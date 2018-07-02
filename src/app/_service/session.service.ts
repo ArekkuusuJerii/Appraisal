@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 import * as CryptoJS from 'crypto-js';
 import { MessageService } from './message.service';
+import { Session } from '../_model/session';
 
 @Injectable({
   providedIn: 'root'
