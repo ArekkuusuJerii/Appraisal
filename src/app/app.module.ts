@@ -4,6 +4,11 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { API } from './api.config';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+
+const routes = [
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+];
 
 @NgModule({
   declarations: [
@@ -11,7 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [API],
   bootstrap: [AppComponent]
