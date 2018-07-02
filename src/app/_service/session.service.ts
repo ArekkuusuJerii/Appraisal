@@ -46,7 +46,10 @@ export class SessionService {
       headers: {'Credentials': this.getCredentials()}
     }).subscribe(
       () => success = true,
-      () => localStorage.removeItem('session')
+      err => {
+        localStorage.removeItem('session');
+        this.message.push(err);
+      }
     );
     return success;
   }
