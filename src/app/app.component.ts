@@ -13,8 +13,20 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.session.hasSession() && !this.session.validate()) {
-      this.router.navigate(['/login']);
+    if (SessionService.hasSession()) {
+      this.session.validate().subscribe(() => {
+        const user = SessionService.getSession();
+        if (user.usuarioRol === 'administrador') {
+          this.router.navigate(['dashboard/administrador']);
+        } else {
+          this.router.navigate(['dashboard/organizacion']);
+        }
+        this.message.push({severity: 'success', summary: 'Has iniciado sesión', detail: 'Última sesión recuperada'});
+      }, () => {
+        this.router.navigate(['login']);
+        this.message.push({severity: 'warning', summary: 'Has cerrado sesión', detail: 'Última sesión ha caducado'});
+        localStorage.removeItem('session');
+      });
     }
   }
 }
