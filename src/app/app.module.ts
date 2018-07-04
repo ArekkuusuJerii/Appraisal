@@ -14,7 +14,11 @@ import { OrgComponent } from './user/org/org.component';
 
 const routes = [
   {path: 'login', component: LoginComponent},
-  {path: '**', redirectTo: ''}
+  {path: 'dashboard/administrador', component: AdminComponent},
+  {path: 'dashboard/organizacion', component: OrgComponent},
+  {path: 'dashboard', component: DashboardComponent},
+  {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+  {path: '**', redirectTo: '/dashboard'}
 ];
 
 @NgModule({
