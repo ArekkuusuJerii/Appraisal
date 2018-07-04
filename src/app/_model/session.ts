@@ -1,10 +1,10 @@
-export class Session {
+export class Usuario {
   usuarioRol?: string;
   token?: string;
   key?: string;
-  person?: Person;
+  person?: Persona;
 }
-export class Person {
+export class Persona {
   name: string;
   primerApellido: string;
   segundoApellido: string;

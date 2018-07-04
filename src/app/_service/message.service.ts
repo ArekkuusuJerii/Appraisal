@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Message } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
@@ -6,9 +7,7 @@ import { Injectable } from '@angular/core';
 export class MessageService {
   messages = [];
 
-  constructor() { }
-
-  push(msg: string | string[]) {
+  push(msg: Message | Message[]) {
     this.messages = [];
     this.messages.push(msg);
   }
