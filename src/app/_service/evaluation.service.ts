@@ -11,19 +11,19 @@ import { Status } from '../_model/evaluation';
 })
 export class EvaluationService {
 
-  constructor(private api: API, private session: SessionService, private http: HttpClient) { }
+  constructor(private api: API, private http: HttpClient) { }
 
   getStatus(organizacion: number): Observable<Status> {
     const url = this.api.for(`evaluacion/${organizacion}`);
     return this.http.get<Status>(url, {
-      headers: {'Credentials': this.session.getCredentials()}
+      headers: {'Credentials': SessionService.getCredentials()}
     });
   }
 
   getMissing(organizacion: number): Observable<PracticaEspecifica[]> {
     const url = this.api.for(`evaluacion/missing/${organizacion}`);
     return this.http.get<PracticaEspecifica[]>(url, {
-      headers: {'Credentials': this.session.getCredentials()}
+      headers: {'Credentials': SessionService.getCredentials()}
     });
   }
 }
