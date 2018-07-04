@@ -8,12 +8,10 @@ import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { GrowlModule } from 'primeng/growl';
-import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './user/admin/admin.component';
 import { OrgComponent } from './user/org/org.component';
 
 const routes = [
-  {path: 'login', component: LoginComponent},
   {path: 'dashboard/administrador', component: AdminComponent},
   {path: 'dashboard/organizacion', component: OrgComponent},
   {path: 'dashboard', component: DashboardComponent},
@@ -26,7 +24,6 @@ const routes = [
     AppComponent,
     DashboardComponent,
     NavbarComponent,
-    LoginComponent,
     AdminComponent,
     OrgComponent
   ],
