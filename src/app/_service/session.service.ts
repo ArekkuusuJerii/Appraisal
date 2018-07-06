@@ -5,12 +5,13 @@ import { tap } from 'rxjs/operators';
 
 import * as CryptoJS from 'crypto-js';
 import { Usuario } from '../_model/session';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
+  sessionChange = new Subject<Usuario>();
 
   static hasSession(): boolean {
     return localStorage.getItem('session') != null;
@@ -47,7 +48,10 @@ export class SessionService {
         'Credentials': btoa(`${user}:${password}`)
       }
     }).pipe(
-      tap(session => localStorage.setItem('session', JSON.stringify(session)))
+      tap(session => {
+        localStorage.setItem('session', JSON.stringify(session));
+        this.sessionChange.next(session);
+      })
     );
   }
 

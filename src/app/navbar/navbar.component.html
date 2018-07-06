@@ -2,17 +2,20 @@
   <div class="navbar">
     <div class="navbar-content">
       <img class="logo" alt="appraisal logo" src="../../assets/appraisal.png">
-      <img class="cmmi" alt="cmmi logo" src="https://cmmiwebstorage.blob.core.windows.net/patterns/cmmi.svg">
+      <img class="cmmi" alt="cmmi logo" src="../../assets/cmmi.svg">
       <nav>
         <ul>
-          <li>
+          <li *ngIf="hasSession">
             <div class="navbar-item">
-              <a routerLink="/dashboard">Dashboard</a>
+              <a>Logout</a>
             </div>
           </li>
           <li>
-            <div class="navbar-item">
-              <a>Logout</a>
+            <img class="icon" src="../../assets/icon.png">
+          </li>
+          <li>
+            <div class="credentials">
+              {{sessionName}}
             </div>
           </li>
         </ul>

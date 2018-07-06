@@ -1,3 +1,5 @@
-main {
-  background: #e5e1e6;
+.main {
+  background: url("../assets/city_0.jpg") no-repeat;
+  background-size: cover;
+  width: 100vw;
 }
