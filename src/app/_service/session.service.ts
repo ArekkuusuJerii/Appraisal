@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 import * as CryptoJS from 'crypto-js';
 import { Usuario } from '../_model/session';
 import { Observable } from 'rxjs';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,11 @@ export class SessionService {
     });
   }
 
-  constructor(private api: API, private http: HttpClient) {}
+  constructor(
+    private api: API,
+    private message: MessageService,
+    private http: HttpClient) {
+  }
 
   login(user, password): Observable<Usuario> {
     const url = this.api.for('session/login');

@@ -1,108 +1,79 @@
-nav {
-  background: #f6f6f6;
+* {
+  box-sizing: border-box;
 }
 
-nav::after {
+.navbar::after {
   content: '';
-  display: table;
+  display: block;
   clear: both;
 }
 
-.container {
-  width: 80%;
+.navbar-content {
+  width: 65%;
   margin: 0 auto;
+  padding-top: 1.25em;
+}
+
+.navbar-item {
+  background: #007dc6;
+  display: inline-block;
+  padding: 0.75em;
+  border-radius: 5px;
+  transition: all 300ms ease-out;
+}
+
+.navbar-item:hover {
+  background: #0097e2;
+  cursor: pointer;
+  box-shadow: 0 2px 8px 1px rgba(0, 0, 0, 0.2);
+  transition: all 300ms ease-in;
 }
 
 .logo {
   float: left;
+  padding: 10px 0;
+  height: 4em;
 }
 
-.logo ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.cmmi {
+  float: left;
+  height: 1.5em;
 }
 
-.logo li {
-  display: inline-block;
-  margin-left: 70px;
-  padding-top: 23px;
-
-  position: relative;
-}
-
-.logo a {
-  color: #444;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: 25px;
-}
-
-.navbar {
+.navbar nav {
   float: right;
 }
 
-.navbar ul {
-  margin: 0;
-  padding: 0;
+.navbar nav ul {
+  display: flex;
   list-style: none;
 }
 
-.navbar li {
-  display: inline-block;
-  margin-left: 70px;
-  padding-top: 23px;
-
-  position: relative;
+.navbar nav li {
+  margin-left: 1em;
+  margin-bottom: 0;
 }
 
-.navbar a {
-  color: #444;
+.navbar nav a {
+  color: white;
   text-decoration: none;
   text-transform: uppercase;
-  font-size: 14px;
+  font-family: 'Gotham A', 'Gotham B', sans-serif;
+  font-size: 0.75em;
+  font-weight: bold;
+  letter-spacing: 0.25em;
+  padding: 0.5em 0.5em;
 }
 
-.navbar a:hover {
-  color: #000;
-  cursor: pointer;
-}
-
-.navbar a::before {
-  content: '';
-  display: block;
-  height: 5px;
-  background-color: #444;
-
-  position: absolute;
-  top: 0;
-  width: 0;
-
-  transition: all ease-in-out 250ms;
-}
-
-.navbar a:hover::before {
+.before {
+  position: fixed;
   width: 100%;
+  z-index: 9000; /*ITS OVER NINE THOUSAND!!*/
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
+.after {
+  background: url("https://cmmiwebstorage.blob.core.windows.net/patterns/home.global-leader.jpg") no-repeat center;
+  height: 20px;
+  width: 100vw;
 }
