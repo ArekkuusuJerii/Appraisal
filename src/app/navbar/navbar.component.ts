@@ -10,17 +10,17 @@ import { Subscription } from 'rxjs';
 export class NavbarComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   hasSession: boolean;
-  sessionName = '...';
+  username = '...';
 
   constructor(private session: SessionService) { }
 
   ngOnInit() {
     this.subscription = this.session.sessionChange.subscribe(session => {
       if (session) {
-        this.sessionName = session.person.name;
+        this.username = session.username;
         this.hasSession = true;
       } else {
-        this.sessionName = '...';
+        this.username = '...';
         this.hasSession = false;
       }
     });
