@@ -10,6 +10,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { GrowlModule } from 'primeng/growl';
 import { AdminComponent } from './user/admin/admin.component';
 import { OrgComponent } from './user/org/org.component';
+import { ButtonModule } from 'primeng/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes = [
   {path: 'dashboard/administrador', component: AdminComponent},
@@ -29,8 +32,11 @@ const routes = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     GrowlModule,
+    ButtonModule,
     RouterModule.forRoot(routes)
   ],
   providers: [API],

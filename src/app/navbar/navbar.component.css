@@ -1,3 +1,7 @@
+.navbar {
+  background: white;
+}
+
 .navbar::after {
   content: '';
   display: block;
@@ -7,7 +11,6 @@
 .navbar-content {
   width: 65%;
   margin: 0 auto;
-  padding-top: 1.25em;
 }
 
 .navbar-item {
@@ -27,8 +30,8 @@
 
 .logo {
   float: left;
-  padding: 10px 0;
   height: 4em;
+  padding-top: 1.5em;
 }
 
 .credentials {
@@ -56,6 +59,7 @@
 .cmmi {
   float: left;
   height: 1.5em;
+  padding-top: 0.5em;
 }
 
 .icon {
@@ -90,6 +94,8 @@
 }
 
 .before {
+  position: fixed;
+  z-index: 9999;
   width: 100%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

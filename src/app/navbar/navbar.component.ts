@@ -24,6 +24,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.hasSession = false;
       }
     });
+    if (SessionService.hasSession()) {
+      this.username = SessionService.getSession().username;
+      this.hasSession = true;
+    }
   }
 
   ngOnDestroy(): void {

@@ -4,7 +4,7 @@
       <img class="logo" alt="appraisal logo" src="../../assets/appraisal.png">
       <img class="cmmi" alt="cmmi logo" src="../../assets/cmmi.svg">
       <nav>
-        <ul>
+        <ul [ngStyle]="{'visibility': hasSession ? 'visible' : 'hidden'}">
           <li *ngIf="hasSession">
             <div class="navbar-item">
               <a>Logout</a>

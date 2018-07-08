@@ -28,11 +28,12 @@ export class SessionService {
   static getCredentials(): string {
     const session = this.getSession();
     const timestamp = new Date().getTime();
-    const message = `{${session.key}}:{${session.token}:{${timestamp}`;
-    const encrypted_message = btoa(CryptoJS.HmacSHA1(message, session.key));
+    const message = `{${session.key}}:{${session.token}}:{${timestamp}}`;
+    const encrypted_message = CryptoJS.HmacSHA256(message, session.key);
+    const hash = CryptoJS.enc.Base64.stringify(encrypted_message);
     return JSON.stringify({
       token: session.token,
-      hash: encrypted_message,
+      hash: hash,
       timestamp: timestamp
     });
   }

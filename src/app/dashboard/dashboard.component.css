@@ -1,2 +1,27 @@
 .inner {
+  background: url("../../assets/city_0.jpg") no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  background: white;
+  min-width: 200px;
+  min-height: 200px;
+  width: 25%;
+  height: 25%;
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+}
+
+.inputgroup {
+  display: table;
+  margin: 0 auto;
 }
