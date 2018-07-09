@@ -6,7 +6,7 @@
       <nav>
         <ul [ngStyle]="{'visibility': hasSession ? 'visible' : 'hidden'}">
           <li *ngIf="hasSession">
-            <div class="navbar-item">
+            <div (click)="logout()" class="navbar-item">
               <a>Logout</a>
             </div>
           </li>

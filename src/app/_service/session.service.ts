@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { API } from '../api.config';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import * as CryptoJS from 'crypto-js';
 import { Usuario } from '../_model/session';
@@ -56,19 +56,22 @@ export class SessionService {
     );
   }
 
-  logout(): Observable<any> {
+  logout(): Observable<string> {
     const url = this.api.for('session/logout');
-    return this.http.get(url, {
-      observe: 'response',
+    return this.http.get<any>(url, {
       headers: {'Credentials': SessionService.getCredentials()}
-    });
+    }).pipe(map(res => res.body));
   }
 
-  validate(): Observable<any> {
+  validate(): Observable<string> {
     const url = this.api.for('session/validate');
-    return this.http.get(url, {
-      observe: 'response',
+    return this.http.get<any>(url, {
       headers: {'Credentials': SessionService.getCredentials()}
-    });
+    }).pipe(map(res => res.body));
+  }
+
+  deleteSession() {
+    localStorage.removeItem('session');
+    this.sessionChange.next(null);
   }
 }

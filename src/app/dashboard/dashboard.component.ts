@@ -20,7 +20,6 @@ export class DashboardComponent implements OnInit {
     private message: MessageService) {
   }
 
-  // FIXME: Unexpected error!
   ngOnInit() {
     if (SessionService.hasSession()) {
       this.session.validate().subscribe(() => {
@@ -33,7 +32,7 @@ export class DashboardComponent implements OnInit {
         this.message.push({severity: 'success', summary: 'Has iniciado sesión', detail: 'Última sesión recuperada'});
       }, () => {
         this.message.push({severity: 'warning', summary: 'Has cerrado sesión', detail: 'Última sesión ha caducado'});
-        localStorage.removeItem('session');
+        this.session.deleteSession();
         window.location.reload();
       });
     }
