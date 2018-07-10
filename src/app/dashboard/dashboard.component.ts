@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../_service/session.service';
-import { MessageService } from '../_service/message.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NotificationService } from '../_service/notification.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
     private formBuilder: FormBuilder,
     private session: SessionService,
     private router: Router,
-    private message: MessageService) {
+    private message: NotificationService) {
   }
 
   ngOnInit() {
@@ -29,11 +29,10 @@ export class DashboardComponent implements OnInit {
         } else {
           this.router.navigate(['dashboard/organizacion']);
         }
-        this.message.push({severity: 'success', summary: 'Has iniciado sesión', detail: 'Última sesión recuperada'});
+        this.message.notify('success', 'Has iniciado sesión', 'Última sesión recuperada');
       }, () => {
-        this.message.push({severity: 'warning', summary: 'Has cerrado sesión', detail: 'Última sesión ha caducado'});
+        this.message.notify('warn', 'Has cerrado sesión', 'Última sesión ha caducado');
         this.session.deleteSession();
-        window.location.reload();
       });
     }
     this.loginForm = this.formBuilder.group({
@@ -42,24 +41,25 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  get f() { return this.loginForm.controls; }
+  get username() { return this.loginForm.controls.username.value; }
+  get password() { return this.loginForm.controls.password.value; }
 
   login() {
     if (this.loginForm.invalid) {
       return;
     }
     this.submitted = true;
-    this.session.login(this.f.username.value, this.f.password.value).subscribe(
-      user => {
+    this.session.login(this.username, this.password).subscribe(user => {
         if (user.usuarioRol.descripcion === 'Administrador') {
           this.router.navigate(['dashboard/administrador']);
         } else {
           this.router.navigate(['dashboard/organizacion']);
         }
-        this.message.push({severity: 'success', summary: 'Has iniciado sesión', detail: `${user.username}`});
+        this.message.notify('success', 'Has iniciado sesión', `${user.username}`);
       },
       () => {
-        this.message.push({severity: 'warning', summary: 'Error', detail: 'Datos incorrectos'});
+        this.message.notify('warn', 'Error', 'Datos incorrectos');
+        this.submitted = false;
       }
     );
   }

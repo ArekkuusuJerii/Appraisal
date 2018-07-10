@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageService } from './_service/message.service';
+import { NotificationService } from './_service/notification.service';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: []
 })
 export class AppComponent implements OnInit {
-  constructor(protected message: MessageService) {
-  }
+  msgs: Message[] = [];
 
+  constructor(protected message: NotificationService) {
+  }
   ngOnInit() {
   }
 }

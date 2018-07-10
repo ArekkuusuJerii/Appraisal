@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SessionService } from '../_service/session.service';
 import { Subscription } from 'rxjs';
-import { MessageService } from '../_service/message.service';
 import { Router } from '@angular/router';
+import { NotificationService } from '../_service/notification.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(
     private session: SessionService,
-    private message: MessageService,
+    private message: NotificationService,
     private router: Router) { }
 
   ngOnInit() {
@@ -37,11 +37,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   logout() {
     this.session.logout().subscribe(() => {
-        this.message.push({severity: 'success', summary: 'Has cerrado sesión'});
+        this.message.notify('success', 'Has cerrado sesión');
         this.session.deleteSession();
         this.router.navigate(['/dashboard']);
       }, () => {
-        this.message.push({severity: 'warning', summary: 'Error al cerrar sesión', detail: 'Credenciales incorrectas'});
+        this.message.notify('warn', 'Error al cerrar sesión', 'Credenciales incorrectas');
       }
     );
   }
