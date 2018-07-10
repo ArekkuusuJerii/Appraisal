@@ -6,6 +6,7 @@ import { map, tap } from 'rxjs/operators';
 import * as CryptoJS from 'crypto-js';
 import { Usuario } from '../_model/session';
 import { Observable, Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,7 @@ export class SessionService {
     });
   }
 
-  constructor(private api: API, private http: HttpClient) {
+  constructor(private api: API, private http: HttpClient, private router: Router) {
   }
 
   login(user, password): Observable<Usuario> {
@@ -68,6 +69,24 @@ export class SessionService {
     return this.http.get<any>(url, {
       headers: {'Credentials': SessionService.getCredentials()}
     }).pipe(map(res => res.body));
+  }
+
+  tryRedirect() {
+    if (SessionService.hasSession()) {
+      this.validate().subscribe(() => {
+        const user = SessionService.getSession();
+        if (user.usuarioRol.descripcion === 'Administrador') {
+          this.router.navigate(['dashboard/administrador']);
+        } else {
+          this.router.navigate(['dashboard/organizacion']);
+        }
+      }, () => {
+        this.deleteSession();
+        this.router.navigate(['dashboard']);
+      });
+    } else {
+      this.router.navigate(['dashboard']);
+    }
   }
 
   deleteSession() {
