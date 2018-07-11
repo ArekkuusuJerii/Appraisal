@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 
 import * as CryptoJS from 'crypto-js';
-import { Usuario } from '../_model/session';
+import { Session } from '../_model/session';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -12,13 +12,13 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class SessionService {
-  sessionChange = new Subject<Usuario>();
+  sessionChange = new Subject<Session>();
 
   static hasSession(): boolean {
     return localStorage.getItem('session') != null;
   }
 
-  static getSession(): Usuario {
+  static getSession(): Session {
     if (this.hasSession()) {
       return JSON.parse(localStorage.getItem('session'));
     } else {
@@ -42,9 +42,9 @@ export class SessionService {
   constructor(private api: API, private http: HttpClient, private router: Router) {
   }
 
-  login(user, password): Observable<Usuario> {
+  login(user, password): Observable<Session> {
     const url = this.api.for('session/login');
-    return this.http.get<Usuario>(url, {
+    return this.http.get<Session>(url, {
       headers: {
         'Accept': 'application/json',
         'Credentials': btoa(`${user}:${password}`)

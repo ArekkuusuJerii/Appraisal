@@ -1,5 +1,6 @@
 .navbar {
   background: white;
+  height: 80px;
 }
 
 .navbar::after {
@@ -30,12 +31,13 @@
 
 .logo {
   float: left;
-  height: 4em;
-  padding-top: 1.5em;
+  height: 60px;
+  padding-top: 25px;
 }
 
 .credentials {
   display: inline-block;
+  height: 44px;
   padding: 0.75em;
   border-radius: 5px;
   box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.2);
@@ -64,8 +66,9 @@
 
 .icon {
   box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.2);
-  height: 2.75em;
+  height: 44px;
   display: inline-block;
+  border-radius: 5px;
 }
 
 .navbar nav {
@@ -102,6 +105,47 @@
 
 .after {
   background: url("https://cmmiwebstorage.blob.core.windows.net/patterns/home.global-leader.jpg") no-repeat center;
-  height: 20px;
+  height: 15px;
   width: 100vw;
+}
+
+@media screen and (max-width: 1000px) {
+  .navbar-content {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .li-icon {
+    display: none;
+  }
+  .navbar-content {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .li-icon {
+    display: none;
+  }
+  .li-credentials {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .cmmi {
+    height: 15px;
+  }
+  .navbar-item {
+    padding: 0.25em;
+    border-radius: 5px;
+    height: 100%;
+  }
+  .navbar a {
+    font-size: 0.65em;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    padding: 0.5em 0.5em;
+  }
 }

@@ -12,7 +12,16 @@ import { AdminComponent } from './user/admin/admin.component';
 import { OrgComponent } from './user/org/org.component';
 import { ButtonModule } from 'primeng/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  AccordionModule,
+  CardModule,
+  InputTextModule,
+  PasswordModule,
+  ScrollPanelModule,
+  SelectButtonModule,
+  SplitButtonModule
+} from 'primeng/primeng';
 
 const routes = [
   {path: 'dashboard/administrador', component: AdminComponent},
@@ -37,6 +46,14 @@ const routes = [
     ReactiveFormsModule,
     GrowlModule,
     ButtonModule,
+    ScrollPanelModule,
+    CardModule,
+    FormsModule,
+    SelectButtonModule,
+    AccordionModule,
+    InputTextModule,
+    PasswordModule,
+    SplitButtonModule,
     RouterModule.forRoot(routes)
   ],
   providers: [API],

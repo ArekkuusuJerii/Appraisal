@@ -11,18 +11,4 @@ html {
   height: 100%;
 }
 
-.ui-growl-message-error .ui-growl-item {
-  background-color: #cc3f3c;
-}
-
-.ui-growl-message-info .ui-growl-item {
-  background-color: #3877d4;
-}
-
-.ui-growl-message-warn .ui-growl-item {
-  background-color: #f5de0e;
-}
-
-.ui-growl-message-success .ui-growl-item {
-  background-color: #00a926;
-}
+.ui-accordion .ui-accordion-header a { text-decoration : none !important; }

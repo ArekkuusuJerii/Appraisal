@@ -1,18 +1,18 @@
-export class Usuario {
-  id?: number;
+import { Organizacion } from './org';
+
+export class Session {
   username: string;
-  persona?: Persona;
-  usuarioRol?: UsuarioRol;
+  usuarioRol?: Rol;
+  persona?: Info;
+  organizacion?: Organizacion;
   token?: string;
   key?: string;
 }
-export class Persona {
-  id: number;
+export class Rol {
+  descripcion: string;
+}
+export class Info {
   name: string;
   primerApellido: string;
   segundoApellido: string;
-}
-export class UsuarioRol {
-  id: number;
-  descripcion: string;
 }

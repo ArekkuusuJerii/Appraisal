@@ -1,1 +1,85 @@
+<div class="outer">
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-3">
+      <div class="ui-g-12">
+        <div class="header text-center">Organizaciones</div>
+      </div>
+      <div class="ui-g-12 container">
+        <p-scrollPanel [style]="{width: '100%', height: '100%'}">
+          <p-card *ngFor="let user of users" class="org-item" [title]="user.organizacion.nombre">
+            {{user.organizacion.nivel.descripcion}} CMMI
+          </p-card>
+        </p-scrollPanel>
+      </div>
+      <div class="ui-g-12">
+        <button pButton type="button" label="Nuevo" (click)="add()" class="add-button"></button>
+      </div>
+    </div>
+    <div *ngIf="user" class="ui-g-12 ui-md-9">
+      <div class="ui-g-12 ui-g-nopad">
+        <div class="ui-g-7">
+          <div class="header text-center">{{organizacion.nombre}}</div>
+        </div>
+        <div class="ui-g-5 center-button">
+          <button pButton type="button" (click)="save()" label="Guardar" class="ui-button-success"></button>
+          <button pButton type="button" (click)="cancel()" label="Cancelar" class="ui-button-danger"></button>
+        </div>
+      </div>
+      <div class="ui-g-12 container">
+        <p-scrollPanel [style]="{width: '100%', height: '100%'}">
+          <p-accordion>
+            <p-accordionTab header="Organización" [selected]="true">
+              <h4>Título</h4>
+              <span class="ui-float-label">
+                  <input id="float-org" type="text" size="30" [(ngModel)]="organizacion.nombre" pInputText>
+                  <label for="float-org">Organización</label>
+                </span>
+              <h4>Nivel de CMMI</h4>
+              <p-selectButton id="float-nivel" [options]="niveles" [(ngModel)]="organizacion.nivel">
+                <ng-template let-item>
+                  <div class="nivel-item">
+                    <span>{{item.descripcion}}</span>
+                  </div>
+                </ng-template>
+              </p-selectButton>
+            </p-accordionTab>
+          </p-accordion>
+          <p-accordion>
+            <p-accordionTab header="Usuario" [selected]="true">
+              <h4>Correo</h4>
+              <span class="ui-float-label">
+                  <input id="float-email" type="email" [(ngModel)]="user.username" pInputText>
+                  <label for="float-email">Correo</label>
+                </span>
+              <h4>Contraseña</h4>
+              <span class="ui-float-label">
+                  <input id="float-pass" type="password" [(ngModel)]="user.password" pPassword>
+                  <label for="float-pass">****</label>
+              </span>
+              <h4>Nombre</h4>
+              <span class="ui-float-label">
+                  <input id="float-nombre" type="text" size="30" [(ngModel)]="persona.nombre" pInputText>
+                  <label for="float-nombre">Nombre</label>
+                </span>
+              <h4>Apellido Paterno</h4>
+              <span class="ui-float-label">
+                  <input id="float-ap-p" type="text" size="30" [(ngModel)]="persona.primerApellido" pInputText>
+                  <label for="float-ap-p">Apellido Paterno</label>
+                </span>
+              <h4>Apellido Materno</h4>
+              <span class="ui-float-label">
+                  <input id="float-ap-m" type="text" size="30" [(ngModel)]="persona.segundoApellido" pInputText>
+                  <label for="float-ap-m">Apellido Materno</label>
+                </span>
+            </p-accordionTab>
+          </p-accordion>
+          <p-accordion>
+            <p-accordionTab header="Instancias" [selected]="true">
 
+            </p-accordionTab>
+          </p-accordion>
+        </p-scrollPanel>
+      </div>
+    </div>
+  </div>
+</div>
