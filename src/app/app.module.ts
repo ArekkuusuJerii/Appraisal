@@ -15,7 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   AccordionModule,
-  CardModule,
+  CardModule, DataScrollerModule, DialogModule, DragDropModule, DropdownModule,
   InputTextModule, PanelModule,
   PasswordModule,
   ScrollPanelModule,
@@ -23,6 +23,7 @@ import {
   SplitButtonModule
 } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
+import { InstancesComponent } from './user/admin/instances/instances.component';
 
 const routes = [
   {path: 'dashboard/administrador', component: AdminComponent},
@@ -38,7 +39,8 @@ const routes = [
     DashboardComponent,
     NavbarComponent,
     AdminComponent,
-    OrgComponent
+    OrgComponent,
+    InstancesComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +59,10 @@ const routes = [
     SplitButtonModule,
     PanelModule,
     TableModule,
+    DataScrollerModule,
+    DropdownModule,
+    DialogModule,
+    DragDropModule,
     RouterModule.forRoot(routes)
   ],
   providers: [API],

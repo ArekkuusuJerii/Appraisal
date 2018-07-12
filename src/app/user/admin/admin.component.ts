@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../../_service/session.service';
-import { Instance, Type, Usuario } from '../../_model/org';
+import { Organizacion, Usuario } from '../../_model/org';
 import { Nivel } from '../../_model/cmmi';
 import { MenuItem } from 'primeng/api';
 import { UsuarioService } from '../../_service/usuario.service';
@@ -16,14 +16,13 @@ import { CmmiService } from '../../_service/cmmi.service';
 export class AdminComponent implements OnInit {
   menuItems: MenuItem[];
   niveles: Nivel[];
-  types: Type[];
   formUser: FormGroup;
-  formInstance: FormGroup;
-  instances: Instance[] = [];
-  instance: Instance;
   users: Usuario[] = [];
   user: Usuario;
+  copy: Usuario;
+  org: Organizacion;
   isNew = false;
+  drag;
 
   constructor(
     private session: SessionService,
@@ -36,7 +35,6 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.session.tryRedirect();
     this.cmmi.getNiveles().subscribe(niveles => this.niveles = niveles);
-    this.usuarioService.getAllTypes().subscribe(types => this.types = types);
     this.menuItems = [
       {
         label: 'Cancelar', icon: 'fa-close', command: () => this.cancel()
@@ -51,9 +49,6 @@ export class AdminComponent implements OnInit {
       'username': ['', Validators.compose([Validators.required, Validators.email])],
       'password': ['', Validators.compose([Validators.required, Validators.minLength(3)])]
     });
-    this.formInstance = this.builder.group({
-      'nombre': ['', Validators.required],
-    });
     this.usuarioService.getAll().subscribe(all => {
       this.users = all;
     });
@@ -61,10 +56,6 @@ export class AdminComponent implements OnInit {
 
   get controlU() {
     return this.formUser.controls;
-  }
-
-  get controlI() {
-    return this.formInstance.controls;
   }
 
   get persona() {
@@ -75,9 +66,28 @@ export class AdminComponent implements OnInit {
     return this.user.organizacion;
   }
 
-  edit(user) {
+  edit(user: Usuario) {
+    if (!user) {
+      return;
+    }
     this.user = user;
     this.isNew = false;
+    this.copy = {
+      id: user.id,
+      username: user.username,
+      password: user.password,
+      persona: {
+        id: user.persona.id,
+        nombre: user.persona.nombre,
+        primerApellido: user.persona.primerApellido,
+        segundoApellido: user.persona.segundoApellido,
+      },
+      organizacion: {
+        id: user.organizacion.id,
+        nombre: user.organizacion.nombre,
+        nivel: user.organizacion.nivel,
+      }
+    };
   }
 
   add() {
@@ -85,16 +95,17 @@ export class AdminComponent implements OnInit {
       organizacion: {},
       persona: {}
     };
-    this.instances = [];
     this.isNew = true;
-  }
-
-  put() {
-    this.instances.push({});
+    this.formUser.reset();
   }
 
   cancel() {
-    this.user = null;
+    if (!this.isNew) {
+      const index = this.users.indexOf(this.user);
+      this.users[index] = this.copy;
+    } else {
+      this.user = null;
+    }
   }
 
   save() {

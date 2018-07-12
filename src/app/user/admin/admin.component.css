@@ -2,6 +2,8 @@
   height: 100%;
   width: 100%;
   padding-top: 95px;
+  background: url("../../../assets/circuit.png") no-repeat center;
+  background-size: cover;
 }
 
 .ui-g {
@@ -65,14 +67,6 @@
   width: 100%;
 }
 
-.section {
-  padding-top: 2px;
-  padding-bottom: 10px;
-  text-transform: uppercase;
-  font-size: 0.8em;
-  font-weight: bold;
-}
-
 .instances {
   margin-bottom: 15px;
 }
@@ -81,8 +75,38 @@
   margin-top: 15px;
 }
 
-p-scrollPanel .inner {
-  padding: 15px;
+.panel {
+  height: 100%;
+  width: 100%;
+  border: black 1px;
+}
+
+.panel .section {
+  padding-top: 2px;
+  padding-bottom: 10px;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.container p-dataScroller {
+  height: 100px;
+}
+
+.data {
+  background-color: #8e8e8e11;
+}
+
+.drop {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.drop img {
+  height: 12em;
+  width: 12em;
 }
 
 input {
