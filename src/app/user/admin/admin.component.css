@@ -10,20 +10,31 @@
 
 .text-center {
   text-align: center;
-  background: white;
+  color: white;
   font-family: 'Gotham A', 'Gotham B', sans-serif;
-  text-transform: uppercase;
+  font-weight: bold;
   font-size: 0.85em;
-  height: 4em;
+  height: 3.5em;
   padding: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .header {
-  background: #f8f8f8;
+  background: #007dc6;
+  border-radius: 5px;
+}
+
+.full-height {
+  height: 100%;
+  display:flex;
+  flex-direction:column;
 }
 
 .container {
-  height: 500px;
+  flex:1;
+  overflow: hidden;
 }
 
 .org-item {
@@ -38,15 +49,36 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 4em;
 }
 
-.center-button button {
+.save-button {
   width: 25%;
+  margin-right: 15px;
+}
+
+.cancel-button {
+  width: 25%;
+  margin-left: 15px;
 }
 
 .add-button {
   width: 100%;
+}
+
+.section {
+  padding-top: 2px;
+  padding-bottom: 10px;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.instances {
+  margin-bottom: 15px;
+}
+
+.instances .add-button {
+  margin-top: 15px;
 }
 
 p-scrollPanel .inner {
@@ -57,16 +89,22 @@ input {
   width: 50%;
 }
 
-@media screen and (max-width: 1200px) {
-  .center-button button {
-     width: 50%;
-   }
+@media screen and (max-width: 1250px) {
+  .save-button {
+    width: 25%;
+  }
+  .cancel-button {
+    width: 25%;
+  }
 }
 
 @media screen and (max-width: 650px) {
-  .center-button {
-    display: block;
-  }.center-button button {
-     width: 100%;
-   }
+  .save-button {
+    width: auto;
+    margin-right: 10px;
+  }
+  .cancel-button {
+    width: auto;
+    margin-left: 10px;
+  }
 }

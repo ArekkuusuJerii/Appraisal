@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API } from '../api.config';
 import { Observable } from 'rxjs';
-import { Usuario } from '../_model/org';
+import { Type, Usuario } from '../_model/org';
 import { SessionService } from './session.service';
 import { catchError } from 'rxjs/operators';
 
@@ -22,6 +22,11 @@ export class UsuarioService {
         'Accept': 'application/json'
       }
     }).pipe(catchError(() => []));
+  }
+
+  getAllTypes(): Observable<Type[]> {
+    const url = this.api.for('user/roles');
+    return this.http.get<Type[]>(url).pipe(catchError(() => []));
   }
 
   save(usuario: Usuario): Observable<Usuario> {

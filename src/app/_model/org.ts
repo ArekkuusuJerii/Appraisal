@@ -18,3 +18,13 @@ export class Organizacion {
   nivel?: Nivel;
   nombre?: string;
 }
+
+export class Instance {
+  id?: number;
+  nombre?: string;
+  instanciaTipo?: Type;
+}
+export class Type {
+  id: number;
+  descripcion: string;
+}

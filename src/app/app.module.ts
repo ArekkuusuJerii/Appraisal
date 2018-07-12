@@ -16,12 +16,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   AccordionModule,
   CardModule,
-  InputTextModule,
+  InputTextModule, PanelModule,
   PasswordModule,
   ScrollPanelModule,
   SelectButtonModule,
   SplitButtonModule
 } from 'primeng/primeng';
+import { TableModule } from 'primeng/table';
 
 const routes = [
   {path: 'dashboard/administrador', component: AdminComponent},
@@ -54,6 +55,8 @@ const routes = [
     InputTextModule,
     PasswordModule,
     SplitButtonModule,
+    PanelModule,
+    TableModule,
     RouterModule.forRoot(routes)
   ],
   providers: [API],
