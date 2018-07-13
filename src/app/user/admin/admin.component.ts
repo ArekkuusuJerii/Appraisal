@@ -47,7 +47,7 @@ export class AdminComponent implements OnInit {
       'apellido-p': ['', Validators.required],
       'apellido-m': ['', Validators.required],
       'username': ['', Validators.compose([Validators.required, Validators.email])],
-      'password': ['', Validators.compose([Validators.required, Validators.minLength(3)])]
+      'password': ['', Validators.compose([Validators.required, Validators.minLength(6)])]
     });
     this.usuarioService.getAll().subscribe(all => {
       this.users = all;

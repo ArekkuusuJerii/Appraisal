@@ -1,4 +1,4 @@
-import { Nivel } from './cmmi';
+import { AreaProceso, Nivel } from './cmmi';
 
 export class Usuario {
   id?: number;
@@ -23,6 +23,7 @@ export class Instance {
   id?: number;
   nombre?: string;
   instanciaTipo?: Type;
+  areaProcesos?: AreaProceso[];
 }
 export class Type {
   id: number;

@@ -16,14 +16,20 @@ export class EvaluationService {
   getStatus(organizacion: number): Observable<Status> {
     const url = this.api.for(`evaluacion/${organizacion}`);
     return this.http.get<Status>(url, {
-      headers: {'Credentials': SessionService.getCredentials()}
+      headers: {
+        'Credentials': SessionService.getCredentials(),
+        'Accept': 'application/json'
+      }
     });
   }
 
   getMissing(organizacion: number): Observable<PracticaEspecifica[]> {
     const url = this.api.for(`evaluacion/missing/${organizacion}`);
     return this.http.get<PracticaEspecifica[]>(url, {
-      headers: {'Credentials': SessionService.getCredentials()}
+      headers: {
+        'Credentials': SessionService.getCredentials(),
+        'Accept': 'application/json'
+      }
     });
   }
 }
