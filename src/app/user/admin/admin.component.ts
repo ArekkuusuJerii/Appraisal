@@ -90,11 +90,21 @@ export class AdminComponent implements OnInit {
     };
   }
 
+  delete() {
+    if (!this.isNew) {
+      this.usuarioService.delete(this.user).subscribe();
+      this.users = this.users.filter(user => user !== this.user);
+      this.user = null;
+    }
+  }
+
   add() {
     this.user = {
       organizacion: {},
       persona: {}
     };
+    this.org = null;
+    this.copy = null;
     this.isNew = true;
     this.formUser.reset();
   }
@@ -103,9 +113,11 @@ export class AdminComponent implements OnInit {
     if (!this.isNew) {
       const index = this.users.indexOf(this.user);
       this.users[index] = this.copy;
+      this.user = null;
     } else {
       this.user = null;
     }
+    this.formUser.reset();
   }
 
   save() {

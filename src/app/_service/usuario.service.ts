@@ -34,16 +34,18 @@ export class UsuarioService {
     return this.http.post<Usuario>(url, usuario, {
       headers: {
         'Credentials': SessionService.getCredentials(),
-        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       }
     });
   }
 
   update(usuario: Usuario): Observable<Usuario> {
-    const url = this.api.for('user');
+    const url = this.api.for(`user/${usuario.id}`);
     return this.http.put<Usuario>(url, usuario, {
       headers: {
         'Credentials': SessionService.getCredentials(),
+        'Content-Type': 'application/json',
         'Accept': 'application/json'
       }
     });

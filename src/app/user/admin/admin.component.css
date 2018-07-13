@@ -40,7 +40,12 @@
 }
 
 .org-item {
+  margin: 5px;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bolder;
 }
 
 .nivel-item {
@@ -76,16 +81,18 @@
 }
 
 .panel {
-  height: 100%;
   width: 100%;
+  height: 100%;
   border: black 1px;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 .panel .section {
   padding-top: 2px;
   padding-bottom: 10px;
   text-transform: uppercase;
-  font-size: 0.8em;
+  font-size: 0.9em;
   font-weight: bold;
   text-align: center;
 }
