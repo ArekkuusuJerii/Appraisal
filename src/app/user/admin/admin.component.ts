@@ -138,7 +138,7 @@ export class AdminComponent implements OnInit {
           });
         }
       } else {
-        this.message.notify('error', 'Hay errores presentes', 'Solucione sus errores');
+        this.message.notify('error', 'Hay errores presentes', 'Existen errores en su formulario');
       }
     }
   }

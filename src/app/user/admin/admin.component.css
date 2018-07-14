@@ -15,8 +15,8 @@
   color: white;
   font-family: 'Gotham A', 'Gotham B', sans-serif;
   font-weight: bold;
-  font-size: 0.85em;
-  height: 3.5em;
+  font-size: 0.95em;
+  height: 35px;
   padding: 15px;
   white-space: nowrap;
   overflow: hidden;
@@ -41,7 +41,6 @@
 
 .org-item {
   margin: 5px;
-  cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -83,9 +82,6 @@
 .panel {
   width: 100%;
   height: 100%;
-  border: black 1px;
-  padding-right: 15px;
-  padding-left: 15px;
 }
 
 .panel .section {
@@ -95,6 +91,10 @@
   font-size: 0.9em;
   font-weight: bold;
   text-align: center;
+}
+
+.ui-helper-clearfix {
+  padding: 15px;
 }
 
 .container p-dataScroller {

@@ -30,7 +30,7 @@ export class InstanciaService {
   }
 
   save(inst: Instance, org: Organizacion): Observable<Instance> {
-    const url = this.api.for(`instancia?org=${org.id}`);
+    const url = this.api.for(`instancia/${org.id}`);
     return this.http.post<Instance>(url, inst, {
       headers: {
         'Credentials': SessionService.getCredentials(),

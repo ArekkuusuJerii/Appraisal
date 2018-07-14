@@ -15,7 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   AccordionModule,
-  CardModule, DataScrollerModule, DialogModule, DragDropModule, DropdownModule,
+  CardModule, DataGridModule, DataScrollerModule, DialogModule, DragDropModule, DropdownModule,
   InputTextModule, PanelModule,
   PasswordModule, PickListModule,
   ScrollPanelModule,
@@ -64,6 +64,7 @@ const routes = [
     DialogModule,
     DragDropModule,
     PickListModule,
+    DataGridModule,
     RouterModule.forRoot(routes)
   ],
   providers: [API],

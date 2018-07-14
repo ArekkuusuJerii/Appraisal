@@ -19,7 +19,7 @@ export class CmmiService {
   }
 
   getAreaProcesos(org: Organizacion): Observable<AreaProceso[]> {
-    const url = this.api.for(`cmmi/area/${org.nivel.lvl}`);
+    const url = this.api.for(`cmmi/area/${org.nivel.lvl}?all=true`);
     return this.http.get<AreaProceso[]>(url).pipe(catchError(() => []));
   }
 }

@@ -14,6 +14,7 @@ export class NotificationService {
   }
 
   notify(severity: Severities, summary: string, detail?: string) {
+    this.msgs = [];
     this.msgs.push({ severity, summary, detail });
   }
 }
