@@ -35,7 +35,7 @@ export class InstancesComponent implements OnInit {
   ngOnInit() {
     this.columns = [
       {field: 'nombre', header: 'Nombre'},
-      {field: 'instanciaTipo.descripcion', header: 'Tipo'}
+      {field: 'instanciaTipo', subfield: 'descripcion', header: 'Categoría'}
     ];
     this.instanciaService.getAll(this.org).subscribe(all => this.instances = all);
     this.instanciaService.getTypes().subscribe(types => this.types = types);
@@ -57,10 +57,8 @@ export class InstancesComponent implements OnInit {
     };
     this.displayDialog = true;
     this.source = this.areaProcesos.slice();
-    for (const inst of this.instances) {
-      for (const subArea of inst.areaProcesos) {
-        this.source = this.source.filter(area => area.id !== subArea.id);
-      }
+    for (const subArea of this.instance.areaProcesos) {
+      this.source = this.source.filter(area => area.id !== subArea.id);
     }
     this.formInstance.reset();
   }
@@ -72,15 +70,12 @@ export class InstancesComponent implements OnInit {
       id: instance.id,
       nombre: instance.nombre,
       instanciaTipo: instance.instanciaTipo,
-      areaProcesos: instance.areaProcesos
+      areaProcesos: instance.areaProcesos.slice()
     };
     this.displayDialog = true;
-    this.formInstance.reset();
     this.source = this.areaProcesos.slice();
-    for (const inst of this.instances) {
-      for (const subArea of inst.areaProcesos) {
-        this.source = this.source.filter(area => area !== subArea);
-      }
+    for (const subArea of this.instance.areaProcesos) {
+      this.source = this.source.filter(area => area.id !== subArea.id);
     }
   }
 
@@ -94,7 +89,7 @@ export class InstancesComponent implements OnInit {
 
   save() {
     if (this.instance) {
-      if (!this.formInstance.invalid && this.instance.areaProcesos.length > 0) {
+      if (!this.formInstance.invalid) {
         const instances = [...this.instances];
         if (this.new) {
           this.instanciaService.save(this.instance, this.org).subscribe(instance => {
@@ -105,7 +100,7 @@ export class InstancesComponent implements OnInit {
             this.message.notify('success', 'Se ha creado una instancia');
           });
         } else {
-          this.instanciaService.update(this.instance, this.org).subscribe(instance => {
+          this.instanciaService.update(this.instance).subscribe(instance => {
             instances[instances.indexOf(this.selectedInstance)] = instance;
             this.instances = instances;
             this.instance = null;

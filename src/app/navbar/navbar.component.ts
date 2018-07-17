@@ -41,7 +41,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.session.deleteSession();
         this.router.navigate(['/dashboard']);
       }, () => {
-        this.message.notify('warn', 'Error al cerrar sesión', 'Credenciales incorrectas');
+      this.message.notify('warn', 'No fue posible contactar el servidor');
+      this.session.deleteSession();
+      this.router.navigate(['/dashboard']);
       }
     );
   }

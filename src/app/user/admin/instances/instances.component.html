@@ -10,19 +10,22 @@
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr [pSelectableRow]="rowData">
       <td *ngFor="let col of columns">
-        {{rowData[col.field]}}
+        <div *ngIf="col.subfield;then nested_object_content else normal_content"></div>
+        <ng-template #nested_object_content>
+          {{rowData[col.field][col.subfield]}}
+        </ng-template>
+        <ng-template #normal_content>
+          {{rowData[col.field]}}
+        </ng-template>
       </td>
     </tr>
   </ng-template>
-
   <ng-template pTemplate="summary" let-rowData>
     <div style="text-align:left">
       <button type="button" pButton icon="fa fa-plus" (click)="add()" label="Agregar"></button>
     </div>
   </ng-template>
-
 </p-table>
-
 <p-dialog header="Detalles de Instancia" [(visible)]="displayDialog" [maximizable]="true" [closeOnEscape]="true"
           (onHide)="close()" [responsive]="true"
           [width]="'800'" [height]="'500'" [contentStyle]="{'overflow': 'hidden'}">
@@ -65,6 +68,7 @@
           </div>
         </div>
       </div>
+      <hr>
       <p-pickList [source]="source" [target]="instance.areaProcesos"
                   sourceHeader="Disponible"
                   targetHeader="Seleccionado"
@@ -82,8 +86,10 @@
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button *ngIf="!new" type="button" pButton icon="fa fa-close" (click)="delete()" label="Eliminar"></button>
-      <button type="button" pButton icon="fa fa-check" (click)="save()" label="Guardar"></button>
+      <button *ngIf="!new" type="button" pButton icon="fa fa-close" (click)="delete()" label="Eliminar"
+              class="ui-button-danger"></button>
+      <button type="button" pButton icon="fa fa-check" (click)="save()" label="Guardar"
+              class="ui-button-success"></button>
     </div>
   </p-footer>
 </p-dialog>

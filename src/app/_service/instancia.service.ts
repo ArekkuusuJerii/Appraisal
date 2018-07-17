@@ -50,8 +50,8 @@ export class InstanciaService {
     });
   }
 
-  update(inst: Instance, org: Organizacion): Observable<Instance> {
-    const url = this.api.for(`instancia?org=${org.id}&tipo=${inst.instanciaTipo.id}`);
+  update(inst: Instance): Observable<Instance> {
+    const url = this.api.for(`instancia/${inst.id}`);
     return this.http.put<Instance>(url, inst, {
       headers: {
         'Credentials': SessionService.getCredentials(),

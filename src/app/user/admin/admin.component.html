@@ -22,7 +22,7 @@
         </p-dataGrid>
       </div>
       <div class="ui-g-12">
-        <button pButton type="button" label="Nuevo" (click)="add()" class="add-button"></button>
+        <button pButton type="button" label="Nuevo" (click)="add()" class="full-button"></button>
       </div>
     </div>
     <div *ngIf="user" class="ui-g-12 full-height data">
@@ -31,175 +31,181 @@
           <div class="text-center">{{organizacion.nombre}}</div>
         </div>
       </div>
-      <div *ngIf="!org" class="ui-g-12">
-        <div class="ui-g-12 ui-md-4">
+      <div class="ui-g-12 ui-g-nopad">
+        <div class="ui-g-12 ui-md-2">
           <button [disabled]="!formUser.valid" pButton type="button" icon="fa fa-fw fa-save" (click)="save()"
                   label="Guardar"
                   class="ui-button-success"></button>
-          <button pButton type="button" icon="fa fa-fw fa-undo" (click)="cancel()" label="Cancelar"
-                  class="ui-button-danger"></button>
         </div>
-        <div *ngIf="!isNew" class="ui-g-12 ui-md-4 ui-md-offset-4 ui-rtl" dir="rtl">
+        <div class="ui-g-12 ui-md-2">
+          <button pButton type="button" icon="fa fa-fw fa-undo" (click)="cancel()" label="Cancelar"
+                  class="ui-button-warning"></button>
+        </div>
+        <div *ngIf="!isNew" class="ui-g-12 ui-md-2 ui-md-offset-6 ui-rtl" dir="rtl">
           <button pButton type="button" icon="fa fa-fw fa-close" label="Eliminar" class="ui-button-danger"
                   (click)="delete()"></button>
         </div>
       </div>
-      <div *ngIf="org" class="ui-g-12 ui-g-nopad">
-        <div class="ui-g-12 ui-md-4">
-          <button pButton type="button" icon="fa fa-fw fa-arrow-left" (click)="org = null" label="Regresar"
-                  class="ui-button-danger"></button>
+      <div class="ui-g-12 ui-g-nopad">
+        <div *ngIf="!isNew" class="ui-g-12 ui-md-4">
+          <button pButton type="button" label="Instancias"
+                  (click)="org = user.organizacion"
+                  icon="fa fa-bars"
+                  class="full-button"></button>
         </div>
       </div>
       <div class="ui-g-12 ui-g-nopad container">
-        <div *ngIf="!org" class="panel">
-          <form [formGroup]="formUser" (ngSubmit)="save()">
-            <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0">
+        <div class="panel">
+          <p-scrollPanel [style]="{width: '100%', height: '100%'}">
+            <form [formGroup]="formUser" (ngSubmit)="save()">
               <div class="ui-g">
                 <div class="ui-g-12">
-                  <p-card title="Organización">
-                    <div class="ui-grid-row">
-                      <div class="ui-grid-col-2">
-                        Titulo *:
-                      </div>
-                      <div class="ui-grid-col-6">
-                        <input pInputText type="text" formControlName="titulo" [(ngModel)]="organizacion.nombre"
-                               placeholder="Requerido">
-                      </div>
-                      <div class="ui-grid-col-4">
-                        <div class="ui-message ui-messages-error ui-corner-all"
-                             *ngIf="!controlU['titulo'].valid&&controlU['titulo'].dirty">
-                          <i class="fa fa-close"></i>
-                          Titulo es requerido
+                  <p-card title="Organización" [style]="{width: '98.25%'}" styleClass="ui-card-shadow">
+                    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0">
+                      <div class="ui-grid-row">
+                        <div class="ui-grid-col-2">
+                          Titulo *:
+                        </div>
+                        <div class="ui-grid-col-6">
+                          <input pInputText type="text" formControlName="titulo" [(ngModel)]="organizacion.nombre"
+                                 placeholder="Requerido">
+                        </div>
+                        <div class="ui-grid-col-4">
+                          <div class="ui-message ui-messages-error ui-corner-all"
+                               *ngIf="!controlU['titulo'].valid&&controlU['titulo'].dirty">
+                            <i class="fa fa-close"></i>
+                            Titulo es requerido
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="ui-grid-row">
-                      <div class="ui-grid-col-2">
-                        Nivel *:
-                      </div>
-                      <div class="ui-grid-col-6">
-                        <p-selectButton [formControlName]="'nivel'" [options]="niveles"
-                                        [(ngModel)]="organizacion.nivel">
-                          <ng-template let-item>
-                            <div class="nivel-item">
-                              <span>{{item.descripcion}}</span>
-                            </div>
-                          </ng-template>
-                        </p-selectButton>
-                      </div>
-                      <div class="ui-grid-col-4">
-                        <div class="ui-message ui-messages-error ui-corner-all"
-                             *ngIf="!controlU['nivel'].valid&&controlU['nivel'].dirty">
-                          <i class="fa fa-close"></i>
-                          Nivel es requerido
+                      <div class="ui-grid-row">
+                        <div class="ui-grid-col-2">
+                          Nivel *:
                         </div>
-                      </div>
-                    </div>
-                  </p-card>
-                </div>
-                <div class="ui-g-12">
-                  <p-card title="Usuario">
-                    <div class="ui-grid-row">
-                      <div class="ui-grid-col-2">
-                        Usuario *:
-                      </div>
-                      <div class="ui-grid-col-6">
-                        <input pInputText type="email" formControlName="username" [(ngModel)]="user.username"
-                               placeholder="Requerido">
-                      </div>
-                      <div class="ui-grid-col-4">
-                        <div class="ui-message ui-messages-error ui-corner-all"
-                             *ngIf="!controlU['username'].valid&&controlU['username'].dirty">
-                          <i class="fa fa-close"></i>
-                          Usuario es requerido
+                        <div class="ui-grid-col-6">
+                          <p-selectButton [formControlName]="'nivel'" [options]="niveles"
+                                          [(ngModel)]="organizacion.nivel">
+                            <ng-template let-item>
+                              <div class="nivel-item">
+                                <span>{{item.descripcion}}</span>
+                              </div>
+                            </ng-template>
+                          </p-selectButton>
                         </div>
-                      </div>
-                    </div>
-                    <div class="ui-grid-row">
-                      <div class="ui-grid-col-2">
-                        Contraseña *:
-                      </div>
-                      <div class="ui-grid-col-6">
-                        <input pPassword type="password" formControlName="password" [(ngModel)]="user.password"
-                               placeholder="Requerido" promptLabel="Introduce una contraseña">
-                      </div>
-                      <div class="ui-grid-col-4">
-                        <div class="ui-message ui-messages-error ui-corner-all"
-                             *ngIf="!controlU['password'].valid&&controlU['password'].dirty">
-                          <i class="fa fa-close"></i>
-                          Contraseña es requerida
+                        <div class="ui-grid-col-4">
+                          <div class="ui-message ui-messages-error ui-corner-all"
+                               *ngIf="!controlU['nivel'].valid&&controlU['nivel'].dirty">
+                            <i class="fa fa-close"></i>
+                            Nivel es requerido
+                          </div>
                         </div>
                       </div>
                     </div>
                   </p-card>
                 </div>
                 <div class="ui-g-12">
-                  <p-card title="Persona">
-                    <div class="ui-grid-row">
-                      <div class="ui-grid-col-2">
-                        Nombre *:
+                  <p-card title="Usuario" [style]="{width: '98%'}" styleClass="ui-card-shadow">
+                    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0">
+                      <div class="ui-grid-row">
+                        <div class="ui-grid-col-2">
+                          Usuario *:
+                        </div>
+                        <div class="ui-grid-col-6">
+                          <input pInputText type="email" formControlName="username" [(ngModel)]="user.username"
+                                 placeholder="Requerido">
+                        </div>
+                        <div class="ui-grid-col-4">
+                          <div class="ui-message ui-messages-error ui-corner-all"
+                               *ngIf="!controlU['username'].valid&&controlU['username'].dirty">
+                            <i class="fa fa-close"></i>
+                            Usuario es requerido
+                          </div>
+                        </div>
                       </div>
-                      <div class="ui-grid-col-6">
-                        <input pInputText type="text" formControlName="nombre" [(ngModel)]="persona.nombre"
-                               placeholder="Requerido">
-                      </div>
-                      <div class="ui-grid-col-4">
-                        <div class="ui-message ui-messages-error ui-corner-all"
-                             *ngIf="!controlU['nombre'].valid&&controlU['nombre'].dirty">
-                          <i class="fa fa-close"></i>
-                          Nombre es requerido
+                      <div class="ui-grid-row">
+                        <div class="ui-grid-col-2">
+                          Contraseña *:
+                        </div>
+                        <div class="ui-grid-col-6">
+                          <input pPassword type="password" formControlName="password" [(ngModel)]="user.password"
+                                 placeholder="Requerido" promptLabel="Introduce una contraseña">
+                        </div>
+                        <div class="ui-grid-col-4">
+                          <div class="ui-message ui-messages-error ui-corner-all"
+                               *ngIf="!controlU['password'].valid&&controlU['password'].dirty">
+                            <i class="fa fa-close"></i>
+                            Contraseña es requerida
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div class="ui-grid-row">
-                      <div class="ui-grid-col-2">
-                        Apellido Paterno *:
-                      </div>
-                      <div class="ui-grid-col-6">
-                        <input pInputText type="text" formControlName="apellido-p"
-                               [(ngModel)]="persona.primerApellido"
-                               placeholder="Requerido">
-                      </div>
-                      <div class="ui-grid-col-4">
-                        <div class="ui-message ui-messages-error ui-corner-all"
-                             *ngIf="!controlU['apellido-p'].valid&&controlU['apellido-p'].dirty">
-                          <i class="fa fa-close"></i>
-                          Apellido Paterno es requerido
+                  </p-card>
+                </div>
+                <div class="ui-g-12">
+                  <p-card title="Persona" [style]="{width: '98%'}" styleClass="ui-card-shadow">
+                    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0">
+                      <div class="ui-grid-row">
+                        <div class="ui-grid-col-2">
+                          Nombre *:
+                        </div>
+                        <div class="ui-grid-col-6">
+                          <input pInputText type="text" formControlName="nombre" [(ngModel)]="persona.nombre"
+                                 placeholder="Requerido">
+                        </div>
+                        <div class="ui-grid-col-4">
+                          <div class="ui-message ui-messages-error ui-corner-all"
+                               *ngIf="!controlU['nombre'].valid&&controlU['nombre'].dirty">
+                            <i class="fa fa-close"></i>
+                            Nombre es requerido
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="ui-grid-row">
-                      <div class="ui-grid-col-2">
-                        Apellido Materno *:
+                      <div class="ui-grid-row">
+                        <div class="ui-grid-col-2">
+                          Apellido Paterno *:
+                        </div>
+                        <div class="ui-grid-col-6">
+                          <input pInputText type="text" formControlName="apellido-p"
+                                 [(ngModel)]="persona.primerApellido"
+                                 placeholder="Requerido">
+                        </div>
+                        <div class="ui-grid-col-4">
+                          <div class="ui-message ui-messages-error ui-corner-all"
+                               *ngIf="!controlU['apellido-p'].valid&&controlU['apellido-p'].dirty">
+                            <i class="fa fa-close"></i>
+                            Apellido Paterno es requerido
+                          </div>
+                        </div>
                       </div>
-                      <div class="ui-grid-col-6">
-                        <input pInputText type="text" formControlName="apellido-m"
-                               [(ngModel)]="persona.segundoApellido"
-                               placeholder="Requerido">
-                      </div>
-                      <div class="ui-grid-col-4">
-                        <div class="ui-message ui-messages-error ui-corner-all"
-                             *ngIf="!controlU['apellido-m'].valid&&controlU['apellido-m'].dirty">
-                          <i class="fa fa-close"></i>
-                          Apellido Materno es requerido
+                      <div class="ui-grid-row">
+                        <div class="ui-grid-col-2">
+                          Apellido Materno *:
+                        </div>
+                        <div class="ui-grid-col-6">
+                          <input pInputText type="text" formControlName="apellido-m"
+                                 [(ngModel)]="persona.segundoApellido"
+                                 placeholder="Requerido">
+                        </div>
+                        <div class="ui-grid-col-4">
+                          <div class="ui-message ui-messages-error ui-corner-all"
+                               *ngIf="!controlU['apellido-m'].valid&&controlU['apellido-m'].dirty">
+                            <i class="fa fa-close"></i>
+                            Apellido Materno es requerido
+                          </div>
                         </div>
                       </div>
                     </div>
                   </p-card>
                 </div>
               </div>
-            </div>
-          </form>
-        </div>
-        <div *ngIf="org">
-          <app-instances [org]="org"></app-instances>
+            </form>
+          </p-scrollPanel>
         </div>
       </div>
-      <div *ngIf="!org" class="ui-g-12">
-        <button [hidden]="isNew" [disabled]="isNew" pButton type="button" label="Instancias"
-                (click)="org = user.organizacion"
-                class="add-button"></button>
-      </div>
+      <p-dialog *ngIf="org" header="{{org.nombre}}" [closeOnEscape]="true" [(visible)]="org" [modal]="true"
+                [responsive]="true" (onHide)="org = null" [width]="800">
+        <app-instances *ngIf="org" [org]="org"></app-instances>
+      </p-dialog>
     </div>
     <div *ngIf="!user && !org" pDroppable="users" (onDrop)="edit(drag)" class="ui-g-12 ui-md-8 full-height data drop">
       <img src="../../../assets/drag-drop.png">

@@ -7,6 +7,7 @@ import * as CryptoJS from 'crypto-js';
 import { Session } from '../_model/session';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +40,11 @@ export class SessionService {
     });
   }
 
-  constructor(private api: API, private http: HttpClient, private router: Router) {
+  constructor(
+    private api: API,
+    private http: HttpClient,
+    private message: NotificationService,
+    private router: Router) {
   }
 
   login(user, password): Observable<Session> {
@@ -82,9 +87,11 @@ export class SessionService {
         }
       }, () => {
         this.deleteSession();
+        this.message.notify('warn', 'Has cerrado sesión', 'Última sesión ha caducado');
         this.router.navigate(['dashboard']);
       });
     } else {
+      this.message.notify('warn', 'No hay alguna sesión activa');
       this.router.navigate(['dashboard']);
     }
   }

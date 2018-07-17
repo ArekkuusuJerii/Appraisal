@@ -17,7 +17,7 @@ import {
   AccordionModule,
   CardModule, DataGridModule, DataScrollerModule, DialogModule, DragDropModule, DropdownModule,
   InputTextModule, PanelModule,
-  PasswordModule, PickListModule,
+  PasswordModule, PickListModule, ProgressSpinnerModule,
   ScrollPanelModule,
   SelectButtonModule,
   SplitButtonModule
@@ -65,6 +65,7 @@ const routes = [
     DragDropModule,
     PickListModule,
     DataGridModule,
+    ProgressSpinnerModule,
     RouterModule.forRoot(routes)
   ],
   providers: [API],
