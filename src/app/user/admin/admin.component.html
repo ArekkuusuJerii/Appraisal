@@ -1,17 +1,16 @@
 <div class="outer">
   <div class="ui-g">
-    <div *ngIf="!user" class="ui-g-12 ui-md-4 full-height">
+    <div class="ui-g-12 ui-md-4 full-height">
       <div class="ui-g-12">
         <div class="ui-g-12 header">
           <div class="text-center">ORGANIZACIONES</div>
         </div>
       </div>
       <div class="ui-g-12 container">
-        <p-dataGrid [style]="{'margin-bottom':'20px'}" [value]="users" [paginator]="true"
-                    [rows]="4">
+        <p-dataGrid [value]="users" [paginator]="true" [rows]="4">
           <ng-template let-user pTemplate="item">
             <div class="ui-g-12">
-              <p-panel [header]="user.organizacion.nombre" [style]="{'text-align':'center'}" pDraggable="users"
+              <p-panel ondblclick="edit(user)" class="drag" [header]="user.organizacion.nombre" [style]="{'text-align':'center'}" pDraggable="users"
                        (onDragStart)="drag = user"
                        (onDragEnd)="drag = null">
                 <div class="org-item">{{user.organizacion.nivel.descripcion}} Organizacional CMMI</div>
@@ -25,7 +24,7 @@
         <button pButton type="button" label="Nuevo" (click)="add()" class="full-button"></button>
       </div>
     </div>
-    <div *ngIf="user" class="ui-g-12 full-height data">
+    <div *ngIf="user && !drag" class="ui-g-12 ui-md-8 full-height data">
       <div class="ui-g-12">
         <div class="ui-g-12 header">
           <div class="text-center">{{organizacion.nombre}}</div>
@@ -38,7 +37,7 @@
                   class="ui-button-success"></button>
         </div>
         <div class="ui-g-12 ui-md-2">
-          <button pButton type="button" icon="fa fa-fw fa-undo" (click)="cancel()" label="Cancelar"
+          <button pButton type="button" icon="fa fa-fw fa-undo" (click)="cancel()" label="Cerrar"
                   class="ui-button-warning"></button>
         </div>
         <div *ngIf="!isNew" class="ui-g-12 ui-md-2 ui-md-offset-6 ui-rtl" dir="rtl">
@@ -54,13 +53,13 @@
                   class="full-button"></button>
         </div>
       </div>
-      <div class="ui-g-12 ui-g-nopad container">
+      <div class="ui-g-12 container">
         <div class="panel">
           <p-scrollPanel [style]="{width: '100%', height: '100%'}">
             <form [formGroup]="formUser" (ngSubmit)="save()">
               <div class="ui-g">
                 <div class="ui-g-12">
-                  <p-card title="Organización" [style]="{width: '98.25%'}" styleClass="ui-card-shadow">
+                  <p-card title="Organización" [style]="{width: '97.5%'}" styleClass="ui-card-shadow">
                     <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0">
                       <div class="ui-grid-row">
                         <div class="ui-grid-col-2">
@@ -104,7 +103,7 @@
                   </p-card>
                 </div>
                 <div class="ui-g-12">
-                  <p-card title="Usuario" [style]="{width: '98%'}" styleClass="ui-card-shadow">
+                  <p-card title="Usuario" [style]="{width: '97.5%'}" styleClass="ui-card-shadow">
                     <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0">
                       <div class="ui-grid-row">
                         <div class="ui-grid-col-2">
@@ -142,7 +141,8 @@
                   </p-card>
                 </div>
                 <div class="ui-g-12">
-                  <p-card title="Persona" [style]="{width: '98%'}" styleClass="ui-card-shadow">
+                  <p-card title="Persona" [style]="{width: '97.5%', 'margin-bottom': '20px'}"
+                          styleClass="ui-card-shadow">
                     <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0">
                       <div class="ui-grid-row">
                         <div class="ui-grid-col-2">
@@ -207,7 +207,8 @@
         <app-instances *ngIf="org" [org]="org"></app-instances>
       </p-dialog>
     </div>
-    <div *ngIf="!user && !org" pDroppable="users" (onDrop)="edit(drag)" class="ui-g-12 ui-md-8 full-height data drop">
+    <div *ngIf="(!user && !org) || drag" pDroppable="users" (onDrop)="edit(drag)"
+         class="ui-g-12 ui-md-8 full-height data drop">
       <img src="../../../assets/drag-drop.png">
       Arrastra la organización aquí
     </div>

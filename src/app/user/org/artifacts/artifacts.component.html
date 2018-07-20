@@ -1,0 +1,6 @@
+<p-fileUpload name="Archivos" [multiple]="true" [maxFileSize]="1000000 * 10" [customUpload]="true"
+              (uploadHandler)="upload($event)">
+  <ng-template let-file pTemplate="file">
+    <div class="file">{{file.name}} - {{file.size}}</div>
+  </ng-template>
+</p-fileUpload>

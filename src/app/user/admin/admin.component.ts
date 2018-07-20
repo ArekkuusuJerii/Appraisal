@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../../_service/session.service';
-import { Organizacion, Usuario } from '../../_model/org';
+import { Organization, User } from '../../_model/organization';
 import { Nivel } from '../../_model/cmmi';
 import { MenuItem } from 'primeng/api';
 import { UsuarioService } from '../../_service/usuario.service';
@@ -17,10 +17,10 @@ export class AdminComponent implements OnInit {
   menuItems: MenuItem[];
   niveles: Nivel[];
   formUser: FormGroup;
-  users: Usuario[] = [];
-  user: Usuario;
-  copy: Usuario;
-  org: Organizacion;
+  users: User[] = [];
+  user: User;
+  copy: User;
+  org: Organization;
   isNew = false;
   drag;
 
@@ -66,10 +66,7 @@ export class AdminComponent implements OnInit {
     return this.user.organizacion;
   }
 
-  edit(user: Usuario) {
-    if (!user) {
-      return;
-    }
+  edit(user: User) {
     this.user = user;
     this.isNew = false;
     this.copy = {
@@ -90,14 +87,6 @@ export class AdminComponent implements OnInit {
     };
   }
 
-  delete() {
-    if (!this.isNew) {
-      this.usuarioService.delete(this.user).subscribe();
-      this.users = this.users.filter(user => user !== this.user);
-      this.user = null;
-    }
-  }
-
   add() {
     this.user = {
       organizacion: {},
@@ -109,38 +98,49 @@ export class AdminComponent implements OnInit {
     this.formUser.reset();
   }
 
-  cancel() {
-    if (!this.isNew) {
-      const index = this.users.indexOf(this.user);
-      this.users[index] = this.copy;
-      this.user = null;
-    } else {
-      this.user = null;
-    }
-    this.formUser.reset();
-  }
-
   save() {
     if (this.user) {
       if (!this.formUser.invalid) {
+        const users = [...this.users];
         if (this.isNew) {
           this.usuarioService.save(this.user).subscribe(user => {
-            this.message.notify('success', 'Se ha creado una organización');
-            this.users.push(user);
+            users.push(user);
+            this.users = users;
             this.user = null;
+            this.message.notify('success', 'Se ha creado una organización');
           });
         } else {
           this.usuarioService.update(this.user).subscribe(user => {
-            this.message.notify('success', 'Se ha actualizado una organización');
-            const index = this.users.indexOf(this.user);
-            this.users[index] = user;
+            users[users.indexOf(this.user)] = user;
+            this.users = users;
             this.user = null;
+            this.message.notify('success', 'Se ha actualizado una organización');
           });
         }
       } else {
         this.message.notify('error', 'Hay errores presentes', 'Existen errores en su formulario');
       }
     }
+  }
+
+  delete() {
+    if (!this.isNew) {
+      this.usuarioService.delete(this.user).subscribe();
+      this.users = this.users.filter(user => user !== this.user);
+      this.user = null;
+    }
+  }
+
+  cancel() {
+    if (!this.isNew) {
+      const users = [...this.users];
+      users[users.indexOf(this.user)] = this.copy;
+      this.users = users;
+      this.user = null;
+    } else {
+      this.user = null;
+    }
+    this.formUser.reset();
   }
 
 }

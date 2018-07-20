@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API } from '../api.config';
 import { Observable } from 'rxjs';
-import { Type, Usuario } from '../_model/org';
+import { Type, User } from '../_model/organization';
 import { SessionService } from './session.service';
 import { catchError } from 'rxjs/operators';
 
@@ -14,9 +14,9 @@ export class UsuarioService {
   constructor(private api: API, private http: HttpClient) {
   }
 
-  getAll(): Observable<Usuario[]> {
+  getAll(): Observable<User[]> {
     const url = this.api.for('user');
-    return this.http.get<Usuario[]>(url, {
+    return this.http.get<User[]>(url, {
       headers: {
         'Credentials': SessionService.getCredentials(),
         'Accept': 'application/json'
@@ -29,9 +29,9 @@ export class UsuarioService {
     return this.http.get<Type[]>(url).pipe(catchError(() => []));
   }
 
-  save(usuario: Usuario): Observable<Usuario> {
+  save(usuario: User): Observable<User> {
     const url = this.api.for('user');
-    return this.http.post<Usuario>(url, usuario, {
+    return this.http.post<User>(url, usuario, {
       headers: {
         'Credentials': SessionService.getCredentials(),
         'Content-Type': 'application/json',
@@ -40,9 +40,9 @@ export class UsuarioService {
     });
   }
 
-  update(usuario: Usuario): Observable<Usuario> {
+  update(usuario: User): Observable<User> {
     const url = this.api.for(`user/${usuario.id}`);
-    return this.http.put<Usuario>(url, usuario, {
+    return this.http.put<User>(url, usuario, {
       headers: {
         'Credentials': SessionService.getCredentials(),
         'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export class UsuarioService {
     });
   }
 
-  delete(usuario: Usuario): Observable<any> {
+  delete(usuario: User): Observable<any> {
     const url = this.api.for(`user/${usuario.id}`);
     return this.http.delete(url, {
       headers: {

@@ -1,1 +1,89 @@
-
+<div class="outer">
+  <div class="ui-g">
+    <div #left_panel class="ui-g-12 ui-md-4 full-height">
+      <div class="ui-g-12">
+        <div class="ui-g-12 header">
+          <div class="text-center">INSTANCIAS</div>
+        </div>
+      </div>
+      <div class="ui-g-12 container">
+        <p-dataView [emptyMessage]="'Sin instancias'" [value]="instances" [paginator]="true" [rows]="6">
+          <ng-template let-instance pTemplate="listItem">
+            <div class="ui-g-12">
+              <p-panel ondblclick="load(instance)" class="drag" [header]="instance.nombre"
+                       [style]="{'text-align':'center'}" pDraggable="instancias"
+                       (onDragStart)="drag = instance"
+                       (onDragEnd)="drag = null">
+                <div class="inst-item">Categoría: {{instance.instanciaTipo.descripcion}}</div>
+                <hr class="ui-widget-content" style="border-top:0">
+              </p-panel>
+            </div>
+          </ng-template>
+        </p-dataView>
+      </div>
+    </div>
+    <div *ngIf="instance && !drag" class="ui-g-12 ui-md-8 full-height data">
+      <div class="ui-g-12">
+        <div class="ui-g-12 header">
+          <div class="text-center">{{instance.nombre}}</div>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-g-nopad">
+        <div class="ui-g-12 ui-md-2">
+          <button pButton type="button" icon="fa fa-fw fa-close" (click)="cancel()"
+                  label="Cerrar"
+                  class="ui-button-danger"></button>
+        </div>
+      </div>
+      <div class="ui-g-12 container">
+        <div class="panel">
+          <p-treeTable selectionMode="single" [resizableColumns]="true" [scrollable]="true" scrollHeight="95%"
+                       [value]="files" [columns]="cols"
+                       [paginator]="true" [rows]="15" [lazy]="true"
+                       [loading]="loading" (onNodeExpand)="expand($event)" dataKey="nombre">
+            <ng-template pTemplate="caption">
+              Evidencias
+            </ng-template>
+            <ng-template pTemplate="colgroup" let-columns>
+              <colgroup>
+                <col *ngFor="let col of columns" [style.width]="col.width">
+              </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns">
+                  {{col.header}}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+              <tr (click)="select(rowNode)">
+                <td *ngFor="let col of columns; let i = index">
+                  <div *ngIf="rowNode.node.leaf;then leaf_content else branch_content"></div>
+                  <ng-template #leaf_content>
+                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+                    <i *ngIf="col.field == 'nombre'" class="fa fa-file-text"></i>
+                    {{rowData[col.field]}}
+                  </ng-template>
+                  <ng-template #branch_content>
+                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+                    {{rowData[col.field]}}
+                  </ng-template>
+                </td>
+              </tr>
+            </ng-template>
+          </p-treeTable>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!instance || drag" pDroppable="instancias" (onDrop)="load(drag)"
+         class="ui-g-12 ui-md-8 full-height data drop">
+      <img src="../../../assets/drag-drop.png">
+      Arrastra la instancia aquí
+    </div>
+  </div>
+</div>
+<p-dialog *ngIf="selection" header="Evidencia: {{selection.practice.nombre}} - {{selection.practice.descripcion}}"
+          [closeOnEscape]="true" [(visible)]="selection" [modal]="true" [responsive]="true" (onHide)="selection = null">
+  <app-artifacts *ngIf="selection" [selection]="selection"></app-artifacts>
+</p-dialog>

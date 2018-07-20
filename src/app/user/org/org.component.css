@@ -1,0 +1,73 @@
+.outer {
+  height: 100%;
+  width: 100%;
+  padding-top: 95px;
+  background: url("../../../assets/circuit.png") no-repeat center;
+  background-size: cover;
+}
+
+.ui-g {
+  height: 100%;
+}
+
+.text-center {
+  color: white;
+  font-size: 1em;
+  height: 35px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  font-weight: bold;
+
+  text-align: center;
+  vertical-align: middle;
+  line-height: 35px;
+}
+
+.header {
+  background: #007dc6;
+}
+
+.inst-item {
+  margin: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bolder;
+}
+
+.drag {
+  cursor: pointer;
+}
+
+.full-height {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+  overflow: hidden;
+}
+
+.panel {
+  width: 100%;
+  height: 100%;
+}
+
+.data {
+  background-color: #8e8e8e11;
+}
+
+.drop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drop img {
+  height: 12em;
+  width: 12em;
+}

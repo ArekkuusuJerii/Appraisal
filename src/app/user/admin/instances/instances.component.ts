@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Instance, Organizacion, Type } from '../../../_model/org';
+import { Instance, Organization, Type } from '../../../_model/organization';
 import { InstanciaService } from '../../../_service/instancia.service';
 import { AreaProceso } from '../../../_model/cmmi';
 import { CmmiService } from '../../../_service/cmmi.service';
@@ -12,7 +12,7 @@ import { NotificationService } from '../../../_service/notification.service';
   styleUrls: ['./instances.component.css']
 })
 export class InstancesComponent implements OnInit {
-  @Input() org: Organizacion;
+  @Input() org: Organization;
   columns: any[];
   formInstance: FormGroup;
   displayDialog: boolean;
@@ -39,7 +39,7 @@ export class InstancesComponent implements OnInit {
     ];
     this.instanciaService.getAll(this.org).subscribe(all => this.instances = all);
     this.instanciaService.getTypes().subscribe(types => this.types = types);
-    this.cmmi.getAreaProcesos(this.org).subscribe(areas => this.areaProcesos = areas);
+    this.cmmi.getAllAreaProcesos(this.org).subscribe(areas => this.areaProcesos = areas);
     this.formInstance = this.builder.group({
       'titulo': ['', Validators.required],
       'instanciaTipo': ['', Validators.required]

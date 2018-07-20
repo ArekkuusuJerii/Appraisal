@@ -12,11 +12,13 @@
 
 .text-center {
   color: white;
-  font-size: 1.25em;
+  font-size: 1em;
   height: 35px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-transform: uppercase;
+  font-weight: bold;
 
   text-align: center;
   vertical-align: middle;
@@ -25,7 +27,6 @@
 
 .header {
   background: #007dc6;
-  border-radius: 5px;
 }
 
 .full-height {
@@ -49,6 +50,10 @@
 
 .nivel-item {
   padding: .5em 1em
+}
+
+.drag {
+  cursor: pointer;
 }
 
 .center-button {

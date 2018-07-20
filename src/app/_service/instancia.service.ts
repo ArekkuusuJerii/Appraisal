@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { API } from '../api.config';
 import { HttpClient } from '@angular/common/http';
-import { Instance, Organizacion, Type } from '../_model/org';
+import { Instance, Organization, Type } from '../_model/organization';
 import { Observable } from 'rxjs';
 import { SessionService } from './session.service';
 import { catchError } from 'rxjs/operators';
@@ -19,7 +19,7 @@ export class InstanciaService {
     return this.http.get<Type[]>(url).pipe(catchError(() => []));
   }
 
-  getAll(org: Organizacion): Observable<Instance[]> {
+  getAll(org: Organization): Observable<Instance[]> {
     const url = this.api.for(`instancia/${org.id}`);
     return this.http.get<Instance[]>(url, {
       headers: {
@@ -29,7 +29,7 @@ export class InstanciaService {
     }).pipe(catchError(() => []));
   }
 
-  save(inst: Instance, org: Organizacion): Observable<Instance> {
+  save(inst: Instance, org: Organization): Observable<Instance> {
     const url = this.api.for(`instancia/${org.id}`);
     return this.http.post<Instance>(url, inst, {
       headers: {

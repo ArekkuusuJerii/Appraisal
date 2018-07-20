@@ -1,19 +1,19 @@
 import { AreaProceso, Nivel } from './cmmi';
 
-export class Usuario {
+export class User {
   id?: number;
   username?: string;
   password?: string;
-  persona?: Persona;
-  organizacion?: Organizacion;
+  persona?: Person;
+  organizacion?: Organization;
 }
-export class Persona {
+export class Person {
   id?: number;
   nombre?: string;
   primerApellido?: string;
   segundoApellido?: string;
 }
-export class Organizacion {
+export class Organization {
   id?: number;
   nivel?: Nivel;
   nombre?: string;

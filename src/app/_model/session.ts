@@ -1,10 +1,10 @@
-import { Organizacion } from './org';
+import { Organization } from './organization';
 
 export class Session {
   username: string;
   usuarioRol?: Rol;
   persona?: Info;
-  organizacion?: Organizacion;
+  organizacion?: Organization;
   token?: string;
   key?: string;
 }
