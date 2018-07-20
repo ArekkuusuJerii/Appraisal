@@ -84,6 +84,7 @@
   </div>
 </div>
 <p-dialog *ngIf="selection" header="Evidencia: {{selection.practice.nombre}} - {{selection.practice.descripcion}}"
-          [closeOnEscape]="true" [(visible)]="selection" [modal]="true" [responsive]="true" (onHide)="selection = null">
+          [width]="800" [closeOnEscape]="true" [(visible)]="selection" [modal]="true" [responsive]="true"
+          (onHide)="selection = null">
   <app-artifacts *ngIf="selection" [selection]="selection"></app-artifacts>
 </p-dialog>

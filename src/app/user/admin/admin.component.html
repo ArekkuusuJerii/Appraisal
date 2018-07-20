@@ -133,7 +133,8 @@
                           <div class="ui-message ui-messages-error ui-corner-all"
                                *ngIf="!controlU['password'].valid&&controlU['password'].dirty">
                             <i class="fa fa-close"></i>
-                            Contraseña es requerida
+                            <span *ngIf="controlU['password'].errors['required']">Contraseña es requerida</span>
+                            <span *ngIf="controlU['password'].errors['minlength']">Debe contar con 6 o más caracteres</span>
                           </div>
                         </div>
                       </div>

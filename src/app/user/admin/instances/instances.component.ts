@@ -89,7 +89,7 @@ export class InstancesComponent implements OnInit {
 
   save() {
     if (this.instance) {
-      if (!this.formInstance.invalid) {
+      if (this.formInstance.valid) {
         const instances = [...this.instances];
         if (this.new) {
           this.instanciaService.save(this.instance, this.org).subscribe(instance => {

@@ -100,7 +100,7 @@ export class AdminComponent implements OnInit {
 
   save() {
     if (this.user) {
-      if (!this.formUser.invalid) {
+      if (this.formUser.valid) {
         const users = [...this.users];
         if (this.isNew) {
           this.usuarioService.save(this.user).subscribe(user => {

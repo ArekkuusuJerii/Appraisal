@@ -15,7 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   AccordionModule, BlockUIModule,
-  CardModule, DataGridModule, DataScrollerModule, DialogModule, DragDropModule, DropdownModule, FileUploadModule,
+  CardModule, DataGridModule, DataScrollerModule, DialogModule, DragDropModule, DropdownModule, FileUploadModule, InplaceModule,
   InputTextModule, PanelModule,
   PasswordModule, PickListModule, ProgressSpinnerModule,
   ScrollPanelModule,
@@ -73,6 +73,7 @@ const routes = [
     TreeTableModule,
     DataViewModule,
     FileUploadModule,
+    InplaceModule,
     RouterModule.forRoot(routes)
   ],
   providers: [API],
