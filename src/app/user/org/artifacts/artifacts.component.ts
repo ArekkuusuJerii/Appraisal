@@ -56,16 +56,29 @@ export class ArtifactsComponent implements OnInit {
           id: a.id,
           link: a.link,
           date: a.fecha,
-          file: false
+          file: null
         };
       } else {
         return {
           id: a.id,
-          link: this.api.for(`file/${this.evidence.id}/${a.id}`),
+          link: `${a.nombre}`,
           date: a.fecha,
           file: true
         };
       }
+    });
+  }
+
+  download(artifact) {
+    this.evidenciaService.download(artifact['id'], this.evidence).subscribe(data => {
+      const blobURL = window.URL.createObjectURL(data);
+      const anchor = document.createElement('a');
+      anchor.download = artifact['link'];
+      anchor.href = blobURL;
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
+      URL.revokeObjectURL(blobURL);
     });
   }
 

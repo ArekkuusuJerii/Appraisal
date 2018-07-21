@@ -14,18 +14,31 @@ import { ButtonModule } from 'primeng/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
-  AccordionModule, BlockUIModule,
-  CardModule, DataGridModule, DataScrollerModule, DialogModule, DragDropModule, DropdownModule, FileUploadModule, InplaceModule,
-  InputTextModule, PanelModule,
-  PasswordModule, PickListModule, ProgressSpinnerModule,
+  AccordionModule,
+  BlockUIModule,
+  CardModule,
+  DataGridModule,
+  DataScrollerModule,
+  DialogModule,
+  DragDropModule,
+  DropdownModule,
+  FileUploadModule,
+  InplaceModule,
+  InputTextModule,
+  PanelModule,
+  PasswordModule,
+  PickListModule,
+  ProgressSpinnerModule,
   ScrollPanelModule,
   SelectButtonModule,
-  SplitButtonModule, TreeTableModule
+  SplitButtonModule,
+  TreeTableModule
 } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
 import { InstancesComponent } from './user/admin/instances/instances.component';
 import { DataViewModule } from 'primeng/dataview';
 import { ArtifactsComponent } from './user/org/artifacts/artifacts.component';
+import { EvaluationsComponent } from './user/admin/evaluations/evaluations.component';
 
 const routes = [
   {path: 'dashboard/administrador', component: AdminComponent},
@@ -43,7 +56,8 @@ const routes = [
     AdminComponent,
     OrgComponent,
     InstancesComponent,
-    ArtifactsComponent
+    ArtifactsComponent,
+    EvaluationsComponent
   ],
   imports: [
     BrowserModule,

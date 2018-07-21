@@ -133,7 +133,9 @@ export class AdminComponent implements OnInit {
 
   delete() {
     if (!this.isNew) {
-      this.usuarioService.delete(this.user).subscribe();
+      this.usuarioService.delete(this.user).subscribe(() => {
+        this.message.notify('success', 'Se ha eliminado una organización');
+      });
       this.users = this.users.filter(user => user !== this.user);
       this.user = null;
       this.copy = null;

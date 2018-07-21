@@ -25,6 +25,17 @@ export class EvidenciaService {
     });
   }
 
+  download(file, evidence): Observable<Blob> {
+    const url = this.api.for(`file/${evidence.id}/${file}`);
+    return this.http.get(url, {
+      headers: {
+        'Credentials': SessionService.getCredentials(),
+        'Accept': 'application/octet-stream'
+      },
+      responseType: 'blob'
+    });
+  }
+
   uploadFile(file: File, evidence: Evidence): Observable<HttpEvent<Evidence>> {
     const url = this.api.for(`file/${evidence.id}`);
     const formData = new FormData();

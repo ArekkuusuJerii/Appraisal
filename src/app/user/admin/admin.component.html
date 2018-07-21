@@ -15,20 +15,32 @@
                       (onDragStart)="drag = user"
                       (onDragEnd)="drag = null">
                 <div class="ui-g ui-g-nopad">
-                  <div class="ui-g-12 ui-g-nopad">
-                    <div class="ui-g-4 ui-g-nopad">
-                      <div class="org-item">Nombre:</div>
+                  <div class="ui-g-12 ui-md-10 ui-g-nopad">
+                    <div class="ui-g-12 ui-g-nopad">
+                      <div class="ui-g-12 ui-md-4 ui-g-nopad">
+                        <div class="org-item">Nombre:</div>
+                      </div>
+                      <div class="ui-g-12 ui-md-8 ui-g-nopad">
+                        <div class="org-item">{{user.organizacion.nombre}}</div>
+                      </div>
                     </div>
-                    <div class="ui-g-8 ui-g-nopad">
-                      <div class="org-item">{{user.organizacion.nombre}}</div>
+                    <div class="ui-g-12 ui-g-nopad">
+                      <div class="ui-g-12 ui-md-4 ui-g-nopad">
+                        <div class="org-item">Nivel CMMI:</div>
+                      </div>
+                      <div class="ui-g-12 ui-md-8 ui-g-nopad">
+                        <div class="org-item">{{user.organizacion.nivel.descripcion}} Organizacional</div>
+                      </div>
                     </div>
                   </div>
-                  <div class="ui-g-12 ui-g-nopad">
-                    <div class="ui-g-4 ui-g-nopad">
-                      <div class="org-item">Nivel CMMI:</div>
+                  <div class="ui-g-12 ui-md-2 ui-g-nopad">
+                    <div class="ui-g-2 ui-md-12 ui-g-nopad">
+                      <button pButton type="button" icon="fa fa-close" (click)="edit(user);delete();"
+                              class="ui-button-danger"></button>
                     </div>
-                    <div class="ui-g-8 ui-g-nopad">
-                      <div class="org-item">{{user.organizacion.nivel.descripcion}} Organizacional</div>
+                    <div class="ui-g-2 ui-g-offset-8 ui-md-12 ui-md-offset-0 ui-g-nopad">
+                      <button pButton type="button" icon="fa fa-gear" (click)="edit(user)"
+                              class="ui-button-success"></button>
                     </div>
                   </div>
                 </div>
@@ -152,7 +164,8 @@
                                *ngIf="!controlU['password'].valid&&controlU['password'].dirty">
                             <i class="fa fa-close"></i>
                             <span *ngIf="controlU['password'].errors['required']">Contraseña es requerida</span>
-                            <span *ngIf="controlU['password'].errors['minlength']">Debe contar con 6 o más caracteres</span>
+                            <span
+                              *ngIf="controlU['password'].errors['minlength']">Debe contar con 6 o más caracteres</span>
                           </div>
                         </div>
                       </div>
