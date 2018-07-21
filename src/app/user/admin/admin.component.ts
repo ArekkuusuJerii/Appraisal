@@ -67,6 +67,9 @@ export class AdminComponent implements OnInit {
   }
 
   edit(user: User) {
+    if (this.copy) {
+      this.cancel();
+    }
     this.user = user;
     this.isNew = false;
     this.copy = {
@@ -88,6 +91,9 @@ export class AdminComponent implements OnInit {
   }
 
   add() {
+    if (this.copy) {
+      this.cancel();
+    }
     this.user = {
       organizacion: {},
       persona: {}
@@ -107,6 +113,7 @@ export class AdminComponent implements OnInit {
             users.push(user);
             this.users = users;
             this.user = null;
+            this.copy = null;
             this.message.notify('success', 'Se ha creado una organización');
           });
         } else {
@@ -114,6 +121,7 @@ export class AdminComponent implements OnInit {
             users[users.indexOf(this.user)] = user;
             this.users = users;
             this.user = null;
+            this.copy = null;
             this.message.notify('success', 'Se ha actualizado una organización');
           });
         }
@@ -128,6 +136,7 @@ export class AdminComponent implements OnInit {
       this.usuarioService.delete(this.user).subscribe();
       this.users = this.users.filter(user => user !== this.user);
       this.user = null;
+      this.copy = null;
     }
   }
 
@@ -137,8 +146,10 @@ export class AdminComponent implements OnInit {
       users[users.indexOf(this.user)] = this.copy;
       this.users = users;
       this.user = null;
+      this.copy = null;
     } else {
       this.user = null;
+      this.copy = null;
     }
     this.formUser.reset();
   }
