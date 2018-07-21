@@ -28,7 +28,8 @@
             </ng-template>
           </td>
           <td>
-            <button pButton (click)="delete(rowData)" type="button" icon="fa fa-close" class="ui-button-danger"></button>
+            <button pButton (click)="delete(rowData)" type="button" icon="fa fa-close"
+                    class="ui-button-danger"></button>
           </td>
         </tr>
       </ng-template>
@@ -44,7 +45,7 @@
           <button pButton (click)="activeLink = false;activeFile = true;" type="button" icon="fa fa-external-link"
                   label="Introduce un archivo"></button>
         </div>
-        <div  pInplaceContent>
+        <div pInplaceContent>
           <div class="ui-g-12 ui-md-10">
             <p-fileUpload #file [showUploadButton]="false" [showCancelButton]="false"
                           chooseLabel="Selecciona un archivo" [customUpload]="true"
@@ -53,7 +54,7 @@
           </div>
           <div class="ui-g-12 ui-md-2 ui-g-nopad">
             <div class="ui-g-6 ui-md-12">
-              <button pButton (click)="file.upload()" type="button"
+              <button pButton (click)="file.upload();file.clear()" type="button"
                       class="ui-button-success"
                       icon="fa fa-upload"></button>
             </div>
