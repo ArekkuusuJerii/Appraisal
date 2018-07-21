@@ -10,12 +10,37 @@
         <p-dataGrid [value]="users" [paginator]="true" [rows]="4">
           <ng-template let-user pTemplate="item">
             <div class="ui-g-12">
-              <p-panel ondblclick="edit(user)" class="drag" [header]="user.organizacion.nombre" [style]="{'text-align':'center'}" pDraggable="users"
+              <p-card class="drag" styleClass="ui-card-shadow"
+                      [style]="{'text-align':'center', 'height': '100%'}" pDraggable="users"
+                      (onDragStart)="drag = user"
+                      (onDragEnd)="drag = null">
+                <div class="ui-g ui-g-nopad">
+                  <div class="ui-g-12 ui-g-nopad">
+                    <div class="ui-g-4 ui-g-nopad">
+                      <div class="org-item">Nombre:</div>
+                    </div>
+                    <div class="ui-g-8 ui-g-nopad">
+                      <div class="org-item">{{user.organizacion.nombre}}</div>
+                    </div>
+                  </div>
+                  <div class="ui-g-12 ui-g-nopad">
+                    <div class="ui-g-4 ui-g-nopad">
+                      <div class="org-item">Nivel CMMI:</div>
+                    </div>
+                    <div class="ui-g-8 ui-g-nopad">
+                      <div class="org-item">{{user.organizacion.nivel.descripcion}} Organizacional</div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="ui-widget-content" style="border-top:0">
+              </p-card>
+
+              <!--<p-panel class="drag" [header]="user.organizacion.nombre" [style]="{'text-align':'center'}" pDraggable="users"
                        (onDragStart)="drag = user"
                        (onDragEnd)="drag = null">
                 <div class="org-item">{{user.organizacion.nivel.descripcion}} Organizacional CMMI</div>
                 <hr class="ui-widget-content" style="border-top:0">
-              </p-panel>
+              </p-panel>-->
             </div>
           </ng-template>
         </p-dataGrid>
