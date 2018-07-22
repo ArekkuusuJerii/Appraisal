@@ -6,6 +6,8 @@ import { AreaProceso } from '../../../_model/cmmi';
 import { CmmiService } from '../../../_service/cmmi.service';
 import { NotificationService } from '../../../_service/notification.service';
 
+const pattern = '^[0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\\\-]([0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\\\-]| (?! ))+$';
+
 @Component({
   selector: 'app-instances',
   templateUrl: './instances.component.html',
@@ -41,7 +43,7 @@ export class InstancesComponent implements OnInit {
     this.instanciaService.getTypes().subscribe(types => this.types = types);
     this.cmmi.getAllAreaProcesos(this.org).subscribe(areas => this.areaProcesos = areas);
     this.formInstance = this.builder.group({
-      'titulo': ['', Validators.required],
+      'titulo': ['', Validators.compose([Validators.required, Validators.pattern(pattern)])],
       'instanciaTipo': ['', Validators.required]
     });
   }
