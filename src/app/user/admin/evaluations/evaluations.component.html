@@ -1,1 +1,52 @@
-
+<div class="outer">
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-offset-3 ui-md-6 ui-md-offset-3">
+      <p-card [title]="org.nombre" [subtitle]="org.nivel.descripcion + ' CMMI Organizacional'"
+              styleClass="ui-card-shadow">
+        <p-header>
+          <img src="../../../../assets/home.global-leader.jpg">
+        </p-header>
+        <p-card>
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-5">
+              Resultado de la evaluación:
+            </div>
+            <div class="ui-g-12 ui-md-7" style="text-align: center" [style.background-color]="evaluation.status.color">
+              {{evaluation.status.message}}
+            </div>
+          </div>
+        </p-card>
+        <p-table [value]="evaluation.missing" [columns]="cols" [rows]="20" [scrollable]="true" scrollHeight="35vh">
+          <ng-template pTemplate="caption">
+            Prácticas faltantes
+          </ng-template>
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col *ngFor="let col of columns" [style.width]="col.width">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{col.header}}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+              <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <p-footer>
+          <button pButton type="button" label="Cerrar" icon="pi pi-times" class="ui-button-secondary"
+                  (click)="close()" style="margin-right: .25em"></button>
+          <button pButton type="button" label="Recargar" icon="fa fa-undo" class="ui-button-secondary"
+                  (click)="close()"></button>
+        </p-footer>
+      </p-card>
+    </div>
+  </div>
+</div>

@@ -43,6 +43,7 @@ import { EvaluationsComponent } from './user/admin/evaluations/evaluations.compo
 const routes = [
   {path: 'dashboard/administrador', component: AdminComponent},
   {path: 'dashboard/organizacion', component: OrgComponent},
+  {path: 'dashboard/administrador/evaluation/:id', component: EvaluationsComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
   {path: '**', redirectTo: '/dashboard'}

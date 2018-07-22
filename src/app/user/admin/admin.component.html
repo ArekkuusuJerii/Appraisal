@@ -35,8 +35,10 @@
                   </div>
                   <div class="ui-g-12 ui-md-2 ui-g-nopad">
                     <div class="ui-g-2 ui-md-12 ui-g-nopad">
-                      <button pButton type="button" icon="fa fa-close" (click)="edit(user);delete();"
-                              class="ui-button-danger"></button>
+                      <a target="_blank"
+                         routerLink="evaluation/{{user.organizacion.id}}">
+                        <button pButton type="button" icon="fa fa-area-chart" class="ui-button-info"></button>
+                      </a>
                     </div>
                     <div class="ui-g-2 ui-g-offset-8 ui-md-12 ui-md-offset-0 ui-g-nopad">
                       <button pButton type="button" icon="fa fa-gear" (click)="edit(user)"
@@ -67,7 +69,7 @@
                   class="ui-button-success"></button>
         </div>
         <div class="ui-g-12 ui-md-2">
-          <button pButton type="button" icon="fa fa-fw fa-undo" (click)="cancel()" label="Cerrar"
+          <button pButton type="button" icon="fa fa-fw fa-undo" (click)="cancel()" label="Cancelar"
                   class="ui-button-warning"></button>
         </div>
         <div *ngIf="!isNew" class="ui-g-12 ui-md-2 ui-md-offset-6 ui-rtl" dir="rtl">

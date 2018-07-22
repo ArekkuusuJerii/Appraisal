@@ -1,0 +1,7 @@
+.outer {
+  height: 100%;
+  width: 100%;
+  padding-top: 95px;
+  background: url("../../../../assets/circuit.png") no-repeat center;
+  background-size: cover;
+}

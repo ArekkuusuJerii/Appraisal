@@ -76,14 +76,16 @@ export class SessionService {
     }).pipe(map(res => res.body));
   }
 
-  tryRedirect() {
+  tryRedirect(adm = 'dashboard/administrador', org = 'dashboard/organizacion') {
     if (SessionService.hasSession()) {
       this.validate().subscribe(() => {
         const user = SessionService.getSession();
         if (user.usuarioRol.descripcion === 'Administrador') {
-          this.router.navigate(['dashboard/administrador']);
+          if (adm) {
+            this.router.navigate([adm]);
+          }
         } else {
-          this.router.navigate(['dashboard/organizacion']);
+          this.router.navigate([org]);
         }
       }, () => {
         this.deleteSession();

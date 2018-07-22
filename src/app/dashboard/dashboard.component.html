@@ -1,6 +1,6 @@
 <div class="inner">
   <div class="content">
-    <img src="../../favicon.png">
+    <img *ngIf="!submitted" src="../../favicon.png">
     <form *ngIf="!submitted" [formGroup]="loginForm" (ngSubmit)="login()">
       <div class="inputgroup">
         <div class="ui-inputgroup">

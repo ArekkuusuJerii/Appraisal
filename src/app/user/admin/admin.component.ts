@@ -8,6 +8,9 @@ import { NotificationService } from '../../_service/notification.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CmmiService } from '../../_service/cmmi.service';
 
+const titlePattern = '^[0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\\\-]([0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\\\-]| (?! ))+$';
+const txtPattern = '^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´]([a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´]| (?! ))+$';
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -41,13 +44,25 @@ export class AdminComponent implements OnInit {
       }
     ];
     this.formUser = this.builder.group({
-      'titulo': ['', Validators.required],
+      'titulo': ['', Validators.compose([
+        Validators.required, Validators.pattern(titlePattern)
+      ])],
       'nivel': ['', Validators.required],
-      'nombre': ['', Validators.required],
-      'apellido-p': ['', Validators.required],
-      'apellido-m': ['', Validators.required],
-      'username': ['', Validators.compose([Validators.required, Validators.email])],
-      'password': ['', Validators.compose([Validators.required, Validators.minLength(6)])]
+      'nombre': ['', Validators.compose([
+        Validators.required, Validators.pattern(txtPattern)
+      ])],
+      'apellido-p': ['', Validators.compose([
+        Validators.required, Validators.pattern(txtPattern)
+      ])],
+      'apellido-m': ['', Validators.compose([
+        Validators.required, Validators.pattern(txtPattern)
+      ])],
+      'username': ['', Validators.compose([
+        Validators.required, Validators.email
+      ])],
+      'password': ['', Validators.compose([
+        Validators.required, Validators.minLength(6)
+      ])]
     });
     this.usuarioService.getAll().subscribe(all => {
       this.users = all;
@@ -67,9 +82,10 @@ export class AdminComponent implements OnInit {
   }
 
   edit(user: User) {
-    if (this.copy) {
-      this.cancel();
+    if (this.user === user) {
+      return;
     }
+    this.cancel();
     this.user = user;
     this.isNew = false;
     this.copy = {
@@ -147,12 +163,9 @@ export class AdminComponent implements OnInit {
       const users = [...this.users];
       users[users.indexOf(this.user)] = this.copy;
       this.users = users;
-      this.user = null;
-      this.copy = null;
-    } else {
-      this.user = null;
-      this.copy = null;
     }
+    this.user = null;
+    this.copy = null;
     this.formUser.reset();
   }
 
