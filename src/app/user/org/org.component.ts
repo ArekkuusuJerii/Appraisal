@@ -39,6 +39,9 @@ export class OrgComponent implements OnInit {
   }
 
   load(instance: Instance) {
+    if(this.instance === instance) {
+      return;
+    }
     this.files = [];
     this.instance = instance;
     for (const area of instance.areaProcesos) {

@@ -5,8 +5,9 @@ import { InstanciaService } from '../../../_service/instancia.service';
 import { AreaProceso } from '../../../_model/cmmi';
 import { CmmiService } from '../../../_service/cmmi.service';
 import { NotificationService } from '../../../_service/notification.service';
+import { ConfirmationService } from 'primeng/api';
 
-const pattern = '^[0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\\\-]([0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\\\-]| (?! ))+$';
+const pattern = '^[0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\\\-]([0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\\\-]| (?! ))*$';
 
 @Component({
   selector: 'app-instances',
@@ -31,7 +32,8 @@ export class InstancesComponent implements OnInit {
     private instanciaService: InstanciaService,
     private cmmi: CmmiService,
     private message: NotificationService,
-    private builder: FormBuilder) {
+    private builder: FormBuilder,
+    private confirmationService: ConfirmationService) {
   }
 
   ngOnInit() {
@@ -62,6 +64,7 @@ export class InstancesComponent implements OnInit {
     for (const subArea of this.instance.areaProcesos) {
       this.source = this.source.filter(area => area.id !== subArea.id);
     }
+    this.source.sort((a, b) => a.id - b.id);
     this.formInstance.reset();
   }
 
@@ -72,21 +75,28 @@ export class InstancesComponent implements OnInit {
       id: instance.id,
       nombre: instance.nombre,
       instanciaTipo: instance.instanciaTipo,
-      areaProcesos: instance.areaProcesos.slice()
+      areaProcesos: instance.areaProcesos.slice().sort((a, b) => a.id - b.id)
     };
     this.displayDialog = true;
     this.source = this.areaProcesos.slice();
     for (const subArea of this.instance.areaProcesos) {
       this.source = this.source.filter(area => area.id !== subArea.id);
     }
+    this.source.sort((a, b) => a.id - b.id);
+    this.formInstance.markAsUntouched();
   }
 
   delete() {
-    this.instanciaService.delete(this.instance).subscribe();
-    this.instances = this.instances.filter(instance => instance !== this.selectedInstance);
-    this.instance = null;
-    this.displayDialog = false;
-    this.message.notify('success', 'Se ha eliminado una instancia');
+    this.confirmationService.confirm({
+      message: '¿Desea eliminar esta instancia?',
+      accept: () => {
+        this.instanciaService.delete(this.instance).subscribe();
+        this.instances = this.instances.filter(instance => instance !== this.selectedInstance);
+        this.instance = null;
+        this.displayDialog = false;
+        this.message.notify('success', 'Se ha eliminado una instancia');
+      }
+    });
   }
 
   save() {
@@ -94,20 +104,30 @@ export class InstancesComponent implements OnInit {
       if (this.formInstance.valid) {
         const instances = [...this.instances];
         if (this.new) {
-          this.instanciaService.save(this.instance, this.org).subscribe(instance => {
-            instances.push(instance);
-            this.instances = instances;
-            this.instance = null;
-            this.displayDialog = false;
-            this.message.notify('success', 'Se ha creado una instancia');
+          this.confirmationService.confirm({
+            message: '¿Desea crear esta instancia?',
+            accept: () => {
+              this.instanciaService.save(this.instance, this.org).subscribe(instance => {
+                instances.push(instance);
+                this.instances = instances;
+                this.instance = null;
+                this.displayDialog = false;
+                this.message.notify('success', 'Se ha creado una instancia');
+              });
+            }
           });
         } else {
-          this.instanciaService.update(this.instance).subscribe(instance => {
-            instances[instances.indexOf(this.selectedInstance)] = instance;
-            this.instances = instances;
-            this.instance = null;
-            this.displayDialog = false;
-            this.message.notify('success', 'Se ha actualizado una instancia');
+          this.confirmationService.confirm({
+            message: '¿Desea guardar los cambios realizados?',
+            accept: () => {
+              this.instanciaService.update(this.instance).subscribe(instance => {
+                instances[instances.indexOf(this.selectedInstance)] = instance;
+                this.instances = instances;
+                this.instance = null;
+                this.displayDialog = false;
+                this.message.notify('success', 'Se ha actualizado una instancia');
+              });
+            }
           });
         }
       } else {

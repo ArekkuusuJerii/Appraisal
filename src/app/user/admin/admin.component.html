@@ -7,7 +7,8 @@
         </div>
       </div>
       <div class="ui-g-12 container">
-        <p-dataGrid [value]="users" [paginator]="true" [rows]="4">
+        <p-dataGrid [emptyMessage]="'No hay Organizaciones en existencia'" [value]="users" [paginator]="true"
+                    [rows]="4">
           <ng-template let-user pTemplate="item">
             <div class="ui-g-12">
               <p-card class="drag" styleClass="ui-card-shadow"
@@ -34,15 +35,16 @@
                     </div>
                   </div>
                   <div class="ui-g-12 ui-md-2 ui-g-nopad">
-                    <div class="ui-g-2 ui-md-12 ui-g-nopad">
+                    <div class="ui-g-5 ui-md-12 ui-g-nopad">
                       <a target="_blank"
                          routerLink="evaluation/{{user.organizacion.id}}">
-                        <button pButton type="button" icon="fa fa-area-chart" class="ui-button-info"></button>
+                        <button pButton type="button" icon="fa fa-area-chart" class="ui-button-info"
+                                pTooltip="Evaluar" tooltipPosition="right"></button>
                       </a>
                     </div>
-                    <div class="ui-g-2 ui-g-offset-8 ui-md-12 ui-md-offset-0 ui-g-nopad">
+                    <div class="ui-g-5 ui-g-offset-2 ui-md-12 ui-md-offset-0 ui-g-nopad">
                       <button pButton type="button" icon="fa fa-gear" (click)="edit(user)"
-                              class="ui-button-success"></button>
+                              class="ui-button-success" pTooltip="Editar" tooltipPosition="right"></button>
                     </div>
                   </div>
                 </div>
@@ -53,7 +55,8 @@
         </p-dataGrid>
       </div>
       <div class="ui-g-12">
-        <button pButton type="button" icon="fa fa-plus" label="Nuevo" (click)="add()" class="full-button"></button>
+        <button pButton type="button" icon="fa fa-plus" label="Nueva Organización" (click)="add()"
+                class="full-button"></button>
       </div>
     </div>
     <div *ngIf="user && !drag" class="ui-g-12 ui-md-8 full-height data">
@@ -64,13 +67,15 @@
       </div>
       <div class="ui-g-12 ui-g-nopad">
         <div class="ui-g-12 ui-md-2">
-          <button [disabled]="!formUser.valid" pButton type="button" icon="fa fa-fw fa-save" (click)="save()"
+          <button [disabled]="!formUser.valid || formUser.untouched" pButton type="button" icon="fa fa-fw fa-save"
+                  (click)="save()"
                   label="Guardar"
                   class="ui-button-success"></button>
         </div>
         <div class="ui-g-12 ui-md-2">
-          <button pButton type="button" icon="fa fa-fw fa-undo" (click)="cancel()" label="Cancelar"
-                  class="ui-button-warning"></button>
+          <button pButton type="button" icon="fa fa-fw fa-undo" (click)="cancel()"
+                  [ngClass]="isNew ? 'ui-button-danger' : 'ui-button-warning'"
+                  [label]="isNew ? 'Cancelar' : 'Descartar'"></button>
         </div>
         <div *ngIf="!isNew" class="ui-g-12 ui-md-2 ui-md-offset-6 ui-rtl" dir="rtl">
           <button pButton type="button" icon="fa fa-fw fa-close" label="Eliminar" class="ui-button-danger"
@@ -105,7 +110,8 @@
                           <div class="ui-message ui-messages-error ui-corner-all"
                                *ngIf="!controlU['titulo'].valid&&controlU['titulo'].dirty">
                             <i class="fa fa-close"></i>
-                            Titulo es requerido
+                            <span *ngIf="controlU['titulo'].errors['required']">Título es requerido</span>
+                            <span *ngIf="controlU['titulo'].errors['pattern']">Caracteres ilegales</span>
                           </div>
                         </div>
                       </div>
@@ -149,7 +155,8 @@
                           <div class="ui-message ui-messages-error ui-corner-all"
                                *ngIf="!controlU['username'].valid&&controlU['username'].dirty">
                             <i class="fa fa-close"></i>
-                            Usuario es requerido
+                            <span *ngIf="controlU['username'].errors['required']">Usuario es requerido</span>
+                            <span *ngIf="controlU['username'].errors['email']">Correo inválido</span>
                           </div>
                         </div>
                       </div>
@@ -159,7 +166,8 @@
                         </div>
                         <div class="ui-grid-col-6">
                           <input pPassword type="password" formControlName="password" [(ngModel)]="user.password"
-                                 placeholder="Requerido" promptLabel="Introduce una contraseña">
+                                 placeholder="Requerido" promptLabel="Introduce una contraseña"
+                                 weakLabel="Débil" mediumLabel="Suficiente" strongLabel="Fuerte">
                         </div>
                         <div class="ui-grid-col-4">
                           <div class="ui-message ui-messages-error ui-corner-all"
@@ -190,7 +198,8 @@
                           <div class="ui-message ui-messages-error ui-corner-all"
                                *ngIf="!controlU['nombre'].valid&&controlU['nombre'].dirty">
                             <i class="fa fa-close"></i>
-                            Nombre es requerido
+                            <span *ngIf="controlU['nombre'].errors['required']">Nombre es requerido</span>
+                            <span *ngIf="controlU['nombre'].errors['pattern']">Caracteres ilegales</span>
                           </div>
                         </div>
                       </div>
@@ -207,7 +216,8 @@
                           <div class="ui-message ui-messages-error ui-corner-all"
                                *ngIf="!controlU['apellido-p'].valid&&controlU['apellido-p'].dirty">
                             <i class="fa fa-close"></i>
-                            Apellido Paterno es requerido
+                            <span *ngIf="controlU['apellido-p'].errors['required']">Apellido Paterno es requerido</span>
+                            <span *ngIf="controlU['apellido-p'].errors['pattern']">Caracteres ilegales</span>
                           </div>
                         </div>
                       </div>
@@ -224,7 +234,8 @@
                           <div class="ui-message ui-messages-error ui-corner-all"
                                *ngIf="!controlU['apellido-m'].valid&&controlU['apellido-m'].dirty">
                             <i class="fa fa-close"></i>
-                            Apellido Materno es requerido
+                            <span *ngIf="controlU['apellido-m'].errors['required']">Apellido Materno es requerido</span>
+                            <span *ngIf="controlU['apellido-m'].errors['pattern']">Caracteres ilegales</span>
                           </div>
                         </div>
                       </div>

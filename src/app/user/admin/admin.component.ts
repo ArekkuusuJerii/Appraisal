@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../../_service/session.service';
 import { Organization, User } from '../../_model/organization';
 import { Nivel } from '../../_model/cmmi';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { UsuarioService } from '../../_service/usuario.service';
 import { NotificationService } from '../../_service/notification.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CmmiService } from '../../_service/cmmi.service';
 
-const titlePattern = '^[0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\\\-]([0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\\\-]| (?! ))+$';
-const txtPattern = '^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´]([a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´]| (?! ))+$';
+const titlePattern = '^[0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\\\-]([0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\\\-]| (?! ))*$';
+const txtPattern = '^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´]([a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´]| (?! ))*$';
 
 @Component({
   selector: 'app-admin',
@@ -17,7 +17,6 @@ const txtPattern = '^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´](
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-  menuItems: MenuItem[];
   niveles: Nivel[];
   formUser: FormGroup;
   users: User[] = [];
@@ -32,17 +31,13 @@ export class AdminComponent implements OnInit {
     private usuarioService: UsuarioService,
     private cmmi: CmmiService,
     private message: NotificationService,
-    private builder: FormBuilder) {
+    private builder: FormBuilder,
+    private confirmationService: ConfirmationService) {
   }
 
   ngOnInit() {
     this.session.tryRedirect();
     this.cmmi.getNiveles().subscribe(niveles => this.niveles = niveles);
-    this.menuItems = [
-      {
-        label: 'Cancelar', icon: 'fa-close', command: () => this.cancel()
-      }
-    ];
     this.formUser = this.builder.group({
       'titulo': ['', Validators.compose([
         Validators.required, Validators.pattern(titlePattern)
@@ -85,7 +80,7 @@ export class AdminComponent implements OnInit {
     if (this.user === user) {
       return;
     }
-    this.cancel();
+    this.reset();
     this.user = user;
     this.isNew = false;
     this.copy = {
@@ -108,7 +103,7 @@ export class AdminComponent implements OnInit {
 
   add() {
     if (this.copy) {
-      this.cancel();
+      this.reset();
     }
     this.user = {
       organizacion: {},
@@ -125,20 +120,30 @@ export class AdminComponent implements OnInit {
       if (this.formUser.valid) {
         const users = [...this.users];
         if (this.isNew) {
-          this.usuarioService.save(this.user).subscribe(user => {
-            users.push(user);
-            this.users = users;
-            this.user = null;
-            this.copy = null;
-            this.message.notify('success', 'Se ha creado una organización');
+          this.confirmationService.confirm({
+            message: '¿Desea crear esta organización?',
+            accept: () => {
+              this.usuarioService.save(this.user).subscribe(user => {
+                users.push(user);
+                this.users = users;
+                this.formUser.markAsUntouched();
+                this.message.notify('success', 'Se ha creado una organización');
+                this.edit(user);
+              });
+            }
           });
         } else {
-          this.usuarioService.update(this.user).subscribe(user => {
-            users[users.indexOf(this.user)] = user;
-            this.users = users;
-            this.user = null;
-            this.copy = null;
-            this.message.notify('success', 'Se ha actualizado una organización');
+          this.confirmationService.confirm({
+            message: '¿Desea guardar los cambios realizados?',
+            accept: () => {
+              this.usuarioService.update(this.user).subscribe(user => {
+                users[users.indexOf(this.user)] = user;
+                this.users = users;
+                this.formUser.markAsUntouched();
+                this.message.notify('success', 'Se ha actualizado una organización');
+                this.edit(user);
+              });
+            }
           });
         }
       } else {
@@ -149,16 +154,34 @@ export class AdminComponent implements OnInit {
 
   delete() {
     if (!this.isNew) {
-      this.usuarioService.delete(this.user).subscribe(() => {
-        this.message.notify('success', 'Se ha eliminado una organización');
+      this.confirmationService.confirm({
+        message: '¿Desea eliminar esta organización?',
+        accept: () => {
+          this.usuarioService.delete(this.user).subscribe(() => {
+            this.message.notify('success', 'Se ha eliminado una organización');
+          });
+          this.users = this.users.filter(user => user !== this.user);
+          this.user = null;
+          this.copy = null;
+        }
       });
-      this.users = this.users.filter(user => user !== this.user);
-      this.user = null;
-      this.copy = null;
     }
   }
 
   cancel() {
+    if (this.formUser.touched) {
+      this.confirmationService.confirm({
+        message: '¿Descartar cambios?',
+        accept: () => {
+          this.reset();
+        }
+      });
+    } else {
+      this.reset();
+    }
+  }
+
+  reset() {
     if (!this.isNew) {
       const users = [...this.users];
       users[users.indexOf(this.user)] = this.copy;
@@ -166,7 +189,6 @@ export class AdminComponent implements OnInit {
     }
     this.user = null;
     this.copy = null;
-    this.formUser.reset();
   }
 
 }

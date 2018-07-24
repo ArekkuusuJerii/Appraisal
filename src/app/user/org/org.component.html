@@ -7,18 +7,19 @@
         </div>
       </div>
       <div class="ui-g-12 container">
-        <p-dataView [emptyMessage]="'Sin instancias'" [value]="instances" [paginator]="true" [rows]="5">
+        <p-dataView [emptyMessage]="'No existen Instancias en esta Organización'" [value]="instances" [paginator]="true"
+                    [rows]="5">
           <ng-template let-instance pTemplate="listItem">
             <div class="ui-g-12">
               <p-card class="drag" styleClass="ui-card-shadow"
-                       [style]="{'text-align':'center', 'height': '100%'}" pDraggable="instancias"
-                       (onDragStart)="drag = instance"
-                       (onDragEnd)="drag = null">
+                      [style]="{'text-align':'center', 'height': '100%'}" pDraggable="instancias"
+                      (onDragStart)="drag = instance"
+                      (onDragEnd)="drag = null">
                 <div class="ui-g ui-g-nopad">
                   <div class="ui-g-12 ui-md-10 ui-g-nopad">
                     <div class="ui-g-12 ui-g-nopad">
                       <div class="ui-g-12 ui-md-4 ui-g-nopad">
-                        <div class="org-item">Nombre:</div>
+                        <div class="inst-item">Nombre:</div>
                       </div>
                       <div class="ui-g-12 ui-md-8 ui-g-nopad">
                         <div class="inst-item">{{instance.nombre}}</div>
@@ -34,10 +35,8 @@
                     </div>
                   </div>
                   <div class="ui-g-12 ui-md-2 ui-g-nopad">
-                    <div class="ui-g-12 ui-g-nopad">
                       <button pButton type="button" icon="fa fa-gear" (click)="load(instance)"
-                              class="ui-button-success"></button>
-                    </div>
+                              class="ui-button-success" pTooltip="Editar" tooltipPosition="right"></button>
                   </div>
                 </div>
                 <hr class="ui-widget-content" style="border-top:0">

@@ -16,7 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   AccordionModule,
   BlockUIModule,
-  CardModule,
+  CardModule, ConfirmDialogModule,
   DataGridModule,
   DataScrollerModule,
   DialogModule,
@@ -31,7 +31,7 @@ import {
   ProgressSpinnerModule,
   ScrollPanelModule,
   SelectButtonModule,
-  SplitButtonModule,
+  SplitButtonModule, TooltipModule,
   TreeTableModule
 } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
@@ -89,6 +89,8 @@ const routes = [
     DataViewModule,
     FileUploadModule,
     InplaceModule,
+    TooltipModule,
+    ConfirmDialogModule,
     RouterModule.forRoot(routes)
   ],
   providers: [API],

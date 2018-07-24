@@ -1,4 +1,5 @@
-<p-table scrollHeight="95%" [columns]="columns" [value]="instances" selectionMode="single" [(selection)]="selectedInstance"
+<p-table scrollHeight="95%" [columns]="columns" [value]="instances" selectionMode="single"
+         [(selection)]="selectedInstance"
          (onRowSelect)="select($event)" [paginator]="true" [rows]="15">
   <ng-template pTemplate="header" let-columns>
     <tr>
@@ -22,13 +23,13 @@
   </ng-template>
   <ng-template pTemplate="summary" let-rowData>
     <div style="text-align:left">
-      <button type="button" pButton icon="fa fa-plus" (click)="add()" label="Agregar"></button>
+      <button type="button" pButton icon="fa fa-plus" (click)="add()" label="Nueva Instancia"></button>
     </div>
   </ng-template>
 </p-table>
 <p-dialog header="Detalles de Instancia" [(visible)]="displayDialog" [maximizable]="true" [closeOnEscape]="true"
-          (onHide)="close()" [responsive]="true"
-          [width]="'800'" [height]="'500'" [contentStyle]="{'overflow': 'hidden'}">
+          (onHide)="close()" [responsive]="true" [modal]="false"
+          [width]="'800'" [contentStyle]="{'overflow': 'hidden'}">
   <div class="ui-grid-responsive ui-grid-pad ui-fluid" *ngIf="instance">
     <form [formGroup]="formInstance" (ngSubmit)="save()">
       <div class="ui-grid-row">
@@ -43,7 +44,8 @@
           <div class="ui-message ui-messages-error ui-corner-all"
                *ngIf="!controlI['titulo'].valid&&controlI['titulo'].dirty">
             <i class="fa fa-close"></i>
-            Titulo es requerido
+            <span *ngIf="controlI['titulo'].errors['required']">Título es requerido</span>
+            <span *ngIf="controlI['titulo'].errors['pattern']">Caracteres ilegales</span>
           </div>
         </div>
       </div>
@@ -73,9 +75,10 @@
                   sourceHeader="Disponible"
                   targetHeader="Seleccionado"
                   filterBy="nombre,descripcion"
-                  [responsive]="true" [dragdrop]="true" dragdropScope="cars" sourceFilterPlaceholder="Search by brand"
-                  targetFilterPlaceholder="Search by brand" [sourceStyle]="{'height':'200px'}"
-                  [targetStyle]="{'height':'200px'}">
+                  [responsive]="true" [dragdrop]="true" dragdropScope="cars" sourceFilterPlaceholder="Búsqueda"
+                  targetFilterPlaceholder="Search by brand" [sourceStyle]="{'height':'250px'}"
+                  [targetStyle]="{'height':'250px'}" (onMoveToSource)="formInstance.markAsTouched()"
+                  (onMoveToTarget)="formInstance.markAsTouched()">
         <ng-template let-area pTemplate="item">
           <div class="ui-helper-clearfix">
             {{area.nombre}} : {{area.descripcion}}
@@ -88,8 +91,8 @@
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
       <button *ngIf="!new" type="button" pButton icon="fa fa-close" (click)="delete()" label="Eliminar"
               class="ui-button-danger"></button>
-      <button type="button" pButton icon="fa fa-check" (click)="save()" label="Guardar"
-              class="ui-button-success"></button>
+      <button [disabled]="formInstance.invalid || formInstance.untouched" type="button" pButton icon="fa fa-check"
+              (click)="save()" label="Guardar" class="ui-button-success"></button>
     </div>
   </p-footer>
 </p-dialog>
