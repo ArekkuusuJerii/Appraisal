@@ -71,3 +71,7 @@
   height: 12em;
   width: 12em;
 }
+
+.ui-g-12 button {
+  width: 100%;
+}
