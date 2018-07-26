@@ -1,3 +1,11 @@
 button, input {
   width: 100%;
 }
+
+a {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

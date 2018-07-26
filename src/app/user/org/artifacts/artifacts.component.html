@@ -17,6 +17,10 @@
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
           <td *ngFor="let col of columns">
+            <p-overlayPanel #p [style]="{'max-width': '50%', 'word-break': 'break-all'}" [showCloseIcon]="false"
+                            [dismissable]="true" appendTo="body">
+              {{rowData[col.field]}}
+            </p-overlayPanel>
             <ng-container *ngIf="col.field == 'date'; then date else second"></ng-container>
             <ng-template #second>
               <ng-container *ngIf="rowData['file']; then file else link"></ng-container>
@@ -25,7 +29,9 @@
               <span class="ui-column-title">{{col.header}}</span>
               <div class="ui-g ui-g-nopad">
                 <div class="ui-g-1 ui-g-nopad">
-                  <i style="margin-right: 5px" class="fa fa-file-archive-o"></i>
+                  <i (mouseleave)="p.hide()" (mouseenter)="p.show($event)" style="margin-right: 5px"
+                     pTooltip="Archivo" tooltipPosition="top"
+                     class="fa fa-file-archive-o"></i>
                 </div>
                 <div class="ui-g-11 ui-g-nopad">
                   <a style="text-decoration: underline; cursor: pointer" (click)="download(rowData)">{{rowData[col.field]}}</a>
@@ -35,7 +41,9 @@
             <ng-template #link>
               <span class="ui-column-title">{{col.header}}</span>
               <div class="ui-g-1 ui-g-nopad">
-                <i style="margin-right: 5px" class="fa fa-link"></i>
+                <i (mouseleave)="p.hide()" (mouseenter)="p.show($event)" style="margin-right: 5px"
+                   pTooltip="Link" tooltipPosition="top"
+                   class="fa fa-link"></i>
               </div>
               <div class="ui-g-11 ui-g-nopad">
                 <a target="_blank" href="{{rowData[col.field]}}">{{rowData[col.field]}}</a>
@@ -58,58 +66,53 @@
     </p-table>
   </div>
   <div class="ui-g-12 ui-g-nopad">
-    <div *ngIf="!activeLink" [class]="!activeFile ? 'ui-g-6' : 'ui-g-12'">
-      <p-inplace [active]="activeFile">
-        <div pInplaceDisplay>
-          <button pButton (click)="activeLink = false;activeFile = true;" type="button" icon="fa fa-external-link"
-                  label="Introduce un archivo"></button>
+    <div *ngIf="!activeLink" [ngClass]="!activeFile ? 'ui-g-6' : 'ui-g-12'">
+      <div class="ui-g-nopad" *ngIf="!activeFile">
+        <button pButton (click)="activeLink = false;activeFile = true;" type="button" icon="fa fa-external-link"
+                label="Introduce un archivo"></button>
+      </div>
+      <div class="ui-g" *ngIf="activeFile">
+        <div class="ui-g-12 ui-md-10" style="overflow: hidden">
+          <p-fileUpload #file mode="basic" chooseLabel="Selecciona un archivo" [showUploadButton]="false"
+                        [customUpload]="true"
+                        (uploadHandler)="uploadFile($event)" [maxFileSize]="1000000 * 10"></p-fileUpload>
         </div>
-        <div pInplaceContent>
-          <div class="ui-g-12 ui-md-10">
-            <p-fileUpload #file [showUploadButton]="false" [showCancelButton]="false"
-                          chooseLabel="Selecciona un archivo" [customUpload]="true"
-                          (uploadHandler)="uploadFile($event)"
-                          [maxFileSize]="1000000 * 10"></p-fileUpload>
+        <div class="ui-g-12 ui-md-2 ui-g-nopad">
+          <div class="ui-g-12 ui-md-6">
+            <button pButton (click)="file.upload();file.clear()" type="button"
+                    class="ui-button-success"
+                    icon="fa fa-upload"></button>
           </div>
-          <div class="ui-g-12 ui-md-2 ui-g-nopad">
-            <div class="ui-g-6 ui-md-12">
-              <button pButton (click)="file.upload();file.clear()" type="button"
-                      class="ui-button-success"
-                      icon="fa fa-upload"></button>
-            </div>
-            <div class="ui-g-6 ui-md-12">
-              <button pButton (click)="activeLink = false;activeFile = false;file.clear()" type="button"
-                      class="ui-button-danger"
-                      icon="fa fa-close"></button>
-            </div>
+          <div class="ui-g-12 ui-md-6">
+            <button pButton (click)="activeLink = false;activeFile = false;file.clear()" type="button"
+                    class="ui-button-danger"
+                    icon="fa fa-close"></button>
           </div>
         </div>
-      </p-inplace>
+      </div>
     </div>
-    <div *ngIf="!activeFile" [class]="!activeLink ? 'ui-g-6' : 'ui-g-12'">
-      <p-inplace [active]="activeLink">
-        <div pInplaceDisplay>
-          <button pButton (click)="activeLink = true;activeFile = false;" type="button" icon="fa fa-external-link"
-                  label="Introduce un hipervinculo"></button>
+    <div *ngIf="!activeFile" [ngClass]="!activeLink ? 'ui-g-6' : 'ui-g-12'">
+      <div class="ui-g-nopad" *ngIf="!activeLink">
+        <button pButton (click)="activeLink = true;activeFile = false;" type="button" icon="fa fa-external-link"
+                label="Introduce un hipervinculo"></button>
+      </div>
+      <div class="ui-g" *ngIf="activeLink">
+        <div class="ui-g-12 ui-md-10">
+          <form [formGroup]="formHiperlink" (ngSubmit)="uploadHiperlinK()">
+            <input #link type="text" formControlName="hiperlink" placeholder="hipervinculo" pInputText>
+          </form>
         </div>
-        <div pInplaceContent>
-          <div class="ui-g-12 ui-md-10">
-            <form [formGroup]="formHiperlink" (ngSubmit)="uploadHiperlinK()">
-              <input #link type="text" formControlName="hiperlink" placeholder="hipervinculo" pInputText>
-            </form>
+        <div class="ui-g-12 ui-md-2 ui-g-nopad">
+          <div class="ui-g-12 ui-md-6">
+            <button pButton type="button" (click)="uploadHiperlinK()" icon="fa fa-upload"
+                    class="ui-button-success"></button>
           </div>
-          <div class="ui-g-12 ui-md-2 ui-g-nopad">
-            <div class="ui-g-12 ui-md-6">
-              <button pButton type="button" (click)="uploadHiperlinK()" icon="fa fa-upload"
-                      class="ui-button-success"></button>
-            </div>
-            <div class="ui-g-12 ui-md-6">
-              <button pButton (click)="activeLink = false;activeFile = false;" type="button" class="ui-button-danger"
-                      icon="fa fa-close"></button>
-            </div>
+          <div class="ui-g-12 ui-md-6">
+            <button pButton (click)="activeLink = false;activeFile = false;" type="button" class="ui-button-danger"
+                    icon="fa fa-close"></button>
           </div>
         </div>
-      </p-inplace>
+      </div>
     </div>
   </div>
 </div>
