@@ -1,6 +1,6 @@
-<p-table scrollHeight="95%" [columns]="columns" [value]="instances" selectionMode="single"
+<p-table scrollHeight="50%" [columns]="columns" [value]="instances" selectionMode="single"
          [(selection)]="selectedInstance"
-         (onRowSelect)="select($event)" [paginator]="true" [rows]="15">
+         (onRowSelect)="select($event)" [paginator]="true" [rows]="10">
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th *ngFor="let col of columns">
