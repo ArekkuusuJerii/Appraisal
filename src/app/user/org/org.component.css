@@ -72,7 +72,11 @@
   width: 12em;
 }
 
-.ui-g-12 button {
+.button-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.button-wrapper button {
   width: 100%;
-  height: 100%;
 }
