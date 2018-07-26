@@ -11,4 +11,57 @@ html {
   height: 100%;
 }
 
-.ui-accordion .ui-accordion-header a { text-decoration : none !important; }
+.ui-accordion .ui-accordion-header a {
+  text-decoration: none !important;
+}
+
+.full-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.full-card .ui-card-body {
+  height: 100%;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.full-card .ui-card-body .ui-card-content {
+  flex: 1;
+  overflow: hidden;
+}
+
+.full-scroller {
+  height: 100%;
+}
+
+.full-scroller .ui-datascroller {
+  height: 100%;
+}
+
+.full-scroller .ui-datascroller-content {
+  height: 60vh;
+}
+
+.content-card {
+  height: 100%;
+}
+
+.content-card .ui-card-body {
+  height: 100%;
+}
+
+.full-table {
+  height: 100%;
+}
+
+.full-table .ui-treetable {
+  height: 100%;
+}
+
+.full-table .ui-treetable-scrollable-body {
+  max-height: 60vh;
+}

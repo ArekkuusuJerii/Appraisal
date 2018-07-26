@@ -1,11 +1,11 @@
 <div class="outer">
   <div class="ui-g">
     <div class="ui-g-12 ui-md-4">
-      <p-card [style]="{'height': '100%'}" [title]="'Instancias'" styleClass="ui-card-shadow">
+      <p-card styleClass="full-card ui-card-shadow" [title]="'Instancias'">
         <p-header>
           <img src="../../../assets/home.global-leader.jpg">
         </p-header>
-        <p-dataScroller [scrollHeight]="'75vh'" [rows]="10" [inline]="true" [value]="instances">
+        <p-dataScroller styleClass="full-scroller" [rows]="10" [inline]="true" [value]="instances">
           <ng-template let-instance pTemplate="listItem">
             <div class="ui-g-12">
               <p-card class="drag" styleClass="ui-card-shadow"
@@ -44,8 +44,8 @@
       </p-card>
     </div>
     <div *ngIf="instance && !drag" class="ui-g-12 ui-md-8 data">
-      <p-card [style]="{'height': '100%'}" [title]="instance.nombre" [subtitle]="instance.instanciaTipo.descripcion"
-              styleClass="ui-card-shadow">
+      <p-card styleClass="content-card ui-card-shadow" [title]="instance.nombre"
+              [subtitle]="instance.instanciaTipo.descripcion">
         <div class="ui-g">
           <div class="ui-g-12 ui-g-nopad">
             <div class="ui-g-12 ui-md-2">
@@ -55,7 +55,7 @@
             </div>
           </div>
           <div class="ui-g-12">
-            <p-treeTable selectionMode="single" [resizableColumns]="true" [scrollable]="true" scrollHeight="60vh"
+            <p-treeTable styleClass="full-table" selectionMode="single" [scrollable]="true"
                          [value]="files" [columns]="cols"
                          [paginator]="true" [rows]="15" [lazy]="true"
                          [loading]="loading" (onNodeExpand)="expand($event)" dataKey="nombre">

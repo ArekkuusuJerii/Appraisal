@@ -1,11 +1,11 @@
 <div class="outer">
   <div class="ui-g">
     <div class="ui-g-12 ui-md-4">
-      <p-card [style]="{'height': '100%'}" [title]="'Organizaciones'" styleClass="ui-card-shadow">
+      <p-card styleClass="full-card ui-card-shadow" [style]="{'height': '100%'}" [title]="'Organizaciones'">
         <p-header>
           <img src="../../../assets/home.global-leader.jpg">
         </p-header>
-        <p-dataScroller [scrollHeight]="'95%'" [value]="users" [inline]="true" [rows]="10">
+        <p-dataScroller styleClass="full-scroller" [value]="users" [inline]="true" [rows]="10">
           <ng-template let-user pTemplate="item">
             <div class="ui-g-12">
               <p-card class="drag" styleClass="ui-card-shadow"
@@ -57,9 +57,9 @@
       </p-card>
     </div>
     <div *ngIf="user && !drag" class="ui-g-12 ui-md-8 data">
-      <p-card [style]="{'height': '100%'}" [title]="organizacion.nombre ? organizacion.nombre : 'Nueva organización'"
-              [subtitle]="organizacion.nivel ? organizacion.nivel.descripcion + ' CMMI Organizacional' : 'Nivel 0 CMMI Organizacional'"
-              styleClass="ui-card-shadow">
+      <p-card styleClass="content-card ui-card-shadow"
+              [title]="organizacion.nombre ? organizacion.nombre : 'Nueva organización'"
+              [subtitle]="organizacion.nivel ? organizacion.nivel.descripcion + ' CMMI Organizacional' : 'Nivel 0 CMMI Organizacional'">
         <div class="ui-g">
           <div class="ui-g-12 ui-g-nopad">
             <div class="ui-g-12 ui-md-2">
