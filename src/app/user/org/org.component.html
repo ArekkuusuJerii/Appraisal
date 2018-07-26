@@ -1,102 +1,99 @@
 <div class="outer">
   <div class="ui-g">
-    <div class="ui-g-12 ui-md-4 full-height">
-      <div class="container">
-        <p-card [style]="{'height': '100%'}" title="Instancias" styleClass="ui-card-shadow">
-          <p-header>
-            <img src="../../../assets/home.global-leader.jpg">
-          </p-header>
-          <p-dataScroller [scrollHeight]="'75vh'" [rows]="10" [inline]="true" [value]="instances">
-            <ng-template let-instance pTemplate="listItem">
-              <div class="ui-g-12">
-                <p-card class="drag" styleClass="ui-card-shadow"
-                        [style]="{'text-align':'center', 'height': '100%'}" pDraggable="instancias"
-                        (onDragStart)="drag = instance"
-                        (onDragEnd)="drag = null">
-                  <div class="ui-g ui-g-nopad">
-                    <div class="ui-g-12 ui-md-10 ui-g-nopad">
-                      <div class="ui-g-12 ui-g-nopad">
-                        <div class="ui-g-12 ui-md-4 ui-g-nopad">
-                          <div class="inst-item">Nombre:</div>
-                        </div>
-                        <div class="ui-g-12 ui-md-8 ui-g-nopad">
-                          <div class="inst-item">{{instance.nombre}}</div>
-                        </div>
+    <div class="ui-g-12 ui-md-4">
+      <p-card [style]="{'height': '100%'}" [title]="'Instancias'" styleClass="ui-card-shadow">
+        <p-header>
+          <img src="../../../assets/home.global-leader.jpg">
+        </p-header>
+        <p-dataScroller [scrollHeight]="'75vh'" [rows]="10" [inline]="true" [value]="instances">
+          <ng-template let-instance pTemplate="listItem">
+            <div class="ui-g-12">
+              <p-card class="drag" styleClass="ui-card-shadow"
+                      [style]="{'text-align':'center', 'height': '100%'}" pDraggable="instancias"
+                      (onDragStart)="drag = instance"
+                      (onDragEnd)="drag = null">
+                <div class="ui-g ui-g-nopad">
+                  <div class="ui-g-12 ui-md-10 ui-g-nopad">
+                    <div class="ui-g-12 ui-g-nopad">
+                      <div class="ui-g-12 ui-md-4 ui-g-nopad">
+                        <div class="inst-item">Nombre:</div>
                       </div>
-                      <div class="ui-g-12 ui-g-nopad">
-                        <div class="ui-g-12 ui-md-4 ui-g-nopad">
-                          <div class="inst-item">Categoría:</div>
-                        </div>
-                        <div class="ui-g-12 ui-md-8 ui-g-nopad">
-                          <div class="inst-item">{{instance.instanciaTipo.descripcion}}</div>
-                        </div>
+                      <div class="ui-g-12 ui-md-8 ui-g-nopad">
+                        <div class="inst-item">{{instance.nombre}}</div>
                       </div>
                     </div>
-                    <div class="ui-g-12 ui-md-2 ui-g-nopad button-wrapper">
-                      <button pButton type="button" icon="fa fa-gear" (click)="load(instance)"
-                              class="ui-button-success" pTooltip="Editar" tooltipPosition="right"></button>
+                    <div class="ui-g-12 ui-g-nopad">
+                      <div class="ui-g-12 ui-md-4 ui-g-nopad">
+                        <div class="inst-item">Categoría:</div>
+                      </div>
+                      <div class="ui-g-12 ui-md-8 ui-g-nopad">
+                        <div class="inst-item">{{instance.instanciaTipo.descripcion}}</div>
+                      </div>
                     </div>
                   </div>
-                  <hr class="ui-widget-content" style="border-top:0">
-                </p-card>
-              </div>
-            </ng-template>
-          </p-dataScroller>
-        </p-card>
-      </div>
-    </div>
-    <div *ngIf="instance && !drag" class="ui-g-12 ui-md-8 full-height data">
-      <div class="container">
-        <p-card [style]="{'height': '100%'}" [title]="instance.nombre" styleClass="ui-card-shadow">
-          <div class="ui-g">
-            <div class="ui-g-12 ui-g-nopad">
-              <div class="ui-g-12 ui-md-2">
-                <button pButton type="button" icon="fa fa-fw fa-close" (click)="cancel()"
-                        label="Cerrar"
-                        class="ui-button-danger"></button>
-              </div>
+                  <div class="ui-g-12 ui-md-2 ui-g-nopad button-wrapper">
+                    <button pButton type="button" icon="fa fa-gear" (click)="load(instance)"
+                            class="ui-button-success" pTooltip="Editar" tooltipPosition="right"></button>
+                  </div>
+                </div>
+                <hr class="ui-widget-content" style="border-top:0">
+              </p-card>
             </div>
-            <div class="ui-g-12">
-              <p-treeTable selectionMode="single" [resizableColumns]="true" [scrollable]="true" scrollHeight="60vh"
-                           [value]="files" [columns]="cols"
-                           [paginator]="true" [rows]="15" [lazy]="true"
-                           [loading]="loading" (onNodeExpand)="expand($event)" dataKey="nombre">
-                <ng-template pTemplate="caption">
-                  Evidencias
-                </ng-template>
-                <ng-template pTemplate="colgroup" let-columns>
-                  <colgroup>
-                    <col *ngFor="let col of columns" [style.width]="col.width">
-                  </colgroup>
-                </ng-template>
-                <ng-template pTemplate="header" let-columns>
-                  <tr>
-                    <th *ngFor="let col of columns">
-                      {{col.header}}
-                    </th>
-                  </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
-                  <tr (click)="select(rowNode)">
-                    <td *ngFor="let col of columns; let i = index">
-                      <div *ngIf="rowNode.node.leaf;then leaf_content else branch_content"></div>
-                      <ng-template #leaf_content>
-                        <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
-                        <i *ngIf="col.field == 'nombre'" class="fa fa-file-text"></i>
-                        {{rowData[col.field]}}
-                      </ng-template>
-                      <ng-template #branch_content>
-                        <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
-                        {{rowData[col.field]}}
-                      </ng-template>
-                    </td>
-                  </tr>
-                </ng-template>
-              </p-treeTable>
+          </ng-template>
+        </p-dataScroller>
+      </p-card>
+    </div>
+    <div *ngIf="instance && !drag" class="ui-g-12 ui-md-8 data">
+      <p-card [style]="{'height': '100%'}" [title]="instance.nombre" [subtitle]="instance.instanciaTipo.descripcion"
+              styleClass="ui-card-shadow">
+        <div class="ui-g">
+          <div class="ui-g-12 ui-g-nopad">
+            <div class="ui-g-12 ui-md-2">
+              <button pButton type="button" icon="fa fa-fw fa-close" (click)="cancel()"
+                      label="Cerrar"
+                      class="ui-button-danger"></button>
             </div>
           </div>
-        </p-card>
-      </div>
+          <div class="ui-g-12">
+            <p-treeTable selectionMode="single" [resizableColumns]="true" [scrollable]="true" scrollHeight="60vh"
+                         [value]="files" [columns]="cols"
+                         [paginator]="true" [rows]="15" [lazy]="true"
+                         [loading]="loading" (onNodeExpand)="expand($event)" dataKey="nombre">
+              <ng-template pTemplate="caption">
+                Evidencias
+              </ng-template>
+              <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                  <col *ngFor="let col of columns" [style.width]="col.width">
+                </colgroup>
+              </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns">
+                    {{col.header}}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                <tr (click)="select(rowNode)">
+                  <td *ngFor="let col of columns; let i = index">
+                    <div *ngIf="rowNode.node.leaf;then leaf_content else branch_content"></div>
+                    <ng-template #leaf_content>
+                      <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+                      <i *ngIf="col.field == 'nombre'" class="fa fa-file-text"></i>
+                      {{rowData[col.field]}}
+                    </ng-template>
+                    <ng-template #branch_content>
+                      <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+                      {{rowData[col.field]}}
+                    </ng-template>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-treeTable>
+          </div>
+        </div>
+      </p-card>
     </div>
     <div *ngIf="!instance || drag" pDroppable="instancias" (onDrop)="load(drag)"
          class="ui-g-12 ui-md-8 full-height data drop">

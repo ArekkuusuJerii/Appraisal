@@ -174,10 +174,12 @@ export class AdminComponent implements OnInit {
         message: '¿Descartar cambios?',
         accept: () => {
           this.reset();
+          this.formUser.reset();
         }
       });
     } else {
       this.reset();
+      this.formUser.reset();
     }
   }
 

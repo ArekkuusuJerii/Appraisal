@@ -39,7 +39,7 @@ export class OrgComponent implements OnInit {
   }
 
   load(instance: Instance) {
-    if(this.instance === instance) {
+    if (this.instance === instance) {
       return;
     }
     this.files = [];
