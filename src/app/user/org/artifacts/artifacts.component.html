@@ -17,7 +17,7 @@
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
           <td *ngFor="let col of columns">
-            <p-overlayPanel #p [style]="{'max-width': '50%', 'word-break': 'break-all'}" [showCloseIcon]="false"
+            <p-overlayPanel #p [style]="{'width': '50%', 'word-break': 'break-all'}" [showCloseIcon]="false"
                             [dismissable]="true" appendTo="body">
               {{rowData[col.field]}}
             </p-overlayPanel>
@@ -28,24 +28,24 @@
             <ng-template #file>
               <span class="ui-column-title">{{col.header}}</span>
               <div class="ui-g ui-g-nopad">
-                <div class="ui-g-1 ui-g-nopad">
+                <div class="ui-g-12 ui-md-1 ui-g-nopad">
                   <i (mouseleave)="p.hide()" (mouseenter)="p.show($event)" style="margin-right: 5px"
                      pTooltip="Archivo" tooltipPosition="top"
                      class="fa fa-file-archive-o"></i>
                 </div>
-                <div class="ui-g-11 ui-g-nopad">
+                <div class="ui-g-12 ui-md-11 ui-g-nopad">
                   <a style="text-decoration: underline; cursor: pointer" (click)="download(rowData)">{{rowData[col.field]}}</a>
                 </div>
               </div>
             </ng-template>
             <ng-template #link>
               <span class="ui-column-title">{{col.header}}</span>
-              <div class="ui-g-1 ui-g-nopad">
+              <div class="ui-g-12 ui-md-1 ui-g-nopad">
                 <i (mouseleave)="p.hide()" (mouseenter)="p.show($event)" style="margin-right: 5px"
                    pTooltip="Link" tooltipPosition="top"
                    class="fa fa-link"></i>
               </div>
-              <div class="ui-g-11 ui-g-nopad">
+              <div class="ui-g-12 ui-md-11 ui-g-nopad">
                 <a target="_blank" href="{{rowData[col.field]}}">{{rowData[col.field]}}</a>
               </div>
             </ng-template>
