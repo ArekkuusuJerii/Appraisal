@@ -6,29 +6,12 @@
   background-size: cover;
 }
 
+.data {
+  background: #8e8e8e11;
+}
+
 .ui-g {
   height: 100%;
-}
-
-.text-center {
-  color: white;
-  font-size: 1em;
-  height: 35px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  font-weight: bold;
-
-  text-align: center;
-  vertical-align: middle;
-  line-height: 35px;
-}
-
-.header {
-  background: #007dc6;
-  border-radius: 5px;
-  box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.2);
 }
 
 .org-item {
@@ -47,12 +30,6 @@
   cursor: pointer;
 }
 
-.center-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .save-button {
   width: 25%;
   margin-right: 15px;
@@ -67,46 +44,10 @@
   width: 100%;
 }
 
-.ui-g-12 button {
-  width: 100%;
-}
-
-.instances {
-  margin-bottom: 15px;
-}
-
-.instances .full-button {
-  margin-top: 15px;
-}
-
-.panel {
-  width: 100%;
-  height: 100%;
-}
-
-.panel .section {
-  padding-top: 2px;
-  padding-bottom: 10px;
-  text-transform: uppercase;
-  font-size: 0.9em;
-  font-weight: bold;
-  text-align: center;
-}
-
-.ui-helper-clearfix {
-  padding: 15px;
-}
-
-.container p-dataScroller {
-  height: 100px;
-}
-
-.data {
-  background: #8e8e8e11;
-}
-
 .drop {
+  height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }

@@ -21,8 +21,11 @@ html {
   flex-direction: column;
 }
 
+.full-card .ui-card-header{
+  flex: 0;
+}
+
 .full-card .ui-card-body {
-  height: 100%;
   flex: 1;
   overflow: hidden;
   display: flex;
@@ -30,38 +33,10 @@ html {
 }
 
 .full-card .ui-card-body .ui-card-content {
-  flex: 1;
-  overflow: hidden;
+  flex: 1 0 150px;
+  overflow: auto;
 }
 
-.full-scroller {
-  height: 100%;
-}
-
-.full-scroller .ui-datascroller {
-  height: 100%;
-}
-
-.full-scroller .ui-datascroller-content {
-  height: 60vh;
-}
-
-.content-card {
-  height: 100%;
-}
-
-.content-card .ui-card-body {
-  height: 100%;
-}
-
-.full-table {
-  height: 100%;
-}
-
-.full-table .ui-treetable {
-  height: 100%;
-}
-
-.full-table .ui-treetable-scrollable-body {
-  max-height: 60vh;
+.full-card .ui-card-footer {
+  flex: 0;
 }

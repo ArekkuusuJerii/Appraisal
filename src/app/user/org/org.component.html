@@ -5,42 +5,35 @@
         <p-header>
           <img src="../../../assets/home.global-leader.jpg">
         </p-header>
-        <p-dataScroller styleClass="full-scroller" [rows]="10" [inline]="true" [value]="instances">
-          <ng-template let-instance pTemplate="listItem">
-            <div class="ui-g-12">
-              <p-card class="drag" styleClass="ui-card-shadow"
-                      [style]="{'text-align':'center', 'height': '100%'}" pDraggable="instancias"
-                      (onDragStart)="drag = instance"
-                      (onDragEnd)="drag = null">
-                <div class="ui-g ui-g-nopad">
-                  <div class="ui-g-12 ui-md-10 ui-g-nopad">
-                    <div class="ui-g-12 ui-g-nopad">
-                      <div class="ui-g-12 ui-md-4 ui-g-nopad">
-                        <div class="inst-item">Nombre:</div>
-                      </div>
-                      <div class="ui-g-12 ui-md-8 ui-g-nopad">
-                        <div class="inst-item">{{instance.nombre}}</div>
-                      </div>
-                    </div>
-                    <div class="ui-g-12 ui-g-nopad">
-                      <div class="ui-g-12 ui-md-4 ui-g-nopad">
-                        <div class="inst-item">Categoría:</div>
-                      </div>
-                      <div class="ui-g-12 ui-md-8 ui-g-nopad">
-                        <div class="inst-item">{{instance.instanciaTipo.descripcion}}</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ui-g-12 ui-md-2 ui-g-nopad button-wrapper">
-                    <button pButton type="button" icon="fa fa-gear" (click)="load(instance)"
-                            class="ui-button-success" pTooltip="Editar" tooltipPosition="right"></button>
-                  </div>
+        <hr class="ui-widget-content" style="border-top:0">
+        <div *ngFor="let instance of instances" class="drag" styleClass="ui-card-shadow" pDraggable="instancias"
+                (onDragStart)="drag = instance" (onDragEnd)="drag = null">
+          <div class="ui-g ui-g-nopad">
+            <div class="ui-g-12 ui-md-10 ui-g-nopad">
+              <div class="ui-g-12 ui-g-nopad">
+                <div class="ui-g-12 ui-md-4 ui-g-nopad">
+                  <div class="inst-item">Nombre:</div>
                 </div>
-                <hr class="ui-widget-content" style="border-top:0">
-              </p-card>
+                <div class="ui-g-12 ui-md-8 ui-g-nopad">
+                  <div class="inst-item">{{instance.nombre}}</div>
+                </div>
+              </div>
+              <div class="ui-g-12 ui-g-nopad">
+                <div class="ui-g-12 ui-md-4 ui-g-nopad">
+                  <div class="inst-item">Categoría:</div>
+                </div>
+                <div class="ui-g-12 ui-md-8 ui-g-nopad">
+                  <div class="inst-item">{{instance.instanciaTipo.descripcion}}</div>
+                </div>
+              </div>
             </div>
-          </ng-template>
-        </p-dataScroller>
+            <div class="ui-g-12 ui-md-2 ui-g-nopad button-wrapper">
+              <button pButton type="button" icon="fa fa-gear" (click)="load(instance)"
+                      class="ui-button-success" pTooltip="Editar" tooltipPosition="right"></button>
+            </div>
+          </div>
+          <hr class="ui-widget-content" style="border-top:0">
+        </div>
       </p-card>
     </div>
     <div *ngIf="instance && !drag" class="ui-g-12 ui-md-8 data">
