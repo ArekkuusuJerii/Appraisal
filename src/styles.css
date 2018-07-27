@@ -21,22 +21,45 @@ html {
   flex-direction: column;
 }
 
-.full-card .ui-card-header{
+.full-card > .ui-card-header{
   flex: 0;
 }
 
-.full-card .ui-card-body {
+.full-card > .ui-card-body {
   flex: 1;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-.full-card .ui-card-body .ui-card-content {
-  flex: 1 0 150px;
+.full-card > .ui-card-body > .ui-card-content {
+  flex: 1 0 100px;
   overflow: auto;
 }
 
-.full-card .ui-card-footer {
+.full-card > .ui-card-footer {
   flex: 0;
+}
+
+.content-card > .ui-card-body > .ui-card-content {
+  flex: 1 0 100px;
+  overflow: hidden;
+}
+
+.box {
+  height: 100%;
+  overflow: auto;
+}
+
+.full-dialog > .ui-dialog-content {
+  height: 100%;
+}
+
+@media screen and (max-width: 640px){
+  .full-card > .ui-card-body > .ui-card-content {
+    flex: 1 0 10%;
+  }
+  .content-card > .ui-card-body > .ui-card-content {
+    flex: 1 0 100%;
+  }
 }

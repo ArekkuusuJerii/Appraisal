@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { SessionService } from '../../_service/session.service';
 import { Instance, Organization } from '../../_model/organization';
 import { InstanciaService } from '../../_service/instancia.service';
@@ -113,5 +113,11 @@ export class OrgComponent implements OnInit {
 
   cancel() {
     this.instance = null;
+  }
+
+  @HostListener('document:keydown.escape', ['$event']) onKeydownEscapeHandler() {
+    if (!this.selection) {
+      this.cancel();
+    }
   }
 }

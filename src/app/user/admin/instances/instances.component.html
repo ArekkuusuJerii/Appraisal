@@ -28,23 +28,22 @@
   </ng-template>
 </p-table>
 <p-dialog header="Detalles de Instancia" [(visible)]="displayDialog" [maximizable]="true" [closeOnEscape]="true"
-          (onHide)="close()" [responsive]="true" [modal]="false"
-          [width]="'800'" [contentStyle]="{'overflow': 'hidden'}">
+          (onHide)="close()" [responsive]="true" [modal]="false" [width]="'800'"
+          [contentStyle]="{'overflow': 'hidden'}">
   <div class="ui-grid-responsive ui-grid-pad ui-fluid" *ngIf="instance">
     <form [formGroup]="formInstance" (ngSubmit)="save()">
       <div class="ui-grid-row">
         <div class="ui-grid-col-2">
-          Titulo *:
+          Nombre *:
         </div>
         <div class="ui-grid-col-6">
-          <input pInputText type="text" formControlName="titulo" [(ngModel)]="instance.nombre"
-                 placeholder="Requerido">
+          <input pInputText type="text" formControlName="titulo" [(ngModel)]="instance.nombre" placeholder="Requerido">
         </div>
         <div class="ui-grid-col-4">
           <div class="ui-message ui-messages-error ui-corner-all"
                *ngIf="!controlI['titulo'].valid&&controlI['titulo'].dirty">
             <i class="fa fa-close"></i>
-            <span *ngIf="controlI['titulo'].errors['required']">Título es requerido</span>
+            <span *ngIf="controlI['titulo'].errors['required']">Nombre es requerido</span>
             <span *ngIf="controlI['titulo'].errors['pattern']">Caracteres ilegales</span>
           </div>
         </div>
@@ -71,20 +70,19 @@
         </div>
       </div>
       <hr>
-      <p-pickList [source]="source" [target]="instance.areaProcesos"
-                  sourceHeader="Disponible"
-                  targetHeader="Seleccionado"
-                  filterBy="nombre,descripcion"
-                  [responsive]="true" [dragdrop]="true" dragdropScope="cars" sourceFilterPlaceholder="Búsqueda"
-                  targetFilterPlaceholder="Búsqueda" [sourceStyle]="{'height':'250px'}"
-                  [targetStyle]="{'height':'250px'}" (onMoveToSource)="formInstance.markAsTouched()"
-                  (onMoveToTarget)="formInstance.markAsTouched()">
-        <ng-template let-area pTemplate="item">
-          <div class="ui-helper-clearfix">
-            {{area.nombre}} : {{area.descripcion}}
-          </div>
-        </ng-template>
-      </p-pickList>
+      <div style="height:100%; overflow: auto">
+        <p-pickList [source]="source" [target]="instance.areaProcesos" sourceHeader="Disponible"
+                    targetHeader="Seleccionado" filterBy="nombre,descripcion" [responsive]="true" [dragdrop]="true"
+                    dragdropScope="cars" sourceFilterPlaceholder="Búsqueda" targetFilterPlaceholder="Búsqueda"
+                    [sourceStyle]="{'height':'250px'}" [targetStyle]="{'height':'250px'}"
+                    (onMoveToSource)="formInstance.markAsTouched()" (onMoveToTarget)="formInstance.markAsTouched()">
+          <ng-template let-area pTemplate="item">
+            <div class="ui-helper-clearfix">
+              {{area.nombre}} : {{area.descripcion}}
+            </div>
+          </ng-template>
+        </p-pickList>
+      </div>
     </form>
   </div>
   <p-footer>

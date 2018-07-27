@@ -37,7 +37,7 @@
       </p-card>
     </div>
     <div *ngIf="instance && !drag" class="ui-g-12 ui-md-8 data">
-      <p-card styleClass="content-card ui-card-shadow" [title]="instance.nombre"
+      <p-card styleClass="ui-card-shadow" [title]="instance.nombre"
               [subtitle]="instance.instanciaTipo.descripcion">
         <div class="ui-g">
           <div class="ui-g-12 ui-g-nopad">
@@ -97,6 +97,6 @@
 </div>
 <p-dialog *ngIf="selection" header="Evidencia: {{selection.practice.nombre}} - {{selection.practice.descripcion}}"
           [width]="800" [closeOnEscape]="true" [(visible)]="selection" [modal]="true" [responsive]="true"
-          (onHide)="selection = null">
+          (onHide)="selection = null" styleClass="full-dialog">
   <app-artifacts *ngIf="selection" [selection]="selection"></app-artifacts>
 </p-dialog>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { SessionService } from '../../_service/session.service';
 import { Organization, User } from '../../_model/organization';
 import { Nivel } from '../../_model/cmmi';
@@ -191,6 +191,18 @@ export class AdminComponent implements OnInit {
     }
     this.user = null;
     this.copy = null;
+  }
+
+  @HostListener('document:keydown.escape', ['$event']) onKeydownEscapeHandler() {
+    if (!this.org) {
+      this.cancel();
+    }
+  }
+
+  @HostListener('document:keydown', ['$event']) onKeydownBackspaceHandler(evt: KeyboardEvent) {
+    if (evt.keyCode === 46 && this.user) {
+      this.delete();
+    }
   }
 
 }

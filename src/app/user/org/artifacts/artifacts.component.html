@@ -1,4 +1,4 @@
-<div class="ui-g">
+<div class="ui-g ui-g-nopad">
   <div class="ui-g-12 ui-g-nopad">
     <p-table [columns]="cols" [value]="links" scrollHeight="300px" [scrollable]="true" [responsive]="true">
       <ng-template pTemplate="colgroup" let-columns>
@@ -65,7 +65,7 @@
       </ng-template>
     </p-table>
   </div>
-  <div class="ui-g-12">
+  <div class="ui-g-12 ui-g-nopad" style="padding-top: 15px">
     <div *ngIf="!activeLink" class="ui-g-12 ui-g-nopad">
       <div class="ui-g-nopad" *ngIf="!activeFile" style="padding-bottom: 2px">
         <button pButton (click)="activeLink = false;activeFile = true;" type="button" icon="fa fa-file-archive-o"
@@ -74,19 +74,17 @@
       <div class="ui-g" *ngIf="activeFile">
         <div class="ui-g-12 ui-md-10" style="overflow: hidden">
           <p-fileUpload #file mode="basic" chooseLabel="Selecciona un archivo" [showUploadButton]="false"
-                        [customUpload]="true"
-                        (uploadHandler)="uploadFile($event)" [maxFileSize]="1000000 * 10"></p-fileUpload>
+                        [customUpload]="true" (uploadHandler)="uploadFile($event);file.clear()"
+                        [maxFileSize]="1000000 * 10"></p-fileUpload>
         </div>
         <div class="ui-g-12 ui-md-2 ui-g-nopad">
           <div class="ui-g-12 ui-md-6">
-            <button pButton (click)="file.upload();file.clear()" type="button"
-                    class="ui-button-success"
+            <button pButton (click)="file.upload();" type="button" class="ui-button-success"
                     icon="fa fa-upload"></button>
           </div>
           <div class="ui-g-12 ui-md-6">
             <button pButton (click)="activeLink = false;activeFile = false;file.clear()" type="button"
-                    class="ui-button-danger"
-                    icon="fa fa-close"></button>
+                    class="ui-button-danger" icon="fa fa-close"></button>
           </div>
         </div>
       </div>
@@ -98,13 +96,13 @@
       </div>
       <div class="ui-g" *ngIf="activeLink">
         <div class="ui-g-12 ui-md-10">
-          <form [formGroup]="formHiperlink" (ngSubmit)="uploadHiperlinK()">
+          <form [formGroup]="formHiperlink" (ngSubmit)="uploadHyperlink()">
             <input #link type="text" formControlName="hiperlink" placeholder="hipervinculo" pInputText>
           </form>
         </div>
         <div class="ui-g-12 ui-md-2 ui-g-nopad">
           <div class="ui-g-12 ui-md-6">
-            <button pButton type="button" (click)="uploadHiperlinK()" icon="fa fa-upload"
+            <button pButton type="button" (click)="uploadHyperlink()" icon="fa fa-upload"
                     class="ui-button-success"></button>
           </div>
           <div class="ui-g-12 ui-md-6">
