@@ -19,6 +19,7 @@ export class OrgComponent implements OnInit {
   org: Organization;
   selection;
   drag;
+  selected;
 
   constructor(
     private instanciaService: InstanciaService,
@@ -108,6 +109,7 @@ export class OrgComponent implements OnInit {
         instance: this.instance,
         practice: rowNode.node.data
       };
+      this.selected = rowNode;
     }
   }
 

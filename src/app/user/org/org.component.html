@@ -28,7 +28,8 @@
               </div>
             </div>
             <div class="ui-g-12 ui-md-2 ui-g-nopad button-wrapper">
-              <button pButton type="button" [icon]="inst == instance ? 'fa fa-folder-open-o' : 'fa fa-folder-o'" (click)="load(inst)"
+              <button pButton type="button" [icon]="inst == instance ? 'fa fa-folder-open-o' : 'fa fa-folder-o'"
+                      (click)="load(inst)"
                       class="ui-button-success" pTooltip="Evidencias" tooltipPosition="right"></button>
             </div>
           </div>
@@ -47,10 +48,8 @@
             </div>
           </div>
           <div class="ui-g-12" style="flex: 1 0; overflow: hidden">
-            <p-treeTable #table styleClass="full-table" selectionMode="single" [scrollable]="true"
-                         [value]="files" [columns]="cols"
-                         [paginator]="true" [rows]="15" [lazy]="true"
-                         [loading]="loading" (onNodeExpand)="expand($event)" dataKey="nombre">
+            <p-treeTable #table styleClass="full-table" selectionMode="single" [scrollable]="true" [value]="files"
+                         [columns]="cols" [lazy]="true" [loading]="loading" (onNodeExpand)="expand($event)">
               <ng-template pTemplate="caption">
                 Evidencias
               </ng-template>
