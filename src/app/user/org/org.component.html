@@ -6,8 +6,8 @@
           <img src="../../../assets/home.global-leader.jpg">
         </p-header>
         <hr class="ui-widget-content" style="border-top:0">
-        <div *ngFor="let instance of instances" class="drag" styleClass="ui-card-shadow" pDraggable="instancias"
-                (onDragStart)="drag = instance" (onDragEnd)="drag = null">
+        <div *ngFor="let inst of instances" class="drag" pDraggable="instancias"
+             (onDragStart)="drag = inst" (onDragEnd)="drag = null">
           <div class="ui-g ui-g-nopad">
             <div class="ui-g-12 ui-md-10 ui-g-nopad">
               <div class="ui-g-12 ui-g-nopad">
@@ -15,7 +15,7 @@
                   <div class="inst-item">Nombre:</div>
                 </div>
                 <div class="ui-g-12 ui-md-8 ui-g-nopad">
-                  <div class="inst-item">{{instance.nombre}}</div>
+                  <div class="inst-item">{{inst.nombre}}</div>
                 </div>
               </div>
               <div class="ui-g-12 ui-g-nopad">
@@ -23,13 +23,13 @@
                   <div class="inst-item">Categoría:</div>
                 </div>
                 <div class="ui-g-12 ui-md-8 ui-g-nopad">
-                  <div class="inst-item">{{instance.instanciaTipo.descripcion}}</div>
+                  <div class="inst-item">{{inst.instanciaTipo.descripcion}}</div>
                 </div>
               </div>
             </div>
             <div class="ui-g-12 ui-md-2 ui-g-nopad button-wrapper">
-              <button pButton type="button" icon="fa fa-gear" (click)="load(instance)"
-                      class="ui-button-success" pTooltip="Editar" tooltipPosition="right"></button>
+              <button pButton type="button" [icon]="inst == instance ? 'fa fa-folder-open-o' : 'fa fa-folder-o'" (click)="load(inst)"
+                      class="ui-button-success" pTooltip="Evidencias" tooltipPosition="right"></button>
             </div>
           </div>
           <hr class="ui-widget-content" style="border-top:0">
@@ -37,18 +37,17 @@
       </p-card>
     </div>
     <div *ngIf="instance && !drag" class="ui-g-12 ui-md-8 data">
-      <p-card styleClass="ui-card-shadow" [title]="instance.nombre"
+      <p-card styleClass="full-card content-card ui-card-shadow" [title]="instance.nombre"
               [subtitle]="instance.instanciaTipo.descripcion">
-        <div class="ui-g">
-          <div class="ui-g-12 ui-g-nopad">
+        <div class="ui-g" style="flex-direction: column">
+          <div class="ui-g-12 ui-g-nopad" style="flex: 0">
             <div class="ui-g-12 ui-md-2">
-              <button pButton type="button" icon="fa fa-fw fa-close" (click)="cancel()"
-                      label="Cerrar"
+              <button pButton type="button" icon="fa fa-fw fa-close" (click)="cancel()" label="Cerrar"
                       class="ui-button-danger"></button>
             </div>
           </div>
-          <div class="ui-g-12">
-            <p-treeTable styleClass="full-table" selectionMode="single" [scrollable]="true"
+          <div class="ui-g-12" style="flex: 1 0; overflow: hidden">
+            <p-treeTable #table styleClass="full-table" selectionMode="single" [scrollable]="true"
                          [value]="files" [columns]="cols"
                          [paginator]="true" [rows]="15" [lazy]="true"
                          [loading]="loading" (onNodeExpand)="expand($event)" dataKey="nombre">

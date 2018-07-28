@@ -55,6 +55,29 @@ html {
   height: 100%;
 }
 
+.full-table {
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.full-table #table {
+  flex: 1 0 100px;
+}
+
+.full-table .ui-treetable {
+  height: 100%;
+}
+
+.full-table .ui-treetable .ui-treetable-scrollable-body, .ui-treetable-scrollable-wrapper {
+  height: 100%;
+  overflow: auto;
+  border-left: #d6d6d6 1px solid;
+  border-right: #d6d6d6 1px solid;
+  background: #f9f9f9;
+}
+
 @media screen and (max-width: 640px){
   .full-card > .ui-card-body > .ui-card-content {
     flex: 1 0 10%;
