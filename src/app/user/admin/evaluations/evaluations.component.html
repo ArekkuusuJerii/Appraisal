@@ -12,7 +12,15 @@
               Resultado de la evaluación:
             </div>
             <div class="ui-g-12 ui-md-7" style="text-align: center" [style.background-color]="evaluation.status.color">
-              {{evaluation.status.message}}
+              <ng-container *ngIf="evaluation.status.color == 65280">
+                <label style="color:green">Si cumple</label>
+              </ng-container>
+              <ng-container *ngIf="evaluation.status.color == 16776960">
+                  <label style="color:yellow">En progreso</label>
+                </ng-container>
+                <ng-container *ngIf="evaluation.status.color == 16711680">
+                    <label style="color:red">No cumple</label>
+                  </ng-container>
             </div>
           </div>
         </p-card>
