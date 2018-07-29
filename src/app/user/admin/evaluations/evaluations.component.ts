@@ -23,8 +23,10 @@ export class EvaluationsComponent implements OnInit {
   ngOnInit() {
     this.session.tryRedirect(null);
     this.cols = [
-      {field: 'nombre', header: 'Nombre', width: '20%'},
-      {field: 'descripcion', header: 'Descripción', width: '80%'}
+      {field: 'name', width: '20%'},
+      {field: 'description', width: '50%'},
+      {field: 'status', width: '15%'},
+      {field: 'progress', width: '15%'}
     ];
     this.setup();
   }
@@ -34,14 +36,18 @@ export class EvaluationsComponent implements OnInit {
     this.evaluationService.find(id).subscribe(org => {
       this.org = org;
     });
-    this.evaluationService.getStatus(id).subscribe(status => {
-      this.evaluationService.getMissing(id).subscribe(missing => {
-        const sorted = missing.sort((a, b) => a.id - b.id);
-        this.evaluation = {
-          status: status,
-          missing: sorted
-        };
-      });
+    this.evaluationService.getStatus(id).subscribe(evaluation => {
+      this.evaluation = evaluation;
+      this.evaluation.children.sort((a, b) => a.data.id - b.data.id);
+      for (const sub0 of this.evaluation.children) {
+        sub0.children.sort((a, b) => a.data.id - b.data.id);
+        for (const sub1 of sub0.children) {
+          sub1.children.sort((a, b) => a.data.id - b.data.id);
+          for (const sub2 of sub1.children) {
+            sub2.children.sort((a, b) => a.data.id - b.data.id);
+          }
+        }
+      }
     });
   }
 
