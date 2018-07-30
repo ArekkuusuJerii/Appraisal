@@ -12,14 +12,14 @@
               Resultado de la evaluación:
             </div>
             <div class="ui-g-12 ui-md-7" style="text-align: center">
-              <ng-container *ngIf="evaluation.status == 'NO_CUMPLE'">
-                <label style="color:red">No cumple</label>
+              <ng-container *ngIf="evaluation.data.status == 'NO_CUMPLE'">
+                <label style="color:#bb0000">No cumple</label>
               </ng-container>
-              <ng-container *ngIf="evaluation.status == 'EN_PROGRESO'">
-                <label style="color:yellow">En progreso</label>
+              <ng-container *ngIf="evaluation.data.status == 'EN_PROGRESO'">
+                <label style="color:#dbdb00">En progreso</label>
               </ng-container>
-              <ng-container *ngIf="evaluation.status == 'SI_CUMPLE'">
-                <label style="color:green">Si cumple</label>
+              <ng-container *ngIf="evaluation.data.status == 'SI_CUMPLE'">
+                <label style="color:#00bb00">Si cumple</label>
               </ng-container>
             </div>
           </div>
@@ -50,13 +50,13 @@
                   <ng-template #status>
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
                     <ng-container *ngIf="rowData[col.field] == 'NO_CUMPLE'">
-                      <label style="color:red">No cumple</label>
+                      <label style="color:#bb0000">No cumple</label>
                     </ng-container>
                     <ng-container *ngIf="rowData[col.field] == 'EN_PROGRESO'">
-                      <label style="color:yellow">En progreso</label>
+                      <label style="color:#dbdb00">En progreso</label>
                     </ng-container>
                     <ng-container *ngIf="rowData[col.field] == 'SI_CUMPLE'">
-                      <label style="color:green">Si cumple</label>
+                      <label style="color:#00bb00">Si cumple</label>
                     </ng-container>
                   </ng-template>
                   <ng-template #branch>
