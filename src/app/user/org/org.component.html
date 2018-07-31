@@ -28,7 +28,7 @@
               </div>
             </div>
             <div class="ui-g-12 ui-md-2 ui-g-nopad button-wrapper">
-              <button pButton type="button" [icon]="inst == instance ? 'fa fa-folder-open-o' : 'fa fa-folder-o'"
+              <button pButton type="button" [disabled]="inst == instance" [icon]="inst == instance ? 'fa fa-folder-open-o' : 'fa fa-folder-o'"
                       (click)="load(inst)"
                       class="ui-button-success" pTooltip="Evidencias" tooltipPosition="right"></button>
             </div>
