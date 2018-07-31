@@ -66,6 +66,7 @@ export class InstancesComponent implements OnInit {
     }
     this.source.sort((a, b) => a.id - b.id);
     this.formInstance.reset();
+    this.formInstance.controls['instanciaTipo'].markAsDirty();
   }
 
   select(event) {

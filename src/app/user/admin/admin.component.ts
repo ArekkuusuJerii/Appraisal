@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { SessionService } from '../../_service/session.service';
 import { Organization, User } from '../../_model/organization';
 import { Nivel } from '../../_model/cmmi';
 import { ConfirmationService } from 'primeng/api';
 import { UsuarioService } from '../../_service/usuario.service';
 import { NotificationService } from '../../_service/notification.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { CmmiService } from '../../_service/cmmi.service';
 
-const titlePattern = '^[0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\\\-]([0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\\\-]| (?! ))*$';
-const txtPattern = '^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´]([a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´]| (?! ))*$';
+const titlePattern = /^[0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\-]([0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\-]| (?! ))*$/;
+const txtPattern = /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´]([a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´]| (?! ))*$/;
 
 @Component({
   selector: 'app-admin',
@@ -17,6 +17,7 @@ const txtPattern = '^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´](
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
+  block = /^[^A-Z]+$/;
   niveles: Nivel[];
   formUser: FormGroup;
   users: User[] = [];
@@ -53,7 +54,7 @@ export class AdminComponent implements OnInit {
         Validators.required, Validators.pattern(txtPattern)
       ])],
       'username': ['', Validators.compose([
-        Validators.required, Validators.email
+        Validators.required, Validators.email, this.uniqueEmail()
       ])],
       'password': ['', Validators.compose([
         Validators.required, Validators.minLength(6)
@@ -62,6 +63,14 @@ export class AdminComponent implements OnInit {
     this.usuarioService.getAll().subscribe(all => {
       this.users = all;
     });
+  }
+
+  uniqueEmail(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const forbidden = this.users.filter(user => user.username !== (this.user ? this.user.username : ''))
+        .some((user) => user.username === control.value);
+      return forbidden ? {'forbiddenEmail': {value: control.value}} : null;
+    };
   }
 
   get controlU() {
@@ -113,6 +122,7 @@ export class AdminComponent implements OnInit {
     this.copy = null;
     this.isNew = true;
     this.formUser.reset();
+    this.formUser.controls['nivel'].markAsDirty();
   }
 
   save() {
@@ -174,10 +184,12 @@ export class AdminComponent implements OnInit {
         message: '¿Descartar cambios?',
         accept: () => {
           this.reset();
+          this.formUser.reset();
         }
       });
     } else {
       this.reset();
+      this.formUser.reset();
     }
   }
 
@@ -189,6 +201,18 @@ export class AdminComponent implements OnInit {
     }
     this.user = null;
     this.copy = null;
+  }
+
+  @HostListener('document:keydown.escape', ['$event']) onKeydownEscapeHandler() {
+    if (!this.org) {
+      this.cancel();
+    }
+  }
+
+  @HostListener('document:keydown', ['$event']) onKeydownBackspaceHandler(evt: KeyboardEvent) {
+    if (evt.keyCode === 46 && this.user) {
+      this.delete();
+    }
   }
 
 }

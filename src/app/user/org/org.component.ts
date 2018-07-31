@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { SessionService } from '../../_service/session.service';
 import { Instance, Organization } from '../../_model/organization';
 import { InstanciaService } from '../../_service/instancia.service';
@@ -19,6 +19,7 @@ export class OrgComponent implements OnInit {
   org: Organization;
   selection;
   drag;
+  selected;
 
   constructor(
     private instanciaService: InstanciaService,
@@ -39,7 +40,7 @@ export class OrgComponent implements OnInit {
   }
 
   load(instance: Instance) {
-    if(this.instance === instance) {
+    if (this.instance === instance) {
       return;
     }
     this.files = [];
@@ -108,10 +109,17 @@ export class OrgComponent implements OnInit {
         instance: this.instance,
         practice: rowNode.node.data
       };
+      this.selected = rowNode;
     }
   }
 
   cancel() {
     this.instance = null;
+  }
+
+  @HostListener('document:keydown.escape', ['$event']) onKeydownEscapeHandler() {
+    if (!this.selection) {
+      this.cancel();
+    }
   }
 }

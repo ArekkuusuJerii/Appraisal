@@ -1,6 +1,6 @@
 <div class="outer">
   <div class="ui-g">
-    <div class="ui-g-12 ui-md-offset-3 ui-md-6 ui-md-offset-3">
+    <div class="ui-g-12 ui-md-offset-2 ui-md-8 ui-md-offset-2">
       <p-card [title]="org.nombre" [subtitle]="org.nivel.descripcion + ' CMMI Organizacional'"
               styleClass="ui-card-shadow">
         <p-header>
@@ -11,43 +11,89 @@
             <div class="ui-g-12 ui-md-5">
               Resultado de la evaluación:
             </div>
-            <div class="ui-g-12 ui-md-7" style="text-align: center" [style.background-color]="evaluation.status.color">
-              <ng-container *ngIf="evaluation.status.color == 65280">
-                <label style="color:green">Si cumple</label>
+            <div class="ui-g-12 ui-md-7" style="text-align: center">
+              <ng-container *ngIf="evaluation.data.status == 'NO_CUMPLE'">
+                <i class="fa fa-warning" style="color:#bb0000"></i>
+                No cumple
               </ng-container>
-              <ng-container *ngIf="evaluation.status.color == 16776960">
-                  <label style="color:yellow">En progreso</label>
-                </ng-container>
-                <ng-container *ngIf="evaluation.status.color == 16711680">
-                    <label style="color:red">No cumple</label>
-                  </ng-container>
+              <ng-container *ngIf="evaluation.data.status == 'EN_PROGRESO'">
+                <i class="fa fa-gears" style="color:#dbdb00"></i>
+                En progreso
+              </ng-container>
+              <ng-container *ngIf="evaluation.data.status == 'SI_CUMPLE'">
+                <i class="fa fa-check" style="color:#00bb00"></i>
+                Si cumple
+              </ng-container>
             </div>
           </div>
         </p-card>
-        <p-table [value]="evaluation.missing" [columns]="cols" [rows]="20" [scrollable]="true" scrollHeight="35vh">
-          <ng-template pTemplate="caption">
-            Prácticas faltantes
-          </ng-template>
-          <ng-template pTemplate="colgroup" let-columns>
-            <colgroup>
-              <col *ngFor="let col of columns" [style.width]="col.width">
-            </colgroup>
-          </ng-template>
-          <ng-template pTemplate="header" let-columns>
-            <tr>
-              <th *ngFor="let col of columns">
-                {{col.header}}
-              </th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
-              <td *ngFor="let col of columns">
-                {{rowData[col.field]}}
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
+        <p-card>
+          <p-treeTable [value]="evaluation.children" [columns]="cols">
+            <ng-template pTemplate="colgroup" let-columns>
+              <colgroup>
+                <col *ngFor="let col of columns" [style.width]="col.width">
+              </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th colspan="2">Información</th>
+                <th colspan="2">Resultado</th>
+              </tr>
+              <tr>
+                <th [style.width]="10">Nombre</th>
+                <th>Descripción</th>
+                <th>Status</th>
+                <th>%</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+              <tr>
+                <td *ngFor="let col of columns; let i = index">
+                  <div *ngIf="col.field == 'status';then status else branch"></div>
+                  <ng-template #status style="text-align: center">
+                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+                    <ng-container *ngIf="rowData[col.field] == 'NO_CUMPLE'">
+                      <i class="fa fa-warning" style="color:#bb0000"></i>
+                    </ng-container>
+                    <ng-container *ngIf="rowData[col.field] == 'EN_PROGRESO'">
+                      <i class="fa fa-gears" style="color:#dbdb00"></i>
+                    </ng-container>
+                    <ng-container *ngIf="rowData[col.field] == 'SI_CUMPLE'">
+                      <i class="fa fa-check" style="color:#00bb00"></i>
+                    </ng-container>
+                  </ng-template>
+                  <ng-template #branch>
+                    <div *ngIf="col.field == 'progress';then progress else leaf"></div>
+                    <ng-template #progress>
+                      <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+                      {{(rowData[col.field] * 100) | number:'1.0-2'}} %
+                    </ng-template>
+                    <ng-template #leaf>
+                      <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+                      {{rowData[col.field]}}
+                    </ng-template>
+                  </ng-template>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="summary" let-columns>
+              <tr>
+                <td style="padding-right: 15px">
+                  <i class="fa fa-warning" style="color:#bb0000"></i>
+                  No cumple
+                </td>
+                <td style="padding-right: 15px">
+                  <i class="fa fa-gears" style="color:#dbdb00"></i>
+                  En progreso
+                </td>
+                <td style="padding-right: 15px">
+                  <i class="fa fa-check" style="color:#00bb00"></i>
+                  Si cumple
+                </td>
+              </tr>
+            </ng-template>
+          </p-treeTable>
+        </p-card>
         <p-footer>
           <button pButton type="button" label="Cerrar" icon="pi pi-times" class="ui-button-secondary"
                   (click)="close()" style="margin-right: .25em"></button>

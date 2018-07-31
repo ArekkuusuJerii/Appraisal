@@ -1,105 +1,84 @@
 <div class="outer">
   <div class="ui-g">
-    <div class="ui-g-12 ui-md-4 full-height">
-      <div class="ui-g-12">
-        <div class="ui-g-12 header">
-          <div class="text-center">ORGANIZACIONES</div>
-        </div>
-      </div>
-      <div class="ui-g-12 ui-g-nopad container">
-        <p-dataScroller [scrollHeight]="'75vh'" [value]="users" [inline]="true" [rows]="10">
-          <ng-template let-user pTemplate="item">
-            <div class="ui-g-12">
-              <p-card class="drag" styleClass="ui-card-shadow"
-                      [style]="{'text-align':'center', 'height': '100%'}" pDraggable="users"
-                      (onDragStart)="drag = user"
-                      (onDragEnd)="drag = null">
-                <div class="ui-g ui-g-nopad">
-                  <div class="ui-g-12 ui-md-10 ui-g-nopad">
-                    <div class="ui-g-12 ui-g-nopad">
-                      <div class="ui-g-12 ui-md-4 ui-g-nopad">
-                        <div class="org-item">Nombre:</div>
-                      </div>
-                      <div class="ui-g-12 ui-md-8 ui-g-nopad">
-                        <div class="org-item">{{user.organizacion.nombre}}</div>
-                      </div>
-                    </div>
-                    <div class="ui-g-12 ui-g-nopad">
-                      <div class="ui-g-12 ui-md-4 ui-g-nopad">
-                        <div class="org-item">Nivel CMMI:</div>
-                      </div>
-                      <div class="ui-g-12 ui-md-8 ui-g-nopad">
-                        <div class="org-item">{{user.organizacion.nivel.descripcion}} Organizacional</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ui-g-12 ui-md-2 ui-g-nopad">
-                    <div class="ui-g-5 ui-md-12 ui-g-nopad" style="padding-bottom: 2px">
-                      <a target="_blank"
-                         routerLink="evaluation/{{user.organizacion.id}}">
-                        <button pButton type="button" icon="fa fa-area-chart" class="ui-button-info"
-                                pTooltip="Evaluar" tooltipPosition="right"></button>
-                      </a>
-                    </div>
-                    <div class="ui-g-5 ui-g-offset-2 ui-md-12 ui-md-offset-0 ui-g-nopad" style="padding-top: 2px">
-                      <button pButton type="button" icon="fa fa-gear" (click)="edit(user)"
-                              class="ui-button-success" pTooltip="Editar" tooltipPosition="right"></button>
-                    </div>
-                  </div>
+    <div class="ui-g-12 ui-md-4">
+      <p-card styleClass="full-card ui-card-shadow" [title]="'Organizaciones'">
+        <p-header>
+          <img src="../../../assets/home.global-leader.jpg">
+        </p-header>
+        <hr class="ui-widget-content" style="border-top:0">
+        <div *ngFor="let u of users" class="drag" pDraggable="users" (onDragStart)="drag = u"
+             (onDragEnd)="drag = null">
+          <div class="ui-g ui-g-nopad" [ngClass]="user == u ? 'selected' : 'unselected'">
+            <div class="ui-g-12 ui-md-9 ui-g-nopad">
+              <div class="ui-g-12 ui-g-nopad">
+                <div class="ui-g-12 ui-md-6 ui-g-nopad">
+                  <div class="org-item">Nombre:</div>
                 </div>
-                <hr class="ui-widget-content" style="border-top:0">
-              </p-card>
+                <div class="ui-g-12 ui-md-6 ui-g-nopad">
+                  <div class="org-item">{{u.organizacion.nombre}}</div>
+                </div>
+              </div>
+              <div class="ui-g-12 ui-g-nopad">
+                <div class="ui-g-12 ui-md-6 ui-g-nopad">
+                  <div class="org-item">Nivel CMMI:</div>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-g-nopad">
+                  <div class="org-item">{{u.organizacion.nivel.lvl}}</div>
+                </div>
+              </div>
             </div>
-          </ng-template>
-        </p-dataScroller>
-      </div>
-      <div class="ui-g-12">
-        <button pButton type="button" icon="fa fa-plus" label="Nueva Organización" (click)="add()"
-                class="full-button"></button>
-      </div>
-    </div>
-    <div *ngIf="user && !drag" class="ui-g-12 ui-md-8 full-height data">
-      <div class="ui-g-12">
-        <div class="ui-g-12 header">
-          <div class="text-center">{{organizacion.nombre}}</div>
+            <div class="ui-g-12 ui-md-3 ui-g-nopad">
+              <div class="ui-g-5 ui-md-12 ui-g-nopad" style="padding-bottom: 2px">
+                <a target="_blank" routerLink="evaluation/{{u.organizacion.id}}">
+                  <button pButton type="button" icon="fa fa-area-chart" class="full-button ui-button-info"
+                          pTooltip="Evaluar" tooltipPosition="top"></button>
+                </a>
+              </div>
+              <div class="ui-g-5 ui-g-offset-2 ui-md-12 ui-md-offset-0 ui-g-nopad" style="padding-top: 2px">
+                <div class="ui-g-6 ui-g-nopad" style="padding-right: 2px">
+                  <button pButton type="button" icon="fa fa-gear" (click)="edit(u)" [disabled]="user == u"
+                          class="full-button ui-button-success" pTooltip="Editar" tooltipPosition="top"></button>
+                </div>
+                <div class="ui-g-6 ui-g-nopad" style="padding-left: 2px">
+                  <button pButton type="button" (click)="org = u.organizacion" [disabled]="user == u" icon="fa fa-bars"
+                          class="full-button" pTooltip="Instancias" tooltipPosition="top"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="ui-widget-content" style="border-top:0">
         </div>
-      </div>
-      <div class="ui-g-12 ui-g-nopad">
-        <div class="ui-g-12 ui-md-2">
-          <button [disabled]="!formUser.valid || formUser.untouched" pButton type="button" icon="fa fa-fw fa-save"
-                  (click)="save()"
-                  label="Guardar"
-                  class="ui-button-success"></button>
-        </div>
-        <div class="ui-g-12 ui-md-2">
-          <button pButton type="button" icon="fa fa-fw fa-undo" (click)="cancel()"
-                  [ngClass]="isNew ? 'ui-button-danger' : 'ui-button-warning'"
-                  [label]="isNew ? 'Cancelar' : 'Descartar'"></button>
-        </div>
-        <div *ngIf="!isNew" class="ui-g-12 ui-md-2 ui-md-offset-6 ui-rtl" dir="rtl">
-          <button pButton type="button" icon="fa fa-fw fa-close" label="Eliminar" class="ui-button-danger"
-                  (click)="delete()"></button>
-        </div>
-      </div>
-      <div class="ui-g-12 ui-g-nopad">
-        <div class="ui-g-12 ui-md-4">
-          <button pButton type="button" label="Instancias" [disabled]="isNew"
-                  (click)="org = user.organizacion"
-                  icon="fa fa-bars"
+        <p-footer>
+          <button pButton type="button" icon="fa fa-plus" label="Nueva organización" (click)="add()"
                   class="full-button"></button>
-        </div>
-      </div>
-      <div class="ui-g-12 container">
-        <div class="panel">
-          <p-scrollPanel [style]="{width: '100%', height: '100%'}">
+        </p-footer>
+      </p-card>
+    </div>
+    <div *ngIf="user && !drag" class="ui-g-12 ui-md-8 data">
+      <p-card styleClass="full-card content-card ui-card-shadow"
+              [title]="organizacion.nombre ? organizacion.nombre : 'Nueva organización'"
+              [subtitle]="organizacion.nivel ? organizacion.nivel.descripcion + ' CMMI Organizacional' : 'Nivel 0 CMMI Organizacional'">
+        <div class="ui-g">
+          <div class="ui-g-12 ui-g-nopad">
+            <div class="ui-g-12 ui-md-2">
+              <button pButton type="button" icon="fa fa-fw fa-undo" (click)="cancel()" class="full-button"
+                      [ngClass]="isNew ? 'ui-button-danger' : 'ui-button-warning'"
+                      [label]="isNew ? 'Cancelar' : formUser.untouched ? 'Cerrar' : 'Descartar'"></button>
+            </div>
+            <div class="ui-g-12 ui-md-2">
+              <button pButton type="button" label="Instancias" [disabled]="isNew" (click)="org = user.organizacion"
+                      icon="fa fa-bars" class="full-button"></button>
+            </div>
+          </div>
+          <div class="box ui-g-12 ui-g-nopad">
             <form [formGroup]="formUser" (ngSubmit)="save()">
               <div class="ui-g">
                 <div class="ui-g-12">
-                  <p-card title="Organización" [style]="{width: '97.5%'}" styleClass="ui-card-shadow">
+                  <p-card [title]="'Organización'" styleClass="ui-card-shadow">
                     <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0">
                       <div class="ui-grid-row">
                         <div class="ui-grid-col-2">
-                          Titulo *:
+                          Nombre *:
                         </div>
                         <div class="ui-grid-col-6">
                           <input pInputText type="text" formControlName="titulo" [(ngModel)]="organizacion.nombre"
@@ -109,7 +88,7 @@
                           <div class="ui-message ui-messages-error ui-corner-all"
                                *ngIf="!controlU['titulo'].valid&&controlU['titulo'].dirty">
                             <i class="fa fa-close"></i>
-                            <span *ngIf="controlU['titulo'].errors['required']">Título es requerido</span>
+                            <span *ngIf="controlU['titulo'].errors['required']">Nombre es requerido</span>
                             <span *ngIf="controlU['titulo'].errors['pattern']">Caracteres ilegales</span>
                           </div>
                         </div>
@@ -140,7 +119,7 @@
                   </p-card>
                 </div>
                 <div class="ui-g-12">
-                  <p-card title="Usuario" [style]="{width: '97.5%'}" styleClass="ui-card-shadow">
+                  <p-card [title]="'Usuario'" styleClass="ui-card-shadow">
                     <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0">
                       <div class="ui-grid-row">
                         <div class="ui-grid-col-2">
@@ -148,7 +127,7 @@
                         </div>
                         <div class="ui-grid-col-6">
                           <input pInputText type="email" formControlName="username" [(ngModel)]="user.username"
-                                 placeholder="Requerido">
+                                 placeholder="Requerido" [pKeyFilter]="block">
                         </div>
                         <div class="ui-grid-col-4">
                           <div class="ui-message ui-messages-error ui-corner-all"
@@ -156,6 +135,7 @@
                             <i class="fa fa-close"></i>
                             <span *ngIf="controlU['username'].errors['required']">Usuario es requerido</span>
                             <span *ngIf="controlU['username'].errors['email']">Correo inválido</span>
+                            <span *ngIf="controlU['username'].errors['forbiddenEmail']">Usuario ya registrado</span>
                           </div>
                         </div>
                       </div>
@@ -165,8 +145,8 @@
                         </div>
                         <div class="ui-grid-col-6">
                           <input pPassword type="password" formControlName="password" [(ngModel)]="user.password"
-                                 placeholder="Requerido" promptLabel="Introduce una contraseña"
-                                 weakLabel="Débil" mediumLabel="Suficiente" strongLabel="Fuerte">
+                                 placeholder="Requerido" promptLabel="Introduce una contraseña" weakLabel="Débil"
+                                 mediumLabel="Suficiente" strongLabel="Fuerte">
                         </div>
                         <div class="ui-grid-col-4">
                           <div class="ui-message ui-messages-error ui-corner-all"
@@ -178,13 +158,6 @@
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </p-card>
-                </div>
-                <div class="ui-g-12">
-                  <p-card title="Persona" [style]="{width: '97.5%', 'margin-bottom': '20px'}"
-                          styleClass="ui-card-shadow">
-                    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0">
                       <div class="ui-grid-row">
                         <div class="ui-grid-col-2">
                           Nombre *:
@@ -208,8 +181,7 @@
                         </div>
                         <div class="ui-grid-col-6">
                           <input pInputText type="text" formControlName="apellido-p"
-                                 [(ngModel)]="persona.primerApellido"
-                                 placeholder="Requerido">
+                                 [(ngModel)]="persona.primerApellido" placeholder="Requerido">
                         </div>
                         <div class="ui-grid-col-4">
                           <div class="ui-message ui-messages-error ui-corner-all"
@@ -226,8 +198,7 @@
                         </div>
                         <div class="ui-grid-col-6">
                           <input pInputText type="text" formControlName="apellido-m"
-                                 [(ngModel)]="persona.segundoApellido"
-                                 placeholder="Requerido">
+                                 [(ngModel)]="persona.segundoApellido" placeholder="Requerido">
                         </div>
                         <div class="ui-grid-col-4">
                           <div class="ui-message ui-messages-error ui-corner-all"
@@ -243,16 +214,27 @@
                 </div>
               </div>
             </form>
-          </p-scrollPanel>
+          </div>
         </div>
-      </div>
-      <p-dialog *ngIf="org" header="{{org.nombre}}" [closeOnEscape]="true" [(visible)]="org" [modal]="true"
-                [responsive]="true" (onHide)="org = null" [width]="800">
-        <app-instances *ngIf="org" [org]="org"></app-instances>
-      </p-dialog>
+        <p-footer class="ui-g">
+          <div class="ui-g-12 ui-g-nopad ui-rtl" dir="rtl">
+            <div class="ui-g-12 ui-md-2">
+              <button [disabled]="!formUser.valid || formUser.untouched" pButton type="button" icon="fa fa-fw fa-save"
+                      (click)="save()" label="Guardar" class="full-button ui-button-success"></button>
+            </div>
+            <div *ngIf="!isNew" class="ui-g-12 ui-md-2">
+              <button pButton type="button" icon="fa fa-fw fa-close" label="Eliminar"
+                      class="full-button ui-button-danger" (click)="delete()"></button>
+            </div>
+          </div>
+        </p-footer>
+      </p-card>
     </div>
-    <div *ngIf="(!user && !org) || drag" pDroppable="users" (onDrop)="edit(drag)"
-         class="ui-g-12 ui-md-8 full-height data drop">
+    <p-dialog *ngIf="org" header="{{org.nombre}}" [closeOnEscape]="true" [(visible)]="org" [modal]="true"
+              [responsive]="true" (onHide)="org = null" [width]="800">
+      <app-instances *ngIf="org" [org]="org"></app-instances>
+    </p-dialog>
+    <div *ngIf="drag" pDroppable="users" (onDrop)="edit(drag)" class="ui-g-12 ui-md-8 data drop">
       <img src="../../../assets/drag-drop.png">
       Arrastra la organización aquí
     </div>

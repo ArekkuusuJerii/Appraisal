@@ -101,9 +101,11 @@ export class ArtifactsComponent implements OnInit {
     } else {
       this.message.notify('error', 'No hay un archivo seleccionado', 'Por favor seleccione un archivo');
     }
+    this.activeLink = false;
+    this.activeFile = false;
   }
 
-  uploadHiperlinK() {
+  uploadHyperlink() {
     if (this.formHiperlink.valid) {
       this.evidenciaService.uploadHiperlink(this.formHiperlink.value.hiperlink, this.evidence).subscribe(hiperlink => {
         this.evidence.hipervinculos.push(hiperlink);
@@ -114,6 +116,8 @@ export class ArtifactsComponent implements OnInit {
     } else {
       this.message.notify('error', 'Hay errores presentes', 'Existen errores en su formulario');
     }
+    this.activeLink = false;
+    this.activeFile = false;
   }
 
   delete(link) {
