@@ -24,7 +24,7 @@ import {
   DropdownModule,
   FileUploadModule,
   InplaceModule,
-  InputTextModule, OverlayPanelModule,
+  InputTextModule, KeyFilterModule, OverlayPanelModule,
   PanelModule,
   PasswordModule,
   PickListModule,
@@ -92,6 +92,7 @@ const routes = [
     TooltipModule,
     ConfirmDialogModule,
     OverlayPanelModule,
+    KeyFilterModule,
     RouterModule.forRoot(routes)
   ],
   providers: [API],

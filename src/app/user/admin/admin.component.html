@@ -127,7 +127,7 @@
                         </div>
                         <div class="ui-grid-col-6">
                           <input pInputText type="email" formControlName="username" [(ngModel)]="user.username"
-                                 placeholder="Requerido">
+                                 placeholder="Requerido" [pKeyFilter]="block">
                         </div>
                         <div class="ui-grid-col-4">
                           <div class="ui-message ui-messages-error ui-corner-all"
@@ -135,6 +135,7 @@
                             <i class="fa fa-close"></i>
                             <span *ngIf="controlU['username'].errors['required']">Usuario es requerido</span>
                             <span *ngIf="controlU['username'].errors['email']">Correo inválido</span>
+                            <span *ngIf="controlU['username'].errors['forbiddenEmail']">Usuario ya registrado</span>
                           </div>
                         </div>
                       </div>
