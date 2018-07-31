@@ -1,21 +1,21 @@
 <div class="outer">
   <div class="ui-g">
     <div class="ui-g-12 ui-md-4">
-      <p-card styleClass="full-card" [title]="'Organizaciones'">
+      <p-card styleClass="full-card ui-card-shadow" [title]="'Organizaciones'">
         <p-header>
           <img src="../../../assets/home.global-leader.jpg">
         </p-header>
         <hr class="ui-widget-content" style="border-top:0">
-        <div *ngFor="let user of users" class="drag" pDraggable="users" (onDragStart)="drag = user"
+        <div *ngFor="let u of users" class="drag" pDraggable="users" (onDragStart)="drag = u"
              (onDragEnd)="drag = null">
-          <div class="ui-g">
-            <div class="ui-g-12 ui-md-9">
+          <div class="ui-g ui-g-nopad" [ngClass]="user == u ? 'selected' : 'unselected'">
+            <div class="ui-g-12 ui-md-9 ui-g-nopad">
               <div class="ui-g-12 ui-g-nopad">
                 <div class="ui-g-12 ui-md-6 ui-g-nopad">
                   <div class="org-item">Nombre:</div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-g-nopad">
-                  <div class="org-item">{{user.organizacion.nombre}}</div>
+                  <div class="org-item">{{u.organizacion.nombre}}</div>
                 </div>
               </div>
               <div class="ui-g-12 ui-g-nopad">
@@ -23,25 +23,25 @@
                   <div class="org-item">Nivel CMMI:</div>
                 </div>
                 <div class="ui-g-12 ui-md-6 ui-g-nopad">
-                  <div class="org-item">{{user.organizacion.nivel.lvl}}</div>
+                  <div class="org-item">{{u.organizacion.nivel.lvl}}</div>
                 </div>
               </div>
             </div>
-            <div class="ui-g-12 ui-md-3">
+            <div class="ui-g-12 ui-md-3 ui-g-nopad">
               <div class="ui-g-5 ui-md-12 ui-g-nopad" style="padding-bottom: 2px">
-                <a target="_blank" routerLink="evaluation/{{user.organizacion.id}}">
+                <a target="_blank" routerLink="evaluation/{{u.organizacion.id}}">
                   <button pButton type="button" icon="fa fa-area-chart" class="full-button ui-button-info"
-                          pTooltip="Evaluar" tooltipPosition="right"></button>
+                          pTooltip="Evaluar" tooltipPosition="top"></button>
                 </a>
               </div>
               <div class="ui-g-5 ui-g-offset-2 ui-md-12 ui-md-offset-0 ui-g-nopad" style="padding-top: 2px">
                 <div class="ui-g-6 ui-g-nopad" style="padding-right: 2px">
-                  <button pButton type="button" icon="fa fa-gear" (click)="edit(user)"
-                          class="full-button ui-button-success" pTooltip="Editar" tooltipPosition="right"></button>
+                  <button pButton type="button" icon="fa fa-gear" (click)="edit(u)" [disabled]="user == u"
+                          class="full-button ui-button-success" pTooltip="Editar" tooltipPosition="top"></button>
                 </div>
                 <div class="ui-g-6 ui-g-nopad" style="padding-left: 2px">
-                  <button pButton type="button" (click)="org = user.organizacion" icon="fa fa-bars"
-                          class="full-button"></button>
+                  <button pButton type="button" (click)="org = u.organizacion" [disabled]="user == u" icon="fa fa-bars"
+                          class="full-button" pTooltip="Instancias" tooltipPosition="top"></button>
                 </div>
               </div>
             </div>
@@ -61,24 +61,16 @@
         <div class="ui-g">
           <div class="ui-g-12 ui-g-nopad">
             <div class="ui-g-12 ui-md-2">
-              <button [disabled]="!formUser.valid || formUser.untouched" pButton type="button" icon="fa fa-fw fa-save"
-                      (click)="save()" label="Guardar" class="full-button ui-button-success"></button>
-            </div>
-            <div class="ui-g-12 ui-md-2">
               <button pButton type="button" icon="fa fa-fw fa-undo" (click)="cancel()" class="full-button"
                       [ngClass]="isNew ? 'ui-button-danger' : 'ui-button-warning'"
                       [label]="isNew ? 'Cancelar' : formUser.untouched ? 'Cerrar' : 'Descartar'"></button>
             </div>
-            <div *ngIf="!isNew" class="ui-g-12 ui-md-2 ui-md-offset-6 ui-rtl" dir="rtl">
-              <button pButton type="button" icon="fa fa-fw fa-close" label="Eliminar"
-                      class="full-button ui-button-danger" (click)="delete()"></button>
-            </div>
-            <div class="ui-g-12 ui-md-4">
+            <div class="ui-g-12 ui-md-2">
               <button pButton type="button" label="Instancias" [disabled]="isNew" (click)="org = user.organizacion"
                       icon="fa fa-bars" class="full-button"></button>
             </div>
           </div>
-          <div class="box ui-g-12">
+          <div class="box ui-g-12 ui-g-nopad">
             <form [formGroup]="formUser" (ngSubmit)="save()">
               <div class="ui-g">
                 <div class="ui-g-12">
@@ -223,13 +215,25 @@
             </form>
           </div>
         </div>
+        <p-footer class="ui-g">
+          <div class="ui-g-12 ui-g-nopad ui-rtl" dir="rtl">
+            <div class="ui-g-12 ui-md-2">
+              <button [disabled]="!formUser.valid || formUser.untouched" pButton type="button" icon="fa fa-fw fa-save"
+                      (click)="save()" label="Guardar" class="full-button ui-button-success"></button>
+            </div>
+            <div *ngIf="!isNew" class="ui-g-12 ui-md-2">
+              <button pButton type="button" icon="fa fa-fw fa-close" label="Eliminar"
+                      class="full-button ui-button-danger" (click)="delete()"></button>
+            </div>
+          </div>
+        </p-footer>
       </p-card>
     </div>
     <p-dialog *ngIf="org" header="{{org.nombre}}" [closeOnEscape]="true" [(visible)]="org" [modal]="true"
               [responsive]="true" (onHide)="org = null" [width]="800">
       <app-instances *ngIf="org" [org]="org"></app-instances>
     </p-dialog>
-    <div *ngIf="(!user && !org) || drag" pDroppable="users" (onDrop)="edit(drag)" class="ui-g-12 ui-md-8 data drop">
+    <div *ngIf="drag" pDroppable="users" (onDrop)="edit(drag)" class="ui-g-12 ui-md-8 data drop">
       <img src="../../../assets/drag-drop.png">
       Arrastra la organización aquí
     </div>

@@ -113,6 +113,7 @@ export class AdminComponent implements OnInit {
     this.copy = null;
     this.isNew = true;
     this.formUser.reset();
+    this.formUser.controls['nivel'].markAsDirty();
   }
 
   save() {

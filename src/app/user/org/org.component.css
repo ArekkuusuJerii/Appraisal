@@ -10,6 +10,24 @@
   height: 100%;
 }
 
+.unselected {
+  padding: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  transition: all 300ms ease-out;
+}
+
+.unselected:hover {
+  background: #fdfdfd;
+  box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.06);
+  transition: all 100ms ease-in;
+}
+
+.selected {
+  background: #fdfdfd;
+  box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.1);
+}
+
 .inst-item {
   margin: 5px;
   white-space: nowrap;

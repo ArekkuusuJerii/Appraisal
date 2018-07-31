@@ -13,13 +13,16 @@
             </div>
             <div class="ui-g-12 ui-md-7" style="text-align: center">
               <ng-container *ngIf="evaluation.data.status == 'NO_CUMPLE'">
-                <label style="color:#bb0000">No cumple</label>
+                <i class="fa fa-warning" style="color:#bb0000"></i>
+                No cumple
               </ng-container>
               <ng-container *ngIf="evaluation.data.status == 'EN_PROGRESO'">
-                <label style="color:#dbdb00">En progreso</label>
+                <i class="fa fa-gears" style="color:#dbdb00"></i>
+                En progreso
               </ng-container>
               <ng-container *ngIf="evaluation.data.status == 'SI_CUMPLE'">
-                <label style="color:#00bb00">Si cumple</label>
+                <i class="fa fa-check" style="color:#00bb00"></i>
+                Si cumple
               </ng-container>
             </div>
           </div>
@@ -47,16 +50,16 @@
               <tr>
                 <td *ngFor="let col of columns; let i = index">
                   <div *ngIf="col.field == 'status';then status else branch"></div>
-                  <ng-template #status>
+                  <ng-template #status style="text-align: center">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
                     <ng-container *ngIf="rowData[col.field] == 'NO_CUMPLE'">
-                      <label style="color:#bb0000">No cumple</label>
+                      <i class="fa fa-warning" style="color:#bb0000"></i>
                     </ng-container>
                     <ng-container *ngIf="rowData[col.field] == 'EN_PROGRESO'">
-                      <label style="color:#dbdb00">En progreso</label>
+                      <i class="fa fa-gears" style="color:#dbdb00"></i>
                     </ng-container>
                     <ng-container *ngIf="rowData[col.field] == 'SI_CUMPLE'">
-                      <label style="color:#00bb00">Si cumple</label>
+                      <i class="fa fa-check" style="color:#00bb00"></i>
                     </ng-container>
                   </ng-template>
                   <ng-template #branch>
@@ -70,6 +73,22 @@
                       {{rowData[col.field]}}
                     </ng-template>
                   </ng-template>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="summary" let-columns>
+              <tr>
+                <td style="padding-right: 15px">
+                  <i class="fa fa-warning" style="color:#bb0000"></i>
+                  No cumple
+                </td>
+                <td style="padding-right: 15px">
+                  <i class="fa fa-gears" style="color:#dbdb00"></i>
+                  En progreso
+                </td>
+                <td style="padding-right: 15px">
+                  <i class="fa fa-check" style="color:#00bb00"></i>
+                  Si cumple
                 </td>
               </tr>
             </ng-template>
