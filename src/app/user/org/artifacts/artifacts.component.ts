@@ -49,7 +49,7 @@ export class ArtifactsComponent implements OnInit {
     for (const hpr of this.evidence.hipervinculos) {
       links.push(hpr);
     }
-    links.sort((a, b) => +a.date - +b.date);
+    links.sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime());
     this.links = links.map(a => {
       if (a.link) {
         return {
