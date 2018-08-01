@@ -110,11 +110,11 @@ export class ArtifactsComponent implements OnInit {
       this.evidenciaService.uploadHiperlink(this.formHiperlink.value.hiperlink, this.evidence).subscribe(hiperlink => {
         this.evidence.hipervinculos.push(hiperlink);
         this.sort();
-        this.message.notify('success', 'Se ha subido un hipervinculo');
+        this.message.notify('success', 'Se ha subido un hipervínculo');
       });
       this.formHiperlink.reset();
     } else {
-      this.message.notify('error', 'Hay errores presentes', 'Existen errores en su formulario');
+      this.message.notify('error', 'No hay un hipervínculo', 'Por favor ingrese un hipervínculo');
     }
     this.activeLink = false;
     this.activeFile = false;
