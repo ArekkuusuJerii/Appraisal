@@ -234,7 +234,7 @@
               [responsive]="true" (onHide)="org = null" [width]="800">
       <app-instances *ngIf="org" [org]="org"></app-instances>
     </p-dialog>
-    <div *ngIf="drag" pDroppable="users" (onDrop)="edit(drag)" class="ui-g-12 ui-md-8 data drop">
+    <div *ngIf="(!user && !org) || drag" pDroppable="users" (onDrop)="edit(drag)" class="ui-g-12 ui-md-8 data drop">
       <img src="../../../assets/drag-drop.png">
       Arrastra la organización aquí
     </div>
