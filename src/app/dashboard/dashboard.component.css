@@ -11,6 +11,7 @@
 }
 
 .content {
+  padding-top: 95px;
   background: transparent;
   min-width: 200px;
   min-height: 200px;
@@ -24,6 +25,7 @@
 .inputgroup {
   display: table;
   margin: 0 auto;
+  padding-bottom: 5px;
   width: 100%;
 }
 
@@ -34,10 +36,8 @@ img {
 
 input {
   width: 90%;
-  height: 3em;
   font-family: 'Gotham A', 'Gotham B', sans-serif;
-  font-size: 0.75em;
-  letter-spacing: 0.25em;
+  font-size: 0.85em;
   padding: 0.5em 0.5em;
   font-weight: bold;
 }
