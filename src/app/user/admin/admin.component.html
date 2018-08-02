@@ -40,7 +40,7 @@
                           class="full-button ui-button-success" pTooltip="Editar" tooltipPosition="top"></button>
                 </div>
                 <div class="ui-g-6 ui-g-nopad" style="padding-left: 2px">
-                  <button pButton type="button" (click)="org = u.organizacion" [disabled]="user == u" icon="fa fa-bars"
+                  <button pButton type="button" (click)="org = u.organizacion" icon="fa fa-bars"
                           class="full-button" pTooltip="Instancias" tooltipPosition="top"></button>
                 </div>
               </div>
@@ -63,7 +63,7 @@
             <div class="ui-g-12 ui-md-2">
               <button pButton type="button" icon="fa fa-fw fa-undo" (click)="cancel()" class="full-button"
                       [ngClass]="isNew ? 'ui-button-danger' : 'ui-button-warning'"
-                      [label]="isNew ? 'Cancelar' : formUser.untouched ? 'Cerrar' : 'Descartar'"></button>
+                      [label]="isNew ? 'Cancelar' : !formUser.dirty ? 'Cerrar' : 'Descartar'"></button>
             </div>
             <div class="ui-g-12 ui-md-2">
               <button pButton type="button" label="Instancias" [disabled]="isNew" (click)="org = user.organizacion"
@@ -219,7 +219,7 @@
         <p-footer class="ui-g">
           <div class="ui-g-12 ui-g-nopad ui-rtl" dir="rtl">
             <div class="ui-g-12 ui-md-2">
-              <button [disabled]="!formUser.valid || formUser.untouched" pButton type="button" icon="fa fa-fw fa-save"
+              <button [disabled]="!formUser.valid || !formUser.dirty" pButton type="button" icon="fa fa-fw fa-save"
                       (click)="save()" label="Guardar" class="full-button ui-button-success"></button>
             </div>
             <div *ngIf="!isNew" class="ui-g-12 ui-md-2">

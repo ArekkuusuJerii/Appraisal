@@ -27,7 +27,7 @@
     </div>
   </ng-template>
 </p-table>
-<p-dialog header="Detalles de Instancia" [(visible)]="displayDialog" [maximizable]="true" [closeOnEscape]="true"
+<p-dialog header="Detalles de Instancia" [(visible)]="displayDialog" [maximizable]="true"
           (onHide)="close()" [responsive]="true" [modal]="false" [width]="'800'"
           [contentStyle]="{'overflow': 'hidden'}">
   <div class="ui-grid-responsive ui-grid-pad ui-fluid" *ngIf="instance">
@@ -71,11 +71,11 @@
       </div>
       <hr>
       <div style="height:100%; overflow: auto">
-        <p-pickList [source]="source" [target]="instance.areaProcesos" sourceHeader="Disponible"
+        <p-pickList [formControlName]="'areas'" [source]="source" [target]="instance.areaProcesos" sourceHeader="Disponible"
                     targetHeader="Seleccionado" filterBy="nombre,descripcion" [responsive]="true" [dragdrop]="true"
                     dragdropScope="cars" sourceFilterPlaceholder="Búsqueda" targetFilterPlaceholder="Búsqueda"
                     [sourceStyle]="{'height':'250px'}" [targetStyle]="{'height':'250px'}"
-                    (onMoveToSource)="formInstance.markAsTouched()" (onMoveToTarget)="formInstance.markAsTouched()">
+                    (onMoveToSource)="formInstance.markAsDirty()" (onMoveToTarget)="formInstance.markAsDirty()">
           <ng-template let-area pTemplate="item">
             <div class="ui-helper-clearfix">
               {{area.nombre}} : {{area.descripcion}}
@@ -87,9 +87,9 @@
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button *ngIf="!new" type="button" pButton icon="fa fa-close" (click)="delete()" label="Eliminar"
+      <button *ngIf="!new" [disabled]="formInstance.dirty" type="button" pButton icon="fa fa-close" (click)="delete()" label="Eliminar"
               class="ui-button-danger"></button>
-      <button [disabled]="formInstance.invalid || formInstance.untouched" type="button" pButton icon="fa fa-check"
+      <button [disabled]="!formInstance.dirty" type="button" pButton icon="fa fa-check"
               (click)="save()" label="Guardar" class="ui-button-success"></button>
     </div>
   </p-footer>

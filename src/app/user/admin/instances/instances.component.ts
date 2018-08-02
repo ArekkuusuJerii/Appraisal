@@ -55,36 +55,35 @@ export class InstancesComponent implements OnInit {
   }
 
   add() {
+    this.open();
     this.new = true;
     this.instance = {
       areaProcesos: []
     };
-    this.displayDialog = true;
     this.source = this.areaProcesos.slice();
     for (const subArea of this.instance.areaProcesos) {
       this.source = this.source.filter(area => area.id !== subArea.id);
     }
     this.source.sort((a, b) => a.id - b.id);
-    this.formInstance.reset();
     this.formInstance.controls['instanciaTipo'].markAsDirty();
   }
 
   select(event) {
+    this.open();
     const instance = event.data;
     this.new = false;
     this.instance = {
       id: instance.id,
       nombre: instance.nombre,
       instanciaTipo: instance.instanciaTipo,
-      areaProcesos: instance.areaProcesos.slice().sort((a, b) => a.id - b.id)
+      areaProcesos: [...instance.areaProcesos].sort((a, b) => a.id - b.id)
     };
-    this.displayDialog = true;
-    this.source = this.areaProcesos.slice();
+    let source = [...this.areaProcesos];
     for (const subArea of this.instance.areaProcesos) {
-      this.source = this.source.filter(area => area.id !== subArea.id);
+      source = source.filter(area => area.id !== subArea.id);
     }
-    this.source.sort((a, b) => a.id - b.id);
-    this.formInstance.markAsUntouched();
+    source.sort((a, b) => a.id - b.id);
+    this.source = source;
   }
 
   delete() {
@@ -137,9 +136,15 @@ export class InstancesComponent implements OnInit {
     }
   }
 
-  close() {
-    this.instance = null;
-    this.selectedInstance = null;
-    this.displayDialog = false;
+  open() {
+    this.displayDialog = true;
   }
+
+  close() {
+    if (this.selectedInstance) {
+      this.selectedInstance = null;
+    }
+    this.formInstance.reset();
+  }
+
 }
