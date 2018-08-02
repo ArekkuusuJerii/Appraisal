@@ -112,6 +112,7 @@ export class ArtifactsComponent implements OnInit {
           default:
         }
       });
+      this.file = null;
     } else {
       this.message.notify('error', 'No hay un archivo seleccionado', 'Por favor seleccione un archivo');
     }
@@ -151,5 +152,12 @@ export class ArtifactsComponent implements OnInit {
         }
       }
     });
+  }
+
+  cancel() {
+    this.activeLink = false;
+    this.activeFile = false;
+    this.formHiperlink.reset();
+    this.file = null;
   }
 }

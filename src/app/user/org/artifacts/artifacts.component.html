@@ -75,7 +75,8 @@
         <div class="ui-g" *ngIf="activeFile">
           <div class="ui-g-12">
             <p-fileUpload #fileSelect mode="basic" chooseLabel="Selecciona un archivo" [showUploadButton]="false"
-                          [customUpload]="true" (uploadHandler)="fileSelect.clear()" (onSelect)="file = fileSelect.files[0]"
+                          [customUpload]="true" (uploadHandler)="fileSelect.clear()"
+                          (onSelect)="file = fileSelect.files[0]"
                           [maxFileSize]="1000000 * 10"></p-fileUpload>
           </div>
         </div>
@@ -114,9 +115,7 @@
                   icon="fa fa-upload"></button>
         </div>
         <div class="ui-g-12 ui-md-1">
-          <button pButton (click)="activeLink = false;activeFile = false;formHiperlink.reset();fileSelect.clear()"
-                  type="button"
-                  class="ui-button-danger" icon="fa fa-close"></button>
+          <button pButton (click)="cancel();fileSelect.clear();" type="button" class="ui-button-danger" icon="fa fa-close"></button>
         </div>
       </div>
     </p-card>
