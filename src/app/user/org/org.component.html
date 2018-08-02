@@ -93,7 +93,7 @@
     </div>
   </div>
 </div>
-<p-dialog *ngIf="selection" [header]="'Evidencia:' + selection.practice.nombre + '-' + selection.practice.descripcion"
+<p-dialog *ngIf="selection" [header]="'Evidencia:' + selection.practice.nombre + ' - ' + selection.practice.descripcion"
           [width]="800" [closeOnEscape]="true" [(visible)]="selection" [modal]="true" [responsive]="true"
           (onHide)="selection = null" styleClass="full-dialog">
   <app-artifacts *ngIf="selection" [selection]="selection"></app-artifacts>

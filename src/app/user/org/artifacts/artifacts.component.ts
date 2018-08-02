@@ -5,6 +5,9 @@ import { API } from '../../../api.config';
 import { HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotificationService } from '../../../_service/notification.service';
+import { ConfirmationService } from 'primeng/api';
+
+const urlMatch = /^(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}(\.([a-z]{2,6})|:([0-9]{1,6}))\b([-a-zA-Z0-9@:%_+.~#?&/=]*)/;
 
 @Component({
   selector: 'app-artifacts',
@@ -19,12 +22,15 @@ export class ArtifactsComponent implements OnInit {
   formHiperlink: FormGroup;
   activeLink: boolean;
   activeFile: boolean;
+  progress;
+  file;
 
   constructor(
     private api: API,
     private evidenciaService: EvidenciaService,
     private message: NotificationService,
-    private builder: FormBuilder) {
+    private builder: FormBuilder,
+    private confirmationService: ConfirmationService) {
   }
 
   ngOnInit() {
@@ -37,8 +43,12 @@ export class ArtifactsComponent implements OnInit {
       {field: 'date', header: 'Fecha', width: '30%'}
     ];
     this.formHiperlink = this.builder.group({
-      'hiperlink': ['', Validators.required]
+      'hiperlink': ['', Validators.compose([Validators.required, Validators.pattern(urlMatch)])]
     });
+  }
+
+  get controlH() {
+    return this.formHiperlink.controls;
   }
 
   sort() {
@@ -82,17 +92,21 @@ export class ArtifactsComponent implements OnInit {
     });
   }
 
-  uploadFile(event) {
-    if (event.files[0]) {
-      this.evidenciaService.uploadFile(event.files[0], this.evidence).subscribe(response => {
+  uploadFile() {
+    if (this.file) {
+      this.evidenciaService.uploadFile(this.file, this.evidence).subscribe(response => {
         switch (response.type) {
           case HttpEventType.Sent:
             break;
           case HttpEventType.UploadProgress:
+            this.progress = response.loaded / response.total;
             break;
           case HttpEventType.Response:
             this.evidence.artefactos.push(response.body);
             this.sort();
+            this.progress = null;
+            this.activeLink = false;
+            this.activeFile = false;
             this.message.notify('success', 'Se ha subido un archivo');
             break;
           default:
@@ -101,8 +115,6 @@ export class ArtifactsComponent implements OnInit {
     } else {
       this.message.notify('error', 'No hay un archivo seleccionado', 'Por favor seleccione un archivo');
     }
-    this.activeLink = false;
-    this.activeFile = false;
   }
 
   uploadHyperlink() {
@@ -113,26 +125,31 @@ export class ArtifactsComponent implements OnInit {
         this.message.notify('success', 'Se ha subido un hipervínculo');
       });
       this.formHiperlink.reset();
+      this.activeLink = false;
+      this.activeFile = false;
     } else {
-      this.message.notify('error', 'No hay un hipervínculo', 'Por favor ingrese un hipervínculo');
+      this.message.notify('error', 'No es un hipervínculo válido', 'Por favor ingrese un hipervínculo');
     }
-    this.activeLink = false;
-    this.activeFile = false;
   }
 
   delete(link) {
-    if (link.file) {
-      this.evidenciaService.deleteFile(link.id).subscribe(() => {
-        this.message.notify('success', 'Se ha eliminado un archivo');
-      });
-      this.evidence.artefactos = this.evidence.artefactos.filter(a => a.id !== link.id);
-      this.sort();
-    } else {
-      this.evidenciaService.deleteHiperlink(link.id).subscribe(() => {
-        this.message.notify('success', 'Se ha eliminado un hipervinculo');
-      });
-      this.evidence.hipervinculos = this.evidence.hipervinculos.filter(a => a.id !== link.id);
-      this.sort();
-    }
+    this.confirmationService.confirm({
+      message: '¿Desea eliminar este artefacto?',
+      accept: () => {
+        if (link.file) {
+          this.evidenciaService.deleteFile(link.id).subscribe(() => {
+            this.message.notify('success', 'Se ha eliminado un archivo');
+          });
+          this.evidence.artefactos = this.evidence.artefactos.filter(a => a.id !== link.id);
+          this.sort();
+        } else {
+          this.evidenciaService.deleteHiperlink(link.id).subscribe(() => {
+            this.message.notify('success', 'Se ha eliminado un hipervinculo');
+          });
+          this.evidence.hipervinculos = this.evidence.hipervinculos.filter(a => a.id !== link.id);
+          this.sort();
+        }
+      }
+    });
   }
 }

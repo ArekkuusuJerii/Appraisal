@@ -27,7 +27,7 @@ import {
   InputTextModule, KeyFilterModule, OverlayPanelModule,
   PanelModule,
   PasswordModule,
-  PickListModule,
+  PickListModule, ProgressBarModule,
   ProgressSpinnerModule,
   ScrollPanelModule,
   SelectButtonModule,
@@ -93,6 +93,7 @@ const routes = [
     ConfirmDialogModule,
     OverlayPanelModule,
     KeyFilterModule,
+    ProgressBarModule,
     RouterModule.forRoot(routes)
   ],
   providers: [API],

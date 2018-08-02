@@ -79,6 +79,16 @@ html {
   background: #f9f9f9;
 }
 
+.ui-fileupload-choose {
+  width: 100%;
+}
+
+.ui-fileupload-choose > .ui-button-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 @media screen and (max-width: 640px){
   .full-card > .ui-card-body > .ui-card-content {
     flex: 1 0 10%;

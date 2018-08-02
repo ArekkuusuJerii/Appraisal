@@ -73,20 +73,10 @@
                   label="Introduce un archivo"></button>
         </div>
         <div class="ui-g" *ngIf="activeFile">
-          <div class="ui-g-12 ui-md-10" style="overflow: hidden">
-            <p-fileUpload #file mode="basic" chooseLabel="Selecciona un archivo" [showUploadButton]="false"
-                          [customUpload]="true" (uploadHandler)="uploadFile($event);file.clear()"
+          <div class="ui-g-12">
+            <p-fileUpload #fileSelect mode="basic" chooseLabel="Selecciona un archivo" [showUploadButton]="false"
+                          [customUpload]="true" (uploadHandler)="fileSelect.clear()" (onSelect)="file = fileSelect.files[0]"
                           [maxFileSize]="1000000 * 10"></p-fileUpload>
-          </div>
-          <div class="ui-g-12 ui-md-2 ui-g-nopad">
-            <div class="ui-g-12 ui-md-6">
-              <button pButton (click)="file.upload();" type="button" class="ui-button-success"
-                      icon="fa fa-upload"></button>
-            </div>
-            <div class="ui-g-12 ui-md-6">
-              <button pButton (click)="activeLink = false;activeFile = false;file.clear()" type="button"
-                      class="ui-button-danger" icon="fa fa-close"></button>
-            </div>
           </div>
         </div>
       </div>
@@ -96,21 +86,37 @@
                   label="Introduce un hipervinculo"></button>
         </div>
         <div class="ui-g" *ngIf="activeLink">
-          <div class="ui-g-12 ui-md-10">
+          <div class="ui-g-12">
             <form [formGroup]="formHiperlink" (ngSubmit)="uploadHyperlink()">
               <input #link type="text" formControlName="hiperlink" placeholder="hipervinculo" pInputText>
             </form>
           </div>
-          <div class="ui-g-12 ui-md-2 ui-g-nopad">
-            <div class="ui-g-12 ui-md-6">
-              <button pButton type="button" (click)="uploadHyperlink()" icon="fa fa-upload"
-                      class="ui-button-success"></button>
-            </div>
-            <div class="ui-g-12 ui-md-6">
-              <button pButton (click)="activeLink = false;activeFile = false;" type="button" class="ui-button-danger"
-                      icon="fa fa-close"></button>
-            </div>
+        </div>
+      </div>
+      <div *ngIf="activeLink || activeFile" class="ui-g ui-g-nopad">
+        <div class="ui-g-10">
+          <div class="ui-message ui-messages-error ui-corner-all"
+               *ngIf="!controlH['hiperlink'].valid&&controlH['hiperlink'].dirty">
+            <i class="fa fa-close"></i>
+            <span *ngIf="controlH['hiperlink'].errors['required']">Hivervínculo es requerido</span>
+            <span *ngIf="controlH['hiperlink'].errors['pattern']">Este hivervínculo no es válido</span>
           </div>
+          <div class="ui-message ui-messages-error ui-corner-all"
+               *ngIf="activeFile && !progress">
+            <i class="fa fa-close"></i>
+            <span>Seleccione un archivo de tamaño no mayor a 10MB</span>
+          </div>
+          <p-progressBar *ngIf="progress" [value]="progress"></p-progressBar>
+        </div>
+        <div class="ui-g-12 ui-md-1">
+          <button pButton (click)="activeFile ? uploadFile() : uploadHyperlink()" type="button"
+                  class="ui-button-success"
+                  icon="fa fa-upload"></button>
+        </div>
+        <div class="ui-g-12 ui-md-1">
+          <button pButton (click)="activeLink = false;activeFile = false;formHiperlink.reset();fileSelect.clear()"
+                  type="button"
+                  class="ui-button-danger" icon="fa fa-close"></button>
         </div>
       </div>
     </p-card>
