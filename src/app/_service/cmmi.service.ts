@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AreaProceso, MetaEspecifica, Nivel, PracticaEspecifica } from '../_model/cmmi';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Instance, Organization } from '../_model/organization';
+import { Organization } from '../_model/organization';
 
 @Injectable({
   providedIn: 'root'

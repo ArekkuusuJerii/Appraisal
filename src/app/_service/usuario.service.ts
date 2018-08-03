@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API } from '../api.config';
 import { Observable } from 'rxjs';
-import { Type, User } from '../_model/organization';
+import { User } from '../_model/organization';
 import { SessionService } from './session.service';
 import { catchError } from 'rxjs/operators';
 

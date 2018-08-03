@@ -7,7 +7,6 @@ import { UsuarioService } from '../../_service/usuario.service';
 import { NotificationService } from '../../_service/notification.service';
 import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { CmmiService } from '../../_service/cmmi.service';
-import { map } from 'rxjs/operators';
 
 const titlePattern = /^[0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\-]([0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\-]| (?! ))*$/;
 const txtPattern = /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´]([a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´]| (?! ))*$/;

@@ -3,8 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { API } from '../api.config';
 import { SessionService } from './session.service';
 import { Observable } from 'rxjs';
-import { PracticaEspecifica } from '../_model/cmmi';
-import { Status } from '../_model/evaluation';
 import { Organization } from '../_model/organization';
 
 @Injectable({
@@ -24,7 +22,7 @@ export class EvaluationService {
     });
   }
 
-  getStatus(organizacion: number): Observable<Status> {
+  getStatus(organizacion: number): Observable<any> {
     const url = this.api.for(`evaluacion/${organizacion}`);
     return this.http.get(url, {
       headers: {
