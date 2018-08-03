@@ -99,7 +99,7 @@ export class ArtifactsComponent implements OnInit {
           case HttpEventType.Sent:
             break;
           case HttpEventType.UploadProgress:
-            this.progress = response.loaded / response.total;
+            this.progress = 100 * (response.loaded / response.total);
             break;
           case HttpEventType.Response:
             this.evidence.artefactos.push(response.body);

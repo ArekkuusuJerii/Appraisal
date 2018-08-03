@@ -5,8 +5,9 @@ import { Nivel } from '../../_model/cmmi';
 import { ConfirmationService } from 'primeng/api';
 import { UsuarioService } from '../../_service/usuario.service';
 import { NotificationService } from '../../_service/notification.service';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { CmmiService } from '../../_service/cmmi.service';
+import { map } from 'rxjs/operators';
 
 const titlePattern = /^[0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\-]([0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\-]| (?! ))*$/;
 const txtPattern = /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´]([a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´]| (?! ))*$/;
@@ -53,9 +54,9 @@ export class AdminComponent implements OnInit {
       'apellido-m': ['', Validators.compose([
         Validators.required, Validators.pattern(txtPattern)
       ])],
-      'username': ['', Validators.compose([
-        Validators.required, Validators.email, this.uniqueEmail()
-      ])],
+      'username': ['', [
+        Validators.required, Validators.email
+      ], this.uniqueEmail()],
       'password': ['', Validators.compose([
         Validators.required, Validators.minLength(6)
       ])]
@@ -65,11 +66,16 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  uniqueEmail(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      const forbidden = this.users.filter(user => user.username !== (this.user ? this.user.username : ''))
-        .some((user) => user.username === control.value);
-      return forbidden ? {'forbiddenEmail': {value: control.value}} : null;
+  uniqueEmail(): AsyncValidatorFn {
+    return (control: AbstractControl): Promise<ValidationErrors | null> => {
+      return this.usuarioService.getIsEmailTaken(control.value).toPromise()
+        .then(res => {
+          if (this.copy && this.copy.username === control.value) {
+            return null;
+          } else {
+            return res.body === 'UN_AVAILABLE' ? {'forbiddenEmail': {value: control.value}} : null;
+          }
+        });
     };
   }
 
@@ -137,6 +143,7 @@ export class AdminComponent implements OnInit {
                 users.push(user);
                 this.users = users;
                 this.formUser.markAsUntouched();
+                this.formUser.markAsPristine();
                 this.message.notify('success', 'Se ha creado una organización');
                 this.edit(user);
               });
@@ -150,6 +157,7 @@ export class AdminComponent implements OnInit {
                 users[users.indexOf(this.user)] = user;
                 this.users = users;
                 this.formUser.markAsUntouched();
+                this.formUser.markAsPristine();
                 this.message.notify('success', 'Se ha actualizado una organización');
                 this.edit(user);
               });

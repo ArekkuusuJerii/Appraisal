@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.session.sessionChange.subscribe(session => {
       if (session) {
-        this.username = session.username;
+        this.username = session.persona.nombre + ' ' + session.persona.primerApellido + ' ' + session.persona.segundoApellido;
         this.hasSession = true;
       } else {
         this.username = '...';
@@ -30,7 +30,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
       }
     });
     if (SessionService.hasSession()) {
-      this.username = SessionService.getSession().username;
+      const session = SessionService.getSession();
+      this.username = session.persona.nombre + ' ' + session.persona.primerApellido + ' ' + session.persona.segundoApellido;
       this.hasSession = true;
     }
   }

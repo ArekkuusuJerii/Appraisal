@@ -11,16 +11,11 @@
           <div class="ui-g ui-g-nopad" [ngClass]="instance == inst ? 'selected' : 'unselected'">
             <div class="ui-g-12 ui-md-10 ui-g-nopad">
               <div class="ui-g-12 ui-g-nopad">
-                <div class="ui-g-12 ui-md-4 ui-g-nopad">
-                  <div class="inst-item">Nombre:</div>
-                </div>
-                <div class="ui-g-12 ui-md-8 ui-g-nopad">
-                  <div class="inst-item">{{inst.nombre}}</div>
-                </div>
+                <div class="inst-item">{{inst.nombre}}</div>
               </div>
               <div class="ui-g-12 ui-g-nopad">
                 <div class="ui-g-12 ui-md-4 ui-g-nopad">
-                  <div class="inst-item">Categoría:</div>
+                  <div class="inst-item">Categoría :</div>
                 </div>
                 <div class="ui-g-12 ui-md-8 ui-g-nopad">
                   <div class="inst-item">{{inst.instanciaTipo.descripcion}}</div>
@@ -93,7 +88,7 @@
     </div>
   </div>
 </div>
-<p-dialog *ngIf="selection" [header]="'Evidencia:' + selection.practice.nombre + ' - ' + selection.practice.descripcion"
+<p-dialog *ngIf="selection" [header]="selection.practice.nombre + ' - ' + selection.practice.descripcion"
           [width]="800" [closeOnEscape]="true" [(visible)]="selection" [modal]="true" [responsive]="true"
           (onHide)="selection = null" styleClass="full-dialog">
   <app-artifacts *ngIf="selection" [selection]="selection"></app-artifacts>

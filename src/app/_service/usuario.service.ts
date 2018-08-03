@@ -24,9 +24,14 @@ export class UsuarioService {
     }).pipe(catchError(() => []));
   }
 
-  getAllTypes(): Observable<Type[]> {
-    const url = this.api.for('user/roles');
-    return this.http.get<Type[]>(url).pipe(catchError(() => []));
+  getIsEmailTaken(email: string): Observable<any> {
+    const url = this.api.for(`user/username?email=${email}`);
+    return this.http.get(url, {
+      headers: {
+        'Credentials': SessionService.getCredentials(),
+        'Accept': 'application/json'
+      }
+    });
   }
 
   save(usuario: User): Observable<User> {

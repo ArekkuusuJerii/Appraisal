@@ -34,13 +34,4 @@ export class EvaluationService {
     });
   }
 
-  getMissing(organizacion: number): Observable<PracticaEspecifica[]> {
-    const url = this.api.for(`evaluacion/missing/${organizacion}`);
-    return this.http.get<PracticaEspecifica[]>(url, {
-      headers: {
-        'Credentials': SessionService.getCredentials(),
-        'Accept': 'application/json'
-      }
-    });
-  }
 }

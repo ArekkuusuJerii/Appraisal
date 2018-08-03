@@ -11,20 +11,10 @@
           <div class="ui-g ui-g-nopad" [ngClass]="user == u ? 'selected' : 'unselected'">
             <div class="ui-g-12 ui-md-9 ui-g-nopad">
               <div class="ui-g-12 ui-g-nopad">
-                <div class="ui-g-12 ui-md-6 ui-g-nopad">
-                  <div class="org-item">Nombre:</div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-g-nopad">
-                  <div class="org-item">{{u.organizacion.nombre}}</div>
-                </div>
+                <div class="org-item">{{u.organizacion.nombre}}</div>
               </div>
               <div class="ui-g-12 ui-g-nopad">
-                <div class="ui-g-12 ui-md-6 ui-g-nopad">
-                  <div class="org-item">Nivel CMMI:</div>
-                </div>
-                <div class="ui-g-12 ui-md-6 ui-g-nopad">
-                  <div class="org-item">{{u.organizacion.nivel.lvl}}</div>
-                </div>
+                <div class="org-item">{{u.organizacion.nivel.descripcion}} CMMI Organizacional</div>
               </div>
             </div>
             <div class="ui-g-12 ui-md-3 ui-g-nopad">
@@ -78,7 +68,7 @@
                     <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0">
                       <div class="ui-grid-row">
                         <div class="ui-grid-col-2">
-                          Nombre *:
+                          Nombre *
                         </div>
                         <div class="ui-grid-col-6">
                           <input pInputText type="text" formControlName="titulo" [(ngModel)]="organizacion.nombre"
@@ -95,7 +85,7 @@
                       </div>
                       <div class="ui-grid-row">
                         <div class="ui-grid-col-2">
-                          Nivel *:
+                          Nivel *
                         </div>
                         <div class="ui-grid-col-6">
                           <p-selectButton [formControlName]="'nivel'" [options]="niveles"
@@ -123,7 +113,7 @@
                     <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0">
                       <div class="ui-grid-row">
                         <div class="ui-grid-col-2">
-                          Usuario *:
+                          Usuario *
                         </div>
                         <div class="ui-grid-col-6">
                           <input pInputText type="email" formControlName="username" [(ngModel)]="user.username"
@@ -141,7 +131,7 @@
                       </div>
                       <div class="ui-grid-row">
                         <div class="ui-grid-col-2">
-                          Contraseña *:
+                          Contraseña *
                         </div>
                         <div class="ui-grid-col-6">
                           <input pPassword type="password" formControlName="password" [(ngModel)]="user.password"
@@ -160,7 +150,7 @@
                       </div>
                       <div class="ui-grid-row">
                         <div class="ui-grid-col-2">
-                          Nombre *:
+                          Nombre *
                         </div>
                         <div class="ui-grid-col-6">
                           <input pInputText type="text" formControlName="nombre" [(ngModel)]="persona.nombre"
@@ -177,7 +167,7 @@
                       </div>
                       <div class="ui-grid-row">
                         <div class="ui-grid-col-2">
-                          Apellido Paterno *:
+                          Apellido Paterno *
                         </div>
                         <div class="ui-grid-col-6">
                           <input pInputText type="text" formControlName="apellido-p"
@@ -194,7 +184,7 @@
                       </div>
                       <div class="ui-grid-row">
                         <div class="ui-grid-col-2">
-                          Apellido Materno *:
+                          Apellido Materno *
                         </div>
                         <div class="ui-grid-col-6">
                           <input pInputText type="text" formControlName="apellido-m"

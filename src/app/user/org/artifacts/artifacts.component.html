@@ -105,12 +105,12 @@
           <div class="ui-message ui-messages-error ui-corner-all"
                *ngIf="activeFile && !progress">
             <i class="fa fa-close"></i>
-            <span>Seleccione un archivo de tamaño no mayor a 10MB</span>
+            <span>Seleccione un archivo de un tamaño no mayor a 10MB</span>
           </div>
           <p-progressBar *ngIf="progress" [value]="progress"></p-progressBar>
         </div>
         <div class="ui-g-12 ui-md-1">
-          <button pButton (click)="activeFile ? uploadFile() : uploadHyperlink()" type="button"
+          <button pButton [disabled]="progress" (click)="activeFile ? uploadFile() : uploadHyperlink()" type="button"
                   class="ui-button-success"
                   icon="fa fa-upload"></button>
         </div>

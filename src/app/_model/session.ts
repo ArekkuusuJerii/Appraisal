@@ -12,7 +12,7 @@ export class Rol {
   descripcion: string;
 }
 export class Info {
-  name: string;
+  nombre: string;
   primerApellido: string;
   segundoApellido: string;
 }
