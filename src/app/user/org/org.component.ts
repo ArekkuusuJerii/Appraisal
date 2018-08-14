@@ -45,6 +45,7 @@ export class OrgComponent implements OnInit {
     }
     this.files = [];
     this.instance = instance;
+    instance.areaProcesos.sort((a, b) => a.id - b.id);
     for (const area of instance.areaProcesos) {
       this.files.push({
         data: {
@@ -65,6 +66,7 @@ export class OrgComponent implements OnInit {
       case 'area': {
         node.children = [];
         this.cmmiService.getMetas(node.data.id).subscribe(metas => {
+          metas.sort((a, b) => a.id - b.id);
           for (const meta of metas) {
             node.children.push({
               data: {
@@ -84,6 +86,7 @@ export class OrgComponent implements OnInit {
       case 'meta': {
         node.children = [];
         this.cmmiService.getPracticas(node.data.id).subscribe(practicas => {
+          practicas.sort((a, b) => a.id - b.id);
           for (const practica of practicas) {
             node.children.push({
               data: practica,
