@@ -89,7 +89,7 @@
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
       <button *ngIf="!new" [disabled]="formInstance.dirty" type="button" pButton icon="fa fa-close" (click)="delete()" label="Eliminar"
               class="ui-button-danger"></button>
-      <button [disabled]="!formInstance.dirty" type="button" pButton icon="fa fa-check"
+      <button [disabled]="formInstance.pristine || formInstance.invalid" type="button" pButton icon="fa fa-check"
               (click)="save()" label="Guardar" class="ui-button-success"></button>
     </div>
   </p-footer>
