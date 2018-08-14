@@ -138,7 +138,7 @@ export class ArtifactsComponent implements OnInit {
 
   delete(link) {
     this.confirmationService.confirm({
-      message: '¿Desea eliminar este artefacto?',
+      message: '¿Desea eliminar esta evidencia?',
       accept: () => {
         if (link.file) {
           this.evidenciaService.deleteFile(link.id).subscribe(() => {
