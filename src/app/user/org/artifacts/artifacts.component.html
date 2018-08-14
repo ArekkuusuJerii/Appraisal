@@ -111,11 +111,12 @@
         </div>
         <div class="ui-g-12 ui-md-1">
           <button pButton [disabled]="progress" (click)="activeFile ? uploadFile() : uploadHyperlink()" type="button"
-                  class="ui-button-success"
+                  class="ui-button-success" pTooltip="Subir" tooltipPosition="top"
                   icon="fa fa-upload"></button>
         </div>
         <div class="ui-g-12 ui-md-1">
-          <button pButton (click)="cancel();fileSelect.clear();" type="button" class="ui-button-danger" icon="fa fa-close"></button>
+          <button pButton (click)="cancel();fileSelect.clear();" type="button" class="ui-button-danger"
+                  pTooltip="Cancelar" tooltipPosition="top" icon="fa fa-close"></button>
         </div>
       </div>
     </p-card>
