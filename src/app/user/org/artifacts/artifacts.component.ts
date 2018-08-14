@@ -39,7 +39,7 @@ export class ArtifactsComponent implements OnInit {
       this.sort();
     });
     this.cols = [
-      {field: 'link', header: 'Hipervínculo', width: '60%'},
+      {field: 'link', header: 'Evidencia', width: '60%'},
       {field: 'date', header: 'Fecha', width: '30%'}
     ];
     this.formHiperlink = this.builder.group({
@@ -81,14 +81,17 @@ export class ArtifactsComponent implements OnInit {
 
   download(artifact) {
     this.evidenciaService.download(artifact['id'], this.evidence).subscribe(data => {
-      const blobURL = window.URL.createObjectURL(data);
-      const anchor = document.createElement('a');
-      anchor.download = artifact['link'];
-      anchor.href = blobURL;
-      document.body.appendChild(anchor);
-      anchor.click();
-      document.body.removeChild(anchor);
-      URL.revokeObjectURL(blobURL);
+      if (window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveBlob(data, artifact['link']);
+      } else {
+        const url = window.URL.createObjectURL(data);
+        const anchor = document.createElement('a');
+        anchor.download = artifact['link'];
+        anchor.href = url;
+        document.body.appendChild(anchor);
+        anchor.click();
+        document.body.removeChild(anchor);
+      }
     });
   }
 
