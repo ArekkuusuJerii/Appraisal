@@ -14,6 +14,16 @@ export class InstanciaService {
   constructor(private api: API, private http: HttpClient) {
   }
 
+  getIsNameTaken(name: string): Observable<any> {
+    const url = this.api.for(`instancia/name?title=${name}`);
+    return this.http.get(url, {
+      headers: {
+        'Credentials': SessionService.getCredentials(),
+        'Accept': 'application/json'
+      }
+    });
+  }
+
   getTypes(): Observable<Type[]> {
     const url = this.api.for('instancia/tipos');
     return this.http.get<Type[]>(url).pipe(catchError(() => []));

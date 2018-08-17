@@ -45,6 +45,7 @@
             <i class="fa fa-close"></i>
             <span *ngIf="controlI['titulo'].errors['required']">Nombre es requerido</span>
             <span *ngIf="controlI['titulo'].errors['pattern']">Caracteres ilegales</span>
+            <span *ngIf="controlI['titulo'].errors['forbiddenName']">Instancia ya registrada</span>
           </div>
         </div>
       </div>

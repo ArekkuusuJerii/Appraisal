@@ -11,7 +11,7 @@ import { ConfirmationService, Message } from 'primeng/api';
 export class AppComponent implements OnInit {
   msgs: Message[] = [];
 
-  constructor(protected message: NotificationService) {
+  constructor(public message: NotificationService) {
   }
   ngOnInit() {
   }

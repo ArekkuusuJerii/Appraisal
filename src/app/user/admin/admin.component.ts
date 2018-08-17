@@ -7,6 +7,7 @@ import { UsuarioService } from '../../_service/usuario.service';
 import { NotificationService } from '../../_service/notification.service';
 import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { CmmiService } from '../../_service/cmmi.service';
+import { of } from 'rxjs';
 
 const titlePattern = /^[0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\-]([0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ_:().´&?!#$,\\-]| (?! ))*$/;
 const txtPattern = /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´]([a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ´]| (?! ))*$/;
@@ -58,11 +59,20 @@ export class AdminComponent implements OnInit {
       ], this.uniqueEmail()],
       'password': ['', Validators.compose([
         Validators.required, Validators.minLength(6)
-      ])]
+      ]), this.notEqualsEmail()],
     });
     this.usuarioService.getAll().subscribe(all => {
       this.users = all;
     });
+  }
+
+  notEqualsEmail(): AsyncValidatorFn {
+    return (control: FormGroup): Promise<ValidationErrors | null> => {
+      return of({}).toPromise().then(() => {
+          return this.user.username === this.user.password ? {'forbiddenPassword': {value: control.value}} : null;
+        }
+      );
+    };
   }
 
   uniqueEmail(): AsyncValidatorFn {

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Instance, Organization, Type } from '../../../_model/organization';
 import { InstanciaService } from '../../../_service/instancia.service';
 import { AreaProceso } from '../../../_model/cmmi';
@@ -23,6 +23,7 @@ export class InstancesComponent implements OnInit {
   areaProcesos: AreaProceso[];
   instances: Instance[] = [];
   instance: Instance = {};
+  copy: Instance;
   new: boolean;
 
   types: Type[];
@@ -45,9 +46,24 @@ export class InstancesComponent implements OnInit {
     this.instanciaService.getTypes().subscribe(types => this.types = types);
     this.cmmi.getAllAreaProcesos(this.org).subscribe(areas => this.areaProcesos = areas);
     this.formInstance = this.builder.group({
-      'titulo': ['', Validators.compose([Validators.required, Validators.pattern(pattern)])],
+      'titulo': ['', Validators.compose([
+        Validators.required, Validators.pattern(pattern)
+      ]), this.uniqueName()],
       'instanciaTipo': ['', Validators.required]
     });
+  }
+
+  uniqueName(): AsyncValidatorFn {
+    return (control: AbstractControl): Promise<ValidationErrors | null> => {
+      return this.instanciaService.getIsNameTaken(control.value).toPromise()
+        .then(res => {
+          if (this.copy && this.copy.nombre === control.value) {
+            return null;
+          } else {
+            return res.body === 'UN_AVAILABLE' ? {'forbiddenName': {value: control.value}} : null;
+          }
+        });
+    };
   }
 
   get controlI() {
@@ -57,6 +73,7 @@ export class InstancesComponent implements OnInit {
   add() {
     this.open();
     this.new = true;
+    this.copy = null;
     this.instance = {
       areaProcesos: []
     };
@@ -71,6 +88,7 @@ export class InstancesComponent implements OnInit {
   select(event) {
     this.open();
     const instance = event.data;
+    this.copy = instance;
     this.new = false;
     this.instance = {
       id: instance.id,
